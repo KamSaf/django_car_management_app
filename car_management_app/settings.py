@@ -31,8 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'crispy_forms',
-    'crispy_bootstrap5',
     'users.apps.UsersConfig',
     'cars.apps.CarsConfig',
     'entries.apps.EntriesConfig',
@@ -43,7 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,7 +64,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -82,11 +85,11 @@ WSGI_APPLICATION = 'car_management_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '< DATABASE NAME >',
-        'USER': '< USERNAME >',
-        'PASSWORD': '< PASSWORD >',
-        'HOST': '< DATABASE IP ADDRESS >',
-        'PORT': '< DATABASE HOST PORT >'
+        'NAME': 'db_django_car_man_app',
+        'USER': 'django_car_man_app',
+        'PASSWORD': 'django_app_password',
+        'HOST': '172.17.0.2',
+        'PORT': '5432'
     }
 }
 

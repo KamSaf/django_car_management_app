@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 25px;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
+                <div class="card-body">
+                    <h2 class="text-center">
+                        <b>Register</b>
+                    </h2>
+                    <hr>
+                    <div class="container">
+                        <div class="row">
+                                <div style="margin-top: 10px;" id="email-field">
+                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <fieldset class="form-group">
+                                        {{ form|crispy }}
+                                    </fieldset>
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button style="margin-top: 25px;" class="btn btn-sm btn-success" type="submit">Register</button>
+                                    </div>
+                                </form>
+                            <small style="margin-top: 15px;" class="text-muted">Already have an account? <a class="ml-2" href="{% url 'login_page' %}">Sign in</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}

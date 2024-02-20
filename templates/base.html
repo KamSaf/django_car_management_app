@@ -18,6 +18,17 @@
     <header>
         {% include 'include/navbar.html' %}
     </header>
+    <div style="margin-top: 15px;">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger"> {{ message }}</div>
+                {% else %}
+                    <div class="alert alert-success"> {{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
     <body style="background-color: #eaf0f5;">
         {% block body %}{% endblock %}
     </body>
