@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}User profile{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div style="margin-top: 25px;" class="col shadow bg-body rounded card">
+				<div class="card-body">
+					<h1 class="h3 mb-3 font-weight-normal text-center">User profile</h1>
+					<hr>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">Email address:</span>
+							<span class="float-end">
+								{{ user.email }}
+							</span>
+						</span>
+					</div>
+                    <div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">Name:</span>
+							<span class="float-end">
+                                {% if user.first_name %}
+								    {{ user.first_name }}
+                                {% else %}
+                                    <button class="btn btn-sm btn-outline-info edit-profile-button" data-toggle="modal" data-target="#edit_profile_modal">Add information</button>
+                                {% endif %}
+							</span>
+						</span>
+					</div>
+
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">Username:</span>
+							<span class="float-end">
+								{{ user.username }}
+							</span>
+						</span>
+					</div>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">Register date:</span>
+							<span class="float-end">
+								{{ user.date_joined }}
+							</span>
+						</span>
+					</div>
+					<span>
+						<button class="btn btn-sm btn-outline-info edit-profile-button" data-toggle="modal" data-target="#edit_profile_modal">Edit</button>
+						<button class="btn btn-danger btn-sm float-end delete-profile-button" data-toggle="modal" data-target="#confirm_delete_modal">Delete account</button>
+					</span>
+				</div>
+
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
+    {% comment %}
+	<div class="modal fade" id="confirm_delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal_label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="delete_modal_label">Confirm deleting</h5>
+				</div>
+				<div class="modal-body">
+					Are you sure you?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger confirm-delete-profile-button" data-user-id="{{ app.user.id }}" data-bs-dismiss="modal" id="confirm_delete_profile_button">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="edit_profile_modal" tabindex="-1" role="dialog" aria-labelledby="edit_profile_modal_label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="edit_profile_modal_label">Edit profile</h5>
+				</div>
+				<div class="modal-body">
+					<div id="submit-info" class="alert" role="alert" style="display: none;">
+						submit info
+					</div>
+					<small class="text-muted">Leave empty field if you don't want to change it</small>
+
+					{{ form_start(profileEditForm, {action:('/edit_profile')}) }}
+					<div style="margin-top: 15px; margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.email) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.email) }}
+							</span>
+							{{ form_errors(profileEditForm.email) }}
+							{{ form_rest(profileEditForm.email) }}
+						</span>
+					</div>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.name) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.name) }}
+							</span>
+							{{ form_errors(profileEditForm.name) }}
+							{{ form_rest(profileEditForm.name) }}
+						</span>
+					</div>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.plainPassword.first) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.plainPassword.first) }}
+							</span>
+							{{ form_errors(profileEditForm.plainPassword.first) }}
+							{{ form_rest(profileEditForm.plainPassword.first) }}
+						</span>
+					</div>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.plainPassword.second) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.plainPassword.second) }}
+							</span>
+							{{ form_errors(profileEditForm.plainPassword.second) }}
+							{{ form_rest(profileEditForm.plainPassword.second) }}
+						</span>
+					</div>
+					<div style="margin-bottom: 15px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.newTimezone) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.newTimezone) }}
+							</span>
+							{{ form_errors(profileEditForm.newTimezone) }}
+							{{ form_rest(profileEditForm.newTimezone) }}
+						</span>
+					</div>
+					<div style="margin-top: 50px;" class="row">
+						<span class="col text-start">
+							<span class="float-start">{{ form_label(profileEditForm.currentPassword) }}</span>
+							<span class="float-end">
+								{{ form_widget(profileEditForm.currentPassword) }}
+							</span>
+							{{ form_errors(profileEditForm.currentPassword) }}
+							{{ form_rest(profileEditForm.currentPassword) }}
+						</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success save-edit-profile-button" data-user-id="{{ app.user.id }}" id="save_edit_profile">Save</button>
+				</div>
+				{{ form_end(profileEditForm) }}
+
+			</div>
+		</div>
+	</div>
+    {% endcomment %}
+{% endblock %}
