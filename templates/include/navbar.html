@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">CarHub 🚗</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">About</a></li>
+                {% if true == false %}
+                    <li class="nav-item"><a class="nav-link" href="#">My profile</a></li>
+                {% endif %}
+            </ul>
+            {% if true == false  %}
+                <a class='navbar-brand'>Hello, user!</a>
+                <a style="margin-left: 20px;" class="btn btn-outline-light" href="#" >Log out <i class="bi bi-lock"></i></a>
+            {% else %}
+                <a style="margin-left: 20px;" class="btn btn-outline-light" href="#" >Sign in <i class="bi bi-unlock"></i></a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

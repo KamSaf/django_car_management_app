@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div style="margin-top: 25px;" class="container-fluid">
+        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <b>CAR NAME</b>
+                    <button class="btn btn-sm btn-outline-secondary show-all-cars"><i class="bi bi-chevron-down"></i></button>
+                    <a class="btn btn-sm btn-outline-info float-end show-car-details">Car details</a>
+                </h5>
+                <hr>
+                {# <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Fiat Bravo</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+                </nav> #}
+                CURRENT DATE
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 25px;" class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Exploatation History
+                        <a class="btn btn-sm btn-outline-info float-end">See full history</a>
+                    </h5>
+                    <hr>
+                    <h1>placeholder</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                <div class="card-body">
+                        <ul class="nav nav-tabs" id="monthTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="monthTabContent">
+                        <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
+                            <div style="margin-left: 25px; margin-top: 25px;" class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Expenses:</h6>
+                                        <h4 class="text-danger fw-bold">37,21 zł</h4>
+                                        <p class="text-muted fw-lighter">4,23 zł per day</p>
+                                    </div>
+                                    <div class="col">
+                                        <h6>Fuel economy:</h6>
+                                        <h4 class="text-warning fw-bold">8,9l / 100 km</h4>
+                                        <p class="text-muted fw-lighter">1,20 zł per kilometer</p>
+                                    </div>
+                                    <hr>
+                                <div class="row">
+                                    <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>86%</b></div>
+                                    <div class="col"><i class="bi bi-tools"></i> Service: <b>10%</b></div>
+                                    <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>4%</b></div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
+                            <div style="margin-left: 25px; margin-top: 25px;" class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Expenses:</h6>
+                                        <h4 class="text-danger fw-bold">21,37 zł</h4>
+                                        <p class="text-muted fw-lighter">6,90 zł per day</p>
+                                    </div>
+                                    <div class="col">
+                                        <h6>Fuel economy:</h6>
+                                        <h4 class="text-warning fw-bold">9,3l / 100 km</h4>
+                                        <p class="text-muted fw-lighter">1,63 zł per kilometer</p>
+                                    </div>
+                                    <hr>
+                                <div class="row">
+                                    <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>70%</b></div>
+                                    <div class="col"><i class="bi bi-tools"></i> Service: <b>15%</b></div>
+                                    <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>15%</b></div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Favourite workshops:
+                        <a class="btn btn-sm btn-outline-info float-end show-all-workshops">See all saved workshops</a>
+                    </h5>
+                    <hr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                            <span class="col text-start">Dariusz Ficek</span>
+                            <span class="col text-center">tel. 668 108 834</span>
+                            <span class="col text-end">Gliwicka 104, Mikołów</span>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                            <span class="col text-start">Michał Niewolik</span>
+                            <span class="col text-center">tel. 777 888 999</span>
+                            <span class="col text-end">Gajowa 16, Łaziska Górne</span>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                            <span class="col text-start">Rafał Orlik</span>
+                            <span class="col text-center">tel. 111 222 333</span>
+                            <span class="col text-end">Marii Skłodowskiej-Curie 41a, Mikołów</span>
+                            </div>
+                        </li>                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cars_list_modal" tabindex="-1" role="dialog" aria-labelledby="cars_list_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="cars_list_modal_label">Your cars</h5>
+            </div>
+            <div class="modal-body">
+                cars list
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success add-new-car" data-bs-dismiss="modal" id="add_new_car_button">Add new car +</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="car_details_modal" tabindex="-1" role="dialog" aria-labelledby="car_details_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="car_details_modal_label">Your cars</h5>
+            </div>
+            <div class="modal-body">
+                car details
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success edit-car-details" data-bs-dismiss="modal" id="edit_car_details_button">Edit</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="workshops_list_modal" tabindex="-1" role="dialog" aria-labelledby="workshop_list_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="workshop_list_modal_label">Your cars</h5>
+            </div>
+            <div class="modal-body">
+                workshop list
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success add-new-workshop" data-bs-dismiss="modal" id="edit_car_details_button">Add new workshop +</button>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
