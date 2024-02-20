@@ -22,8 +22,8 @@ How to run:
                 'PASSWORD': '< YOUR DATABASE PASSWORD >',
                 'HOST': '< YOUR DATABASE HOST ADDRESS >',
                 'PORT': '< YOUR DATABASE PORT >'
+            }
         }
-}
 
 4. Go to the main project directory and run migration commands:
 
