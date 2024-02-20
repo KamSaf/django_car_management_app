@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Log in!{% endblock %}
 
@@ -13,17 +14,13 @@
                             You are logged in as {{ user.username }} ({{ user.email }}) <a href="{% url 'logout_page' %}">Logout</a>
                         </div>
                     {% endif %}
-                    <form style="margin-bottom: 15px;" method="post">
+                    <form style="margin-bottom: 15px;" method="POST">
                         <h1 class="h3 mb-3 font-weight-normal text-center">Sign in</h1>
                         <hr>
-                        {% comment %}
-                        <!-- <label style="margin-top: 10px;" for="inputEmail">Email</label>
-                        <input style="margin-top: 5px;" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                        <label style="margin-top: 10px;" for="inputPassword">Password</label>
-                        <input style="margin-top: 5px;" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> -->
-                        {% endcomment %}
-
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ form|crispy }}
+                        </fieldset>
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button style="margin-top: 25px;" class="btn btn-sm btn-success" type="submit">Sign in</button>
                         </div>
