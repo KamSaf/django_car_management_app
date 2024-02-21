@@ -11,7 +11,7 @@
                 <div class="card-body">
                     {% if user.is_authenticated %}
                         <div class="text-center mb-3 shadow bg-body rounded card">
-                            You are logged in as {{ user.username }} ({{ user.email }}) <a href="{% url 'logout_page' %}">Logout</a>
+                            You are logged in as {{ user.username }} ({{ user.email }}) <a href="{% url 'logout_url' %}">Logout</a>
                         </div>
                     {% endif %}
                     <form style="margin-bottom: 15px;" method="POST">

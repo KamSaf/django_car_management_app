@@ -12,7 +12,7 @@ How to run:
 
         pip install -r requirements.txt
 
-3. Go to /car_management_app/settings.py and provide your PostgreSQL database connection credentials:
+3. Go to **/car_management_app/settings.py** and provide your PostgreSQL database connection credentials:
 
         DATABASES = {
             'default': {
@@ -25,11 +25,10 @@ How to run:
             }
         }
 
-4. Go to the main project directory and run migration commands:
+4. Go to the main project directory and run migration command:
 
         python manage.py migrate
 
 3. Run application with command when in main project directory:
 
         python manage.py migrate
-
