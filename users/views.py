@@ -3,6 +3,7 @@ from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -15,8 +16,9 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            auth_login(request, form.get_user())
-            return redirect('login_page')
+            print(f'\n\n\n\n {User.objects.get(email=form.cleaned_data.get("email"))} \n\n\n ')
+            auth_login(request, User.objects.get(email=form.cleaned_data.get('email')))
+            return redirect('home_page')
     else:
         form = UserRegisterForm()
     return render(request=request, template_name='users/register.html', context={'form': form})
@@ -49,7 +51,9 @@ def delete_user(request):
     """
         Endpoint for deleting (deactivating) User
     """
-    
+    user = User.objects.get(id=request.user.id)
+    user.is_active = False
+    user.save()
     return redirect('welcome_page')
 
 
