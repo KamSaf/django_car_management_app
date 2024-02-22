@@ -51,9 +51,10 @@ def delete_user(request):
     """
         Endpoint for deleting (deactivating) User
     """
-    user = User.objects.get(id=request.user.id)
-    user.is_active = False
-    user.save()
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        user.is_active = False
+        user.save()
     return redirect('welcome_page')
 
 

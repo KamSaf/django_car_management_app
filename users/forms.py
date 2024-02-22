@@ -29,19 +29,23 @@ class UserUpdateForm(forms.ModelForm):
         'password_not_confirmed': "You need to enter new password in two fields.",
 
     }
-    email = forms.EmailField(required=True)
+
+    email = forms.EmailField(required=True, label='New email address')
+    name = forms.Field(required=False, label='New name')
     new_password1 = forms.Field(widget=forms.PasswordInput(), required=False, label='New password')
     new_password2 = forms.Field(widget=forms.PasswordInput(), required=False, label='Confirm new password')
-    current_password = forms.Field(widget=forms.PasswordInput())
+    current_password = forms.Field(widget=forms.PasswordInput(), label='Current password')
     data_errors = []
+    field_order = ['email', 'name', 'username', 'new_password1', 'new_password2', 'current_password']
 
     class Meta:
         model = User
         fields = ['email', 'username', 'new_password1', 'new_password2', 'current_password']
 
-    def set_initial(self, user: User = None):  # sets initial value for email and username fields as current user data
+    def set_initial(self, user: User = None):  # sets initial value for email, username and name fields as current user data
         self.initial['email'] = user.email
         self.initial['username'] = user.username
+        self.initial['first_name'] = user.first_name
         return self
 
     def clear_errors(self):  # clears displayed error messages list
@@ -54,6 +58,7 @@ class UserUpdateForm(forms.ModelForm):
         new_password2 = self.cleaned_data.get('new_password2')
         new_email = self.cleaned_data.get('email')
         new_username = self.cleaned_data.get('username')
+        new_name = self.cleaned_data.get('name')
 
         if not check_password(current_password, self.instance.password):  # checks if user provided valid password (current)
             self.data_errors.append(self.error_messages['wrong_password'])
@@ -92,4 +97,8 @@ class UserUpdateForm(forms.ModelForm):
 
         self.instance.email = new_email  # set new email for user
         self.instance.username = new_username  # set new username for user
+
+        if new_name:
+            self.instance.first_name = new_name  # set new name for user
+
         return self.cleaned_data

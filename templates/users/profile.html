@@ -29,9 +29,9 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 					<form method="POST" action="{% url 'delete_user_url' %}">
-
+						{% csrf_token %}
+						<button type="submit" class="btn btn-danger confirm-delete-profile-button">Delete</button>
 					</form>
-					<button type="button" class="btn btn-danger confirm-delete-profile-button" data-user-id="{{ app.user.id }}" data-bs-dismiss="modal" id="confirm_delete_profile_button">Delete</button>
 				</div>
 			</div>
 		</div>
