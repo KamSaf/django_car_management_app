@@ -1,5 +1,6 @@
 <h1 class="h3 mb-3 font-weight-normal text-center">User profile</h1>
 <hr>
+{{ request.path }}
 <div style="margin-bottom: 15px;" class="row">
     <span class="col text-start">
         <span class="float-start">Email address:</span>
@@ -26,6 +27,14 @@
         <span class="float-start">Username:</span>
         <span class="float-end">
             {{ user.username }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start">Cars number:</span>
+        <span class="float-end">
+            {{ cars_number }}
         </span>
     </span>
 </div>

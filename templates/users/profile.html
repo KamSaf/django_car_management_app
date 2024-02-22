@@ -45,17 +45,15 @@
 				</div>
 				<div class="modal-body">
 					<form method="POST">
-						<div id="submit-info" class="alert" role="alert" style="display: none;">
-							submit info
-						</div>
+						<div id="submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
 						<small class="text-muted">Leave empty field if you don't want to change it</small>
-							{% csrf_token %}
-							{{ form|crispy }}
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-success save-edit-profile-button" data-user-id="{{ app.user.id }}" id="save_edit_profile">Save</button>
-					</div>
-				</form>
+						{% csrf_token %}
+						{{ form|crispy }}
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-success save-edit-profile-button">Save</button>
+						</div>
+					</form>
 
 			</div>
 		</div>

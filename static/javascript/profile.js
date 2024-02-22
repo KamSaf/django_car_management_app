@@ -3,22 +3,6 @@ $(function() {
       var modal = new bootstrap.Modal(document.getElementById("confirm_delete_modal"));
       modal.show();
     });
-
-    $(".confirm-delete-profile-button").on("click", function() {
-      var userId = $(this).data("userId");
-      
-    //   $.ajax({
-    //     type: "POST",
-    //     url: "",
-    //     data: {
-    //       postId: postId
-    //     },
-    //     success: function(response) {
-    //       $("#post_" + postId).remove();
-    //       modal.hide();
-    //     }
-    //   });
-    });
 });
 
 $(function() {
@@ -27,16 +11,24 @@ $(function() {
       modal.show();
     });
 
-//   $(".save-edit-profile-button").on("click", function(event) {
-//     event.preventDefault();
-
-//       $.ajax({
-//         type: "POST",
-//         url: "/edit_profile",
-//         data: $('form').serializeArray(),
-//         success: function(response) {
-//           console.log(response);
-//         }
-//       });
-//   });
+  $(".save-edit-profile-button").on("click", function(event) {
+    console.log('dupa');
+    event.preventDefault();
+    console.log($('form').serializeArray());
+      $.ajax({
+        type: "POST",
+        url: "edit_user/",
+        data: $('form').serializeArray(),
+        success: function(response) {
+          console.log(response);
+          let errors = "";
+          if (response['errors']){
+            response['errors'].forEach(error => {errors += error});
+          }
+          if (errors){
+            $('#submit_info').html(errors).prop('style', 'display: block;');
+          }
+        }
+      });
+  });
 });
