@@ -27,10 +27,9 @@ urlpatterns = [
     path('register/', user_views.register, name='register_page'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login_page'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout_url'),
-    # path('profile/', user_views.profile, name='profile'),
     path('cars/', include('cars.urls')),
     path('users/', include('users.urls')),
     # path('', include('enties.urls')),
     # path('', include('workshops.urls')),
-    # path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('navbar_refresh/', main_views.refresh_navbar, name="navbar_refresh_url"),
 ]

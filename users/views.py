@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.template.response import SimpleTemplateResponse
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
@@ -30,17 +31,6 @@ def user_profile(request):
     """
         View rendering User account information page
     """
-    # if request.method == 'POST':
-    #     form = UserUpdateForm(request.POST, instance=request.user)
-        # form.clear_errors()
-    #     if form.is_valid():
-    #         form.save()
-    #         messages.success(request, 'Account data edited!')
-    #         redirect('profile_page')
-    #     else:
-    #         for error in form.data_errors:
-    #             messages.error(request, error)
-    # else:
     form = UserUpdateForm()
     if request.user:
         form = form.set_initial(user=request.user)
@@ -69,7 +59,7 @@ def async_edit_user(request):
         form = UserUpdateForm(request.POST, instance=request.user)
         form.clear_errors()
         if form.is_valid():
-            # form.save()
+            form.save()
             return Response({
                 'status': 'success',
                 'email': form.cleaned_data.get('email'),
@@ -80,3 +70,10 @@ def async_edit_user(request):
         'status': 'fail',
         'errors': form.data_errors,
     })
+
+
+def refresh_user_data(request):
+    """
+        Endpoint returnig user data template (for AJAX user data refresh)
+    """
+    return SimpleTemplateResponse('include/users/user_data.html', context={'user': request.user})

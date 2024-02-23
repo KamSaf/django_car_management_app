@@ -1,6 +1,5 @@
 <h1 class="h3 mb-3 font-weight-normal text-center">User profile</h1>
 <hr>
-{{ request.path }}
 <div style="margin-bottom: 15px;" class="row">
     <span class="col text-start">
         <span class="float-start">Email address:</span>
@@ -15,8 +14,6 @@
         <span class="float-end">
             {% if user.first_name %}
                 {{ user.first_name }}
-            {% else %}
-                <button class="btn btn-sm btn-outline-info edit-profile-button" data-toggle="modal" data-target="#edit_profile_modal">Add information</button>
             {% endif %}
         </span>
     </span>
@@ -46,7 +43,3 @@
         </span>
     </span>
 </div>
-<span>
-    <button class="btn btn-sm btn-outline-info edit-profile-button" data-toggle="modal" data-target="#edit_profile_modal">Edit</button>
-    <button class="btn btn-danger btn-sm float-end delete-profile-button" data-toggle="modal" data-target="#confirm_delete_modal">Delete account</button>
-</span>

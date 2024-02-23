@@ -17,7 +17,7 @@
             <script src="{% static '/javascript/profile.js' %}" type="text/javascript"></script>  
         {% endblock %}
     </head>
-    <header>
+    <header id="navbar" data-refresh-url="{% url 'navbar_refresh_url' %}">
         {% include 'include/navbar.html' %}
     </header>
     <div style="margin-top: 15px;">

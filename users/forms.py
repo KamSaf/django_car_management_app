@@ -35,7 +35,7 @@ class UserUpdateForm(forms.ModelForm):
     new_password1 = forms.Field(widget=forms.PasswordInput(), required=False, label='New password')
     new_password2 = forms.Field(widget=forms.PasswordInput(), required=False, label='Confirm new password')
     current_password = forms.Field(widget=forms.PasswordInput(), label='Current password')
-    data_errors = []
+    data_errors = {}
     field_order = ['email', 'name', 'username', 'new_password1', 'new_password2', 'current_password']
 
     class Meta:
@@ -45,11 +45,11 @@ class UserUpdateForm(forms.ModelForm):
     def set_initial(self, user: User = None):  # sets initial value for email, username and name fields as current user data
         self.initial['email'] = user.email
         self.initial['username'] = user.username
-        self.initial['first_name'] = user.first_name
+        self.initial['name'] = user.first_name
         return self
 
     def clear_errors(self):  # clears displayed error messages list
-        self.data_errors = []
+        self.data_errors = {}
         return self
 
     def clean(self):
@@ -61,37 +61,40 @@ class UserUpdateForm(forms.ModelForm):
         new_name = self.cleaned_data.get('name')
 
         if not check_password(current_password, self.instance.password):  # checks if user provided valid password (current)
-            self.data_errors.append(self.error_messages['wrong_password'])
+            self.data_errors['id_current_password'] = self.error_messages['wrong_password']
             self._errors['current_password'] = self.error_class([self.error_messages['wrong_password']])
             return self.cleaned_data
 
         if new_password1 and new_password2:
             if new_password1 != new_password2:  # checks if provided new passwords are the same
-                self.data_errors.append(self.error_messages['passwords_mismatch'])
+                self.data_errors['id_new_password1'] = self.error_messages['passwords_mismatch']
+                self.data_errors['id_new_password2'] = ''
                 self._errors['new_password1'] = self.error_class([self.error_messages['passwords_mismatch']])
                 return self.cleaned_data
 
             if check_password(new_password1, self.instance.password):  # checks if provided new password is identical to the current one
-                self.data_errors.append(self.error_messages['same_password'])
+                self.data_errors['id_new_password1'] = self.error_messages['same_password']
+                self.data_errors['id_new_password2'] = ''
                 self._errors['new_password1'] = self.error_class([self.error_messages['same_password']])
                 return self.cleaned_data
 
             self.instance.password = make_password(new_password1)  # set new password for user
 
         if (new_password1 and not new_password2) or (new_password2 and not new_password1):  # checks if both new password fields are filled
-            self.data_errors.append(self.error_messages['password_not_confirmed'])
+            self.data_errors['id_new_password1'] = self.error_messages['password_not_confirmed']
+            self.data_errors['id_new_password2'] = ''
             self._errors['new_password1'] = self.error_class([self.error_messages['password_not_confirmed']])
             return self.cleaned_data
 
         user_by_email = User.objects.filter(email=new_email).first()
         if user_by_email and user_by_email.id != self.instance.id:  # checks if provided new email is already taken
-            self.data_errors.append(self.error_messages['duplicate_email'])
+            self.data_errors['id_email'] = self.error_messages['duplicate_email']
             self._errors['email'] = self.error_class([self.error_messages['duplicate_email']])
             return self.cleaned_data
 
         user_by_username = User.objects.filter(username=new_username).first()  # checks if provided new username is already taken
         if user_by_username and user_by_username.id != self.instance.id:
-            self.data_errors.append(self.error_messages['duplicate_username'])
+            self.data_errors['id_username'] = self.error_messages['duplicate_username']
             self._errors['username'] = self.error_class([self.error_messages['duplicate_username']])
             return self.cleaned_data
 
@@ -102,3 +105,10 @@ class UserUpdateForm(forms.ModelForm):
             self.instance.first_name = new_name  # set new name for user
 
         return self.cleaned_data
+
+# id_email
+# id_username
+# id_new_password1
+# id_new_password2
+# id_current_password
+# is_invalid

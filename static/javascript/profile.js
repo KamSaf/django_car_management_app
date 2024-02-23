@@ -1,32 +1,46 @@
+function clearErrors(){
+  $('#submit_info').prop('style', 'display: none;');
+  $('.is-invalid').removeClass('is-invalid');
+}
+
 $(function() {
-    $(".delete-profile-button").on("click", function() {
-      var modal = new bootstrap.Modal(document.getElementById("confirm_delete_modal"));
-      modal.show();
+    $(".clear-errors").on("click", function() {
+      clearErrors();
+      $('#data_edit_success').prop('style', 'display: none;');
+
     });
 });
 
 $(function() {
-    $(".edit-profile-button").on("click", function() {
-      var modal = new bootstrap.Modal(document.getElementById("edit_profile_modal"));
-      modal.show();
-    });
+  var modal = new bootstrap.Modal(document.getElementById("edit_profile_modal"));
 
   $(".save-edit-profile-button").on("click", function(event) {
-    console.log('dupa');
     event.preventDefault();
-    console.log($('form').serializeArray());
+    clearErrors();
       $.ajax({
         type: "POST",
         url: "edit_user/",
         data: $('form').serializeArray(),
         success: function(response) {
-          console.log(response);
+          $('#id_current_password').val('');
           let errors = "";
           if (response['errors']){
-            response['errors'].forEach(error => {errors += error});
+            for (key in response['errors']){
+              $('#' + key).addClass('is-invalid');
+              if (response['errors'][key].length > 0){
+                errors += response['errors'][key] + '<br>';
+              }
+            }
           }
           if (errors){
             $('#submit_info').html(errors).prop('style', 'display: block;');
+          } else {
+            var $userData = $('#user_data');
+            var $navbar = $('#navbar');
+            $userData.load($userData.data('refresh-url'));
+            $navbar.load($navbar.data('refresh-url'));
+            $('#data_edit_success').prop('style', 'display: block;');
+            modal.hide();
           }
         }
       });
