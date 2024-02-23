@@ -15,8 +15,25 @@ $(function() {
   var modal = new bootstrap.Modal(document.getElementById("edit_profile_modal"));
 
   $(".save-edit-profile-button").on("click", function(event) {
+
     event.preventDefault();
     clearErrors();
+
+    var fieldsToValidate = ['#id_username', '#id_email', '#id_current_password'];
+    var fields_valid = true;
+
+    for (var i = 0; i < fieldsToValidate.length; i++) {
+      var field = $(fieldsToValidate[i]);
+      if (!field.val()) {
+        field.addClass('is-invalid');
+        fields_valid = false;
+      }
+    }
+    
+    if (!fields_valid) {
+      $('#submit_info').html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+      return;
+    }
       $.ajax({
         type: "POST",
         url: "edit_user/",

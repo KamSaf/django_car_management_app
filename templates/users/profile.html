@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block javascripts %}
+    {{ block.super }}
+        <script src="{% static '/javascript/profile.js' %}" type="text/javascript"></script> 
+{% endblock %}
 
 {% block title %}User profile{% endblock %}
 
@@ -52,7 +58,6 @@
 				<div class="modal-body">
 					<form method="POST">
 						<div id="submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
-						<small class="text-muted">Leave empty field if you don't want to change it</small>
 						{% csrf_token %}
 						{{ form|crispy }}
 						<div class="modal-footer">
