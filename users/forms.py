@@ -105,10 +105,3 @@ class UserUpdateForm(forms.ModelForm):
             self.instance.first_name = new_name  # set new name for user
 
         return self.cleaned_data
-
-# id_email
-# id_username
-# id_new_password1
-# id_new_password2
-# id_current_password
-# is_invalid

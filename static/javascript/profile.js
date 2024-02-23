@@ -20,17 +20,17 @@ $(function() {
     clearErrors();
 
     var fieldsToValidate = ['#id_username', '#id_email', '#id_current_password'];
-    var fields_valid = true;
+    var fieldsValid = true;
 
     for (var i = 0; i < fieldsToValidate.length; i++) {
       var field = $(fieldsToValidate[i]);
       if (!field.val()) {
         field.addClass('is-invalid');
-        fields_valid = false;
+        fieldsValid = false;
       }
     }
     
-    if (!fields_valid) {
+    if (!fieldsValid) {
       $('#submit_info').html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
       return;
     }
