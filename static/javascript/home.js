@@ -1,3 +1,15 @@
+function checkIfValidPhoneNumber(phoneNumber){
+  if (phoneNumber.length != 9){
+    return false
+  }
+  for (char of phoneNumber) {
+    if (isNaN(char)){
+      return false;
+    }
+    return true;
+  };
+}
+
 $(function(){
     $(".new-workshop-main").on("click", function() {
         $('#new_workshop_close_modal_button')
@@ -30,6 +42,12 @@ $(function() {
           field.addClass('is-invalid');
           fieldsValid = false;
         }
+      }
+      
+      if (!checkIfValidPhoneNumber($('#id_phone_number').val())){
+        $('#id_phone_number').addClass('is-invalid');
+        $('#submit_info').html("Invalid phone number.").prop('style', 'display: block;');
+        return;
       }
       
       if (!fieldsValid) {
