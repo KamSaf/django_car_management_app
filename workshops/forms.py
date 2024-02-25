@@ -7,6 +7,11 @@ class WorkshopCreationForm(forms.ModelForm):
     """
         Form for creating new workshops
     """
+
+    def __init__(self, *args, **kwargs):
+        self.logged_user = kwargs.pop('logged_user')
+        super(WorkshopCreationForm, self).__init__(*args, **kwargs)
+
     name = forms.Field(required=True, label=mark_safe('<i class="bi bi-person-vcard"></i> Workshop name'))
     city = forms.Field(required=True, label=mark_safe('<i class="bi bi-map"></i> City'))
     address = forms.Field(required=True, label=mark_safe('<i class="bi bi-geo-alt"></i> Address'))
@@ -64,5 +69,6 @@ class WorkshopCreationForm(forms.ModelForm):
         self.instance.address = address  # set address for new workshop
         self.instance.phone_number = phone_number  # set phone number for new workshop
         self.instance.profession = profession  # set profession for new workshop
+        self.instance.user = self.logged_user  # set author user for new workshop
 
         return self.cleaned_data

@@ -62,9 +62,9 @@ def async_edit_user(request):
             form.save()
             return Response({
                 'status': 'success',
-                'email': form.cleaned_data.get('email'),
-                'name': form.cleaned_data.get('name'),
-                'username': form.cleaned_data.get('username'),
+                # 'email': form.cleaned_data.get('email'),
+                # 'name': form.cleaned_data.get('name'),
+                # 'username': form.cleaned_data.get('username'),
             })
     return Response({
         'status': 'fail',
