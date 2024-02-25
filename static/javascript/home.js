@@ -10,6 +10,20 @@ function checkIfValidPhoneNumber(phoneNumber){
   };
 }
 
+function clearForm(){
+  clearErrors();
+  var fieldsToClear = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
+  for (var i = 0; i < fieldsToClear.length; i++) {
+    $(fieldsToValidate[i]).val('');
+    }
+  };
+
+$(function(){
+  $(".close-new-workshop-modal").on('click', function(){
+    clearForm();
+  });
+});
+
 $(function(){
     $(".new-workshop-main").on("click", function() {
         $('#new_workshop_close_modal_button')
@@ -44,14 +58,14 @@ $(function() {
         }
       }
       
+      if (!fieldsValid) {
+        $('#submit_info').html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+        return;
+      }
+
       if (!checkIfValidPhoneNumber($('#id_phone_number').val())){
         $('#id_phone_number').addClass('is-invalid');
         $('#submit_info').html("Invalid phone number.").prop('style', 'display: block;');
-        return;
-      }
-      
-      if (!fieldsValid) {
-        $('#submit_info').html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
         return;
       }
         $.ajax({
