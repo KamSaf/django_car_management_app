@@ -60,12 +60,7 @@ def async_edit_user(request):
         form.clear_errors()
         if form.is_valid():
             form.save()
-            return Response({
-                'status': 'success',
-                # 'email': form.cleaned_data.get('email'),
-                # 'name': form.cleaned_data.get('name'),
-                # 'username': form.cleaned_data.get('username'),
-            })
+            return Response({'status': 'success'})
     return Response({
         'status': 'fail',
         'errors': form.data_errors,
@@ -76,4 +71,4 @@ def refresh_user_data(request):
     """
         Endpoint returnig user data template (for AJAX user data refresh)
     """
-    return SimpleTemplateResponse('include/users/user_data.html', context={'user': request.user})
+    return SimpleTemplateResponse(template='include/users/user_data.html', context={'user': request.user})

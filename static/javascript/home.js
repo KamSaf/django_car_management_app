@@ -100,3 +100,15 @@ $(document).ready(function(){
     clearWorkshopForm();
   });
 });
+
+
+
+
+
+
+
+$(function() {  
+    $(".show-workshop-details").on("click", function() {
+      
+    });
+});

@@ -120,7 +120,7 @@
                     <div class="overflow-auto" style="max-height: 175px;">
                         <ul class="list-group w-auto" style="list-style: none;">
                             {% for workshop in workshops %}
-                                <button class="btn btn-light" style="margin-bottom: 5px;">
+                                <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;">
                                     <li style="max-height: 50px;">
                                         <div class="row">
                                             <span class="col text-start">{{ workshop.name }}</span>
@@ -194,6 +194,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success new-workshop-embedded" data-bs-target="#new_workshop_modal" data-bs-toggle="modal" id="edit_car_details_button">Add new workshop +</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Workshop details modal -->
+    <div class="modal fade" id="workshop_details_modal" tabindex="-1" role="dialog" aria-labelledby="workshop_details_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="workshop_details_modal_label">Your saved workshops</h5>
+            </div>
+            <div class="modal-body">
+                workshop details
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
         </div>

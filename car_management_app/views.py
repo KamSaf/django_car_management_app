@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.template.response import SimpleTemplateResponse
-from workshops.forms import WorkshopCreationForm
+from workshops.forms import WorkshopForm
 from workshops.models import Workshop
 
 
@@ -31,7 +31,7 @@ def home(request):
     """
     workshops = Workshop.objects.filter(user=request.user).all()
     if request.user.is_authenticated:
-        workshop_form = WorkshopCreationForm(logged_user=request.user)
+        workshop_form = WorkshopForm(logged_user=request.user)
         return render(request, 'home.html', context={
             'workshop_form': workshop_form,
             'workshops': workshops,

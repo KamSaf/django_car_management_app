@@ -3,14 +3,14 @@ from .models import Workshop
 from django.utils.safestring import mark_safe
 
 
-class WorkshopCreationForm(forms.ModelForm):
+class WorkshopForm(forms.ModelForm):
     """
-        Form for creating new workshops
+        Form for creating and editing new workshops
     """
 
     def __init__(self, *args, **kwargs):
         self.logged_user = kwargs.pop('logged_user')
-        super(WorkshopCreationForm, self).__init__(*args, **kwargs)
+        super(WorkshopForm, self).__init__(*args, **kwargs)
 
     name = forms.Field(required=True, label=mark_safe('<i class="bi bi-person-vcard"></i> Workshop name'))
     city = forms.Field(required=True, label=mark_safe('<i class="bi bi-map"></i> City'))
@@ -28,6 +28,15 @@ class WorkshopCreationForm(forms.ModelForm):
     class Meta:
         model = Workshop
         fields = ['name', 'city', 'address', 'phone_number', 'profession']
+
+    def set_initial(self, workshop: Workshop = None):  # sets initial value of fields
+        if workshop:
+            self.initial['name'] = workshop.name
+            self.initial['city'] = workshop.city
+            self.initial['address'] = workshop.address
+            self.initial['phone_number'] = workshop.phone_number
+            self.initial['profession'] = workshop.profession
+        return self
 
     def clear_errors(self):  # clears displayed error messages list
         self.data_errors = {}

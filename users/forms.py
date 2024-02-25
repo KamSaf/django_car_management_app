@@ -42,9 +42,10 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['email', 'username', 'new_password1', 'new_password2', 'current_password']
 
     def set_initial(self, user: User = None):  # sets initial value for email, username and name fields as current user data
-        self.initial['email'] = user.email
-        self.initial['username'] = user.username
-        self.initial['name'] = user.first_name
+        if user:
+            self.initial['email'] = user.email
+            self.initial['username'] = user.username
+            self.initial['name'] = user.first_name
         return self
 
     def clear_errors(self):  # clears displayed error messages list
