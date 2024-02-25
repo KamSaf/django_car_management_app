@@ -10,19 +10,14 @@ function checkIfValidPhoneNumber(phoneNumber){
   };
 }
 
-function clearForm(){
+function clearWorkshopForm(){
   clearErrors();
   var fieldsToClear = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
   for (var i = 0; i < fieldsToClear.length; i++) {
-    $(fieldsToValidate[i]).val('');
-    }
-  };
+    $(fieldsToClear[i]).val('');
+  }
+};
 
-$(function(){
-  $(".close-new-workshop-modal").on('click', function(){
-    clearForm();
-  });
-});
 
 $(function(){
     $(".new-workshop-main").on("click", function() {
@@ -43,7 +38,9 @@ $(function(){
 });
 
 $(function() {  
-    $(".save-new-workshop-button").on("click", function(event) {
+  var modal = new bootstrap.Modal(document.getElementById("new_workshop_modal"));
+
+    $(".save-new-workshop").on("click", function(event) {
       event.preventDefault();
       clearErrors();
 
@@ -90,9 +87,16 @@ $(function() {
             //   $userData.load($userData.data('refresh-url'));
             //   $navbar.load($navbar.data('refresh-url'));
             //   $('#data_edit_success').prop('style', 'display: block;');
+              clearWorkshopForm();
               modal.hide();
             }
           }
         });
     });
+});
+
+$(document).ready(function(){
+  $('#new_workshop_modal').on('hidden.bs.modal', function () {
+    clearWorkshopForm();
   });
+});

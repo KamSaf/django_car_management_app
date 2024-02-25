@@ -50,3 +50,9 @@ $(function() {
       });
   });
 });
+
+$(document).ready(function(){
+  $('#edit_profile_modal').on('hidden.bs.modal', function () {
+    clearErrors();
+  });
+});

@@ -22,6 +22,7 @@ class WorkshopCreationForm(forms.ModelForm):
 
     error_messages = {
         'field_too_long': "field is too long.",
+        'invalid_phone_number': "Provided phone number is invalid."
     }
 
     class Meta:
@@ -54,9 +55,9 @@ class WorkshopCreationForm(forms.ModelForm):
             self._errors['address'] = self.error_class([f'Address {self.error_messages["field_too_long"]}'])
             return self.cleaned_data
 
-        if len(phone_number) > 9:  # checks if phone number field is proper length
-            self.data_errors['id_phone_number'] = self.error_messages['phone_number_too_long']
-            self._errors['phone_number'] = self.error_class([f'Phone number {self.error_messages["field_too_long"]}'])
+        if len(phone_number) != 9 or not phone_number.isdigit():  # checks if phone number field is valid
+            self.data_errors['id_phone_number'] = self.error_messages['invalid_phone_number']
+            self._errors['phone_number'] = self.error_class([self.error_messages["invalid_phone_number"]])
             return self.cleaned_data
 
         if len(profession) > 100:  # checks if profession field is proper length

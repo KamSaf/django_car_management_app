@@ -117,30 +117,27 @@
                         <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#workshops_list_modal">See all saved workshops</button>
                     </h5>
                     <hr>
-                    <button style="margin-bottom: 15px;" class="btn btn-sm btn-outline-success new-workshop-main" data-bs-toggle="modal" data-bs-target="#new_workshop_modal">Add new workshop <i class="bi bi-plus-circle"></i></button>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="row">
-                            <span class="col text-start">Dariusz Ficek</span>
-                            <span class="col text-center">tel. 668 108 834</span>
-                            <span class="col text-end">Gliwicka 104, Mikołów</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                            <span class="col text-start">Michał Niewolik</span>
-                            <span class="col text-center">tel. 777 888 999</span>
-                            <span class="col text-end">Gajowa 16, Łaziska Górne</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                            <span class="col text-start">Rafał Orlik</span>
-                            <span class="col text-center">tel. 111 222 333</span>
-                            <span class="col text-end">Marii Skłodowskiej-Curie 41a, Mikołów</span>
-                            </div>
-                        </li>                    
-                    </ul>
+                    <div class="overflow-auto" style="max-height: 175px;">
+                        <ul class="list-group w-auto" style="list-style: none;">
+                            {% for workshop in workshops %}
+                                <button class="btn btn-light" style="margin-bottom: 5px;">
+                                    <li style="max-height: 50px;">
+                                        <div class="row">
+                                            <span class="col text-start">{{ workshop.name }}</span>
+                                            <span class="col text-center">
+                                                tel.
+                                                {{ workshop.phone_number|slice:"0:3" }}
+                                                {{ workshop.phone_number|slice:"3:6" }}
+                                                {{ workshop.phone_number|slice:"6:9" }}
+                                            </span>
+                                            <span class="col text-end">{{ workshop.address }}, {{ workshop.city }}</span>
+                                        </div>
+                                    </li>
+                                </button>
+                            {% endfor %}                            
+                        </ul>
+                    </div>
+                    <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success new-workshop-main float-end" data-bs-toggle="modal" data-bs-target="#new_workshop_modal">Add new workshop <i class="bi bi-plus-circle"></i></button>
                 </div>
             </div>
         </div>
@@ -217,7 +214,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="new_workshop_close_modal_button" type="button" class="btn btn-secondary close-new-workshop-modal" data-bs-target="#workshops_list_modal" data-bs-toggle="modal">Go back</button>
-                    <button type="button" class="btn btn-success save-new-workshop-button" id="edit_car_details_button" data-url="{% url 'add_new_workshop_url' %}">Save</button>
+                    <button type="button" class="btn btn-success save-new-workshop" id="edit_car_details_button" data-url="{% url 'add_new_workshop_url' %}">Save</button>
                 </div>
             </form>
         </div>
