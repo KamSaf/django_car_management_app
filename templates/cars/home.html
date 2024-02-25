@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block javascripts %}
     {{ block.super }}
@@ -208,13 +209,17 @@
             <div class="modal-header">
             <h5 class="modal-title" id="new_workshop_modal_label">New workshop</h5>
             </div>
-            <div class="modal-body">
-                new workshop
-            </div>
-            <div class="modal-footer">
-                <button id="new_workshop_close_modal_button" type="button" class="btn btn-secondary" data-bs-target="#workshops_list_modal" data-bs-toggle="modal">Go back</button>
-                <button type="button" class="btn btn-success add-new-workshop" data-bs-dismiss="modal" id="edit_car_details_button">Save</button>
-            </div>
+            <form id="new_workshop_form" method="POST">
+                <div class="modal-body">
+                        <div id="submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                        {% csrf_token %}
+                        {{ workshop_form|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button id="new_workshop_close_modal_button" type="button" class="btn btn-secondary" data-bs-target="#workshops_list_modal" data-bs-toggle="modal">Go back</button>
+                    <button type="button" class="btn btn-success add-new-workshop" data-bs-dismiss="modal" id="edit_car_details_button">Save</button>
+                </div>
+            </form>
         </div>
         </div>
     </div>

@@ -27,7 +27,6 @@ class UserUpdateForm(forms.ModelForm):
         'duplicate_email': "This email is already taken.",
         'duplicate_username': "This username is already taken.",
         'password_not_confirmed': "You need to enter new password in two fields.",
-
     }
 
     email = forms.EmailField(required=True, label='New email address')
