@@ -115,7 +115,7 @@
                     <hr>
                     <div class="overflow-auto" style="max-height: 175px;">
                         <ul class="list-group w-auto" style="list-style: none;">
-                            {% for workshop in workshops %}
+                            {% for workshop in favourite_workshops %}
                                 <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
                                     <li style="max-height: 50px;">
                                         <div class="row">
