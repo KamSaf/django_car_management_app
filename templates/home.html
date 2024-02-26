@@ -120,7 +120,7 @@
                     <div class="overflow-auto" style="max-height: 175px;">
                         <ul class="list-group w-auto" style="list-style: none;">
                             {% for workshop in workshops %}
-                                <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;">
+                                <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
                                     <li style="max-height: 50px;">
                                         <div class="row">
                                             <span class="col text-start">{{ workshop.name }}</span>
@@ -201,18 +201,8 @@
 
     <!-- Workshop details modal -->
     <div class="modal fade" id="workshop_details_modal" tabindex="-1" role="dialog" aria-labelledby="workshop_details_modal_label" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="workshop_details_modal_label">Your saved workshops</h5>
-            </div>
-            <div class="modal-body">
-                workshop details
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+        <div class="modal-dialog" role="document">
+            <div id="workshop_details_modal_content" class="modal-content"></div>
         </div>
     </div>
 
@@ -221,7 +211,7 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="new_workshop_modal_label">New workshop</h5>
+                <h5 class="modal-title" id="new_workshop_modal_label">New workshop</h5>
             </div>
             <form id="new_workshop_form" method="POST">
                 <div class="modal-body">

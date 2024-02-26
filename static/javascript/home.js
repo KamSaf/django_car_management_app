@@ -82,11 +82,8 @@ $(function() {
             if (errors){
               $('#submit_info').html(errors).prop('style', 'display: block;');
             } else {
-            //   var $userData = $('#user_data');
-            //   var $navbar = $('#navbar');
-            //   $userData.load($userData.data('refresh-url'));
-            //   $navbar.load($navbar.data('refresh-url'));
-            //   $('#data_edit_success').prop('style', 'display: block;');
+              // odświeżanie obu list warsztatów
+              // wiadomość z przyciskiej OK (do odrzucenia)
               clearWorkshopForm();
               modal.hide();
             }
@@ -101,14 +98,10 @@ $(document).ready(function(){
   });
 });
 
-
-
-
-
-
-
 $(function() {  
     $(".show-workshop-details").on("click", function() {
-      
+      var url = $(this).data('url');
+      var $modalContent = $('#workshop_details_modal_content');
+      $modalContent.load(url);
     });
 });

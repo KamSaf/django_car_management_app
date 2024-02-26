@@ -25,7 +25,7 @@ def async_add_workshop(request):
     })
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 @login_required
 def async_load_workshop_details(request, workshop_id):
     """
@@ -38,13 +38,13 @@ def async_load_workshop_details(request, workshop_id):
             'status': 'fail',
             'errors': 'This item does not exist.',
         })
-    form = WorkshopForm(request.POST, instance=workshop, logged_user=request.user)
+    form = WorkshopForm(instance=workshop, logged_user=request.user)
     form.set_initial(workshop=workshop)
 
     return SimpleTemplateResponse(
         template='include/workshops/workshop_details.html',
         context={
             'workshop': workshop,
-            'workshop_form': form
+            'edit_workshop_form': form
         },
     )
