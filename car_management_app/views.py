@@ -33,7 +33,7 @@ def home(request):
     if request.user.is_authenticated:
         workshop_form = WorkshopForm(logged_user=request.user)
         return render(request, 'home.html', context={
-            'workshop_form': workshop_form,
+            'new_workshop_form': workshop_form,
             'workshops': workshops,
         })
     else:

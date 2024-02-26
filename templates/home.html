@@ -179,13 +179,13 @@
 
     <!-- Workshops list modal -->
     <div class="modal fade" id="workshops_list_modal" tabindex="-1" role="dialog" aria-labelledby="workshop_list_modal_label" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="workshop_list_modal_label">Your saved workshops</h5>
             </div>
             <div class="modal-body">
-                workshop list
+                {% include 'include/workshops/workshops_list.html' %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -213,7 +213,7 @@
                 <div class="modal-body">
                         <div id="new_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                         {% csrf_token %}
-                        {{ workshop_form|crispy }}
+                        {{ new_workshop_form|crispy }}
                 </div>
                 <div class="modal-footer">
                     <button id="new_workshop_close_modal_button" type="button" class="btn btn-secondary close-new-workshop-modal" data-bs-target="#workshops_list_modal" data-bs-toggle="modal">Go back</button>
