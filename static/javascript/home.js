@@ -67,6 +67,9 @@ function workshopsHandleResponse(response, modal, submit_info_box_id){
   }
 };
 
+// ################## jQuery #########################
+
+
 // Function altering modals buttons based on the way it was opened
 $(function(){
     $(".new-workshop-main").on("click", function() {
@@ -85,9 +88,6 @@ $(function(){
             .html('Go back');
     });
 });
-
-
-// ################## jQuery #########################
 
 // Handles new workshop creation request
 $(function() {  
