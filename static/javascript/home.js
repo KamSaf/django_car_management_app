@@ -12,22 +12,22 @@ function checkIfValidPhoneNumber(phoneNumber){
 }
 
 // Function for clearing current form errors and entered data
-function clearWorkshopForm(){
+function clearWorkshopForm(form_id){
   clearErrors();
   var fieldsToClear = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
   for (var i = 0; i < fieldsToClear.length; i++) {
-    $(fieldsToClear[i]).val('');
+    $('#' + form_id + ' ' + fieldsToClear[i]).val('');
   }
 };
 
 // Function for workshop form data validation
-function validateWorkshopData(submit_info_box_id){
+function validateWorkshopData(submit_info_box_id, form_id){
   clearErrors();
   var fieldsToValidate = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
   var fieldsValid = true;
 
   for (var i = 0; i < fieldsToValidate.length; i++) {
-    var field = $(fieldsToValidate[i]);
+    var field = $('#' + form_id + ' ' +fieldsToValidate[i]);
     if (!field.val()) {
       field.addClass('is-invalid');
       fieldsValid = false;
@@ -39,8 +39,8 @@ function validateWorkshopData(submit_info_box_id){
     return false;
   }
 
-  if (!checkIfValidPhoneNumber($('#id_phone_number').val())){
-    $('#id_phone_number').addClass('is-invalid');
+  if (!checkIfValidPhoneNumber($('#' + form_id + ' #id_phone_number').val())){
+    $('#' + form_id + ' #id_phone_number').addClass('is-invalid');
     $('#' + submit_info_box_id).html("Invalid phone number.").prop('style', 'display: block;');
     return false;
   }
@@ -59,7 +59,6 @@ function workshopsHandleResponse(response, modal, submit_info_box_id){
       }
   }
   if (errors){
-    console.log($('#' + submit_info_box_id));
     $('#' + submit_info_box_id).html(errors).prop('style', 'display: block;');
   } else {
     // odświeżanie obu list warsztatów
@@ -97,7 +96,7 @@ $(function() {
     $(".save-new-workshop").on("click", function(event) {
       event.preventDefault();
 
-      if (!validateWorkshopData('new_workshop_submit_info')){
+      if (!validateWorkshopData('new_workshop_submit_info', 'new_workshop_form')){
         return false;
       }
 
@@ -106,7 +105,7 @@ $(function() {
         url: $(this).data('url'),
         data: $('#new_workshop_form').serializeArray(),
         success: function(response) {
-          workshopsHandleResponse(response, modal, 'new_workshop_submit_info');
+          workshopsHandleResponse(response, modal, 'new_workshop_submit_info', 'new_workshop_form');
           var message = $(
             '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
               Workshop created!\
@@ -142,7 +141,7 @@ $(function() {
   $('#workshop_details_modal').on('click', '.save-edit-workshop-data', function(event) {
     event.preventDefault();
   
-    if (!validateWorkshopData('edit_workshop_submit_info')){
+    if (!validateWorkshopData('edit_workshop_submit_info', 'edit_workshop_form')){
       return false;
     }
   
