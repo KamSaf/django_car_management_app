@@ -66,6 +66,13 @@ def async_edit_workshop(request, workshop_id):
                     'db_error': 'This item does not exist in the database.'
                 },
             })
+        if request.user.id != workshop.user_id:
+            return Response({
+                'status': 'fail',
+                'errors': {
+                    'access_error': 'You are not permitted to perform this action.'
+                },
+            })
         form = WorkshopForm(request.POST, instance=workshop, logged_user=request.user)
         form.clear_errors()
         if form.is_valid():
