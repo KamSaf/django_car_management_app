@@ -1,12 +1,12 @@
+// Clears currently displayed errors
 function clearErrors(){
-    $('#submit_info').prop('style', 'display: none;');
-    $('.is-invalid').removeClass('is-invalid');
-  }
-  
-  $(function() {
-      $(".clear-errors").on("click", function() {
-        clearErrors();
-        $('#data_edit_success').prop('style', 'display: none;');
-  
-      });
-  });
+  $('.alert-danger').prop('style', 'display: none;');
+  $('.is-invalid').removeClass('is-invalid');
+}
+
+$(function() {
+    $(".clear-errors").on("click", function() {
+      clearErrors();
+      $('.alert-success').prop('style', 'display: none;');
+    });
+});

@@ -1,7 +1,7 @@
 $(function() {
   var modal = new bootstrap.Modal(document.getElementById("edit_profile_modal"));
 
-  $(".save-edit-profile-button").on("click", function(event) {
+  $(".save-edit-profile").on("click", function(event) {
 
     event.preventDefault();
     clearErrors();
@@ -51,8 +51,6 @@ $(function() {
   });
 });
 
-$(document).ready(function(){
-  $('#edit_profile_modal').on('hidden.bs.modal', function () {
-    clearErrors();
-  });
+$('#edit_profile_modal').on('hidden.bs.modal', function () {
+  clearErrors();
 });

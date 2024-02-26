@@ -215,7 +215,7 @@
             </div>
             <form id="new_workshop_form" method="POST">
                 <div class="modal-body">
-                        <div id="submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                        <div id="new_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                         {% csrf_token %}
                         {{ workshop_form|crispy }}
                 </div>

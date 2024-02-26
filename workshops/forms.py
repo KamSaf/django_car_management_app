@@ -49,6 +49,7 @@ class WorkshopForm(forms.ModelForm):
         phone_number = self.cleaned_data.get('phone_number')
         profession = self.cleaned_data.get('profession')
 
+
         if len(name) > 100:  # checks if workshop name field is proper length
             self.data_errors['id_name'] = self.error_messages['name_too_long']
             self._errors['name'] = self.error_class([f'Name {self.error_messages["field_too_long"]}'])

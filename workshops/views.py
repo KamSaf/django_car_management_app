@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .forms import WorkshopForm
 from .models import Workshop
-from django.template.response import SimpleTemplateResponse
-
+from django.shortcuts import render
 
 
 @api_view(['POST'])
@@ -41,10 +40,38 @@ def async_load_workshop_details(request, workshop_id):
     form = WorkshopForm(instance=workshop, logged_user=request.user)
     form.set_initial(workshop=workshop)
 
-    return SimpleTemplateResponse(
-        template='include/workshops/workshop_details.html',
+    return render(
+        request=request,
+        template_name='include/workshops/workshop_details.html',
         context={
             'workshop': workshop,
             'edit_workshop_form': form
         },
     )
+
+
+@api_view(['POST'])
+@login_required
+def async_edit_workshop(request, workshop_id):
+    """
+        Endpoint for editing workshop (for AJAX)
+    """
+    if request.method == 'POST':
+        try:
+            workshop = Workshop.objects.get(id=workshop_id)
+        except Workshop.DoesNotExist:
+            return Response({
+                'status': 'fail',
+                'errors': {
+                    'db_error': 'This item does not exist in the database.'
+                },
+            })
+        form = WorkshopForm(request.POST, instance=workshop, logged_user=request.user)
+        form.clear_errors()
+        if form.is_valid():
+            form.save()
+            return Response({'status': 'success'})
+    return Response({
+        'status': 'fail',
+        'errors': form.data_errors,
+    })
