@@ -162,3 +162,26 @@ $(function() {
     });
   });
 });
+
+// Assigns redirect action to dismissing workshop details modal
+$(function(){
+  $('#workshops_list').on('click', '.set-modal-redirect', function(){
+    $('#workshop_details_modal').data('modal-redirect', 'true');
+    $('.redirect-to-workshop-list').html('Go back');
+  });
+});
+
+// Handling wheter to close modal or redirect to previous one
+$(function() {
+  var modal = new bootstrap.Modal(document.getElementById("workshop_details_modal"));
+
+  $('#workshop_details_modal').on('click', '.redirect-to-workshop-list', function() {
+    modal.hide();
+    if ($('#workshop_details_modal').data('modal-redirect') === 'true'){
+      var newModal = new bootstrap.Modal(document.getElementById("workshops_list_modal"));
+      newModal.show();
+      $('#workshop_details_modal').removeData('modal-redirect');
+      $('.redirect-to-workshop-list').html('Close');
+    }
+  });
+});

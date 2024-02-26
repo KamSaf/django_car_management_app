@@ -1,8 +1,8 @@
 <div class="overflow-auto" style="max-height: 400px;">
-    <ul class="list-group w-auto" style="list-style: none;">
+    <ul id="workshops_list" class="list-group w-auto" style="list-style: none;">
         {% for workshop in workshops %}
         <li style="max-height: 50px;"></li>
-            <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
+            <button class="btn btn-light show-workshop-details set-modal-redirect" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
                     <div class="row">
                         <span class="col text-start">{{ workshop.name }}</span>
                         <span class="col text-center">
