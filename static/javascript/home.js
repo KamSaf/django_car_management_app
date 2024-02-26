@@ -99,13 +99,13 @@ $(function() {
       event.preventDefault();
 
       if (!validateWorkshopData('new_workshop_submit_info')){
-        return;
+        return false;
       }
 
       $.ajax({
         type: "POST",
         url: $(this).data('url'),
-        data: $('form').serializeArray(),
+        data: $('#new_workshop_form').serializeArray(),
         success: function(response) {
           workshopsHandleResponse(response, modal, 'new_workshop_submit_info');
         }
@@ -137,13 +137,13 @@ $(function() {
     event.preventDefault();
   
     if (!validateWorkshopData('edit_workshop_submit_info')){
-      return;
+      return false;
     }
   
     $.ajax({
       type: "POST",
       url: $(this).data('url'),
-      data: $('form').serializeArray(),
+      data: $('#edit_workshop_form').serializeArray(),
       success: function(response) {
         workshopsHandleResponse(response, modal, 'edit_workshop_submit_info');
       }

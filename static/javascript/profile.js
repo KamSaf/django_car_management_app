@@ -19,7 +19,7 @@ $(function() {
     
     if (!fieldsValid) {
       $('#submit_info').html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
-      return;
+      return false;
     }
       $.ajax({
         type: "POST",
