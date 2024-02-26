@@ -69,7 +69,11 @@
                         <div class="col-1"></div>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-primary add-favourite-workshop float-start"><i class="bi bi-star"></i> Add to favourite</button>
+                    {% if workshop.favourite %}
+                        <button type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start"><i class="bi bi-star-fill"></i> Delete from favourites</button>
+                    {% else %}
+                        <button type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start"><i class="bi bi-star"></i> Add to favourites</button>
+                    {% endif %}
                     <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
                 </div>
                 </div>
