@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.template.response import SimpleTemplateResponse
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
@@ -71,4 +70,8 @@ def refresh_user_data(request):
     """
         Endpoint returnig user data template (for AJAX user data refresh)
     """
-    return SimpleTemplateResponse(template='include/users/user_data.html', context={'user': request.user})
+    return render(
+        request=request,
+        template_name='include/users/user_data.html',
+        context={'user': request.user}
+    )

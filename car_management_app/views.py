@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.template.response import SimpleTemplateResponse
 from workshops.forms import WorkshopForm
 from workshops.models import Workshop
 
@@ -22,7 +21,11 @@ def refresh_navbar(request):
     """
         Endpoint returnig navbar template (for AJAX navbar refresh)
     """
-    return SimpleTemplateResponse('include/navbar.html', context={'user': request.user})
+    return render(
+        request=request,
+        template_name='include/navbar.html',
+        context={'user': request.user}
+    )
 
 
 def home(request):
