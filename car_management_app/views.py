@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.response import SimpleTemplateResponse
 from workshops.forms import WorkshopForm
 from workshops.models import Workshop
+from django.utils import timezone
 
 
 def welcome(request):
