@@ -188,8 +188,42 @@
                 {% include 'include/workshops/workshops_list.html' %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success new-workshop-embedded" data-bs-target="#new_workshop_modal" data-bs-toggle="modal" id="edit_car_details_button">Add new workshop +</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-outline-dark float-start" data-bs-toggle="collapse" data-bs-target="#filter_options" aria-expanded="false" aria-controls="filter_options">Filter options</button>
+                        </div>
+                        <div class="col-8">
+                            <span class="float-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-success new-workshop-embedded" data-bs-target="#new_workshop_modal" data-bs-toggle="modal" id="edit_car_details_button">Add new workshop +</button>    
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="filter_options">
+                <div class="card card-body container">
+                    <div class="row">
+                        <div class="col-3 text-start">
+                            <select class="form-select" id="workshop_filter_categories">
+                                <option value="name">Name</option>
+                                <option value="city">City</option>
+                                <option value="address">Address</option>
+                                <option value="profession">Profession</option>
+                              </select>
+                        </div>
+                        <div class="col-3 text-start">
+                            <input id="" style="margin-left: 5px;" class="form-control" type="text" placeholder="Enter phrase to filter by">
+                        </div>
+                        <div class="col-2 text-start">
+                            <button class="btn btn-outline-dark">Apply filters</button>
+                        </div>
+                        <div class="col-4 text-end">
+                            <button class="btn btn-outline-dark">Reset filters</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         </div>
