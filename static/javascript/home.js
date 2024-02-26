@@ -63,7 +63,6 @@ function workshopsHandleResponse(response, modal, submit_info_box_id){
     $('#' + submit_info_box_id).html(errors).prop('style', 'display: block;');
   } else {
     // odświeżanie obu list warsztatów
-    // wiadomość z przyciskiej OK (do odrzucenia)
     clearWorkshopForm();
     modal.hide();
   }
@@ -108,6 +107,13 @@ $(function() {
         data: $('#new_workshop_form').serializeArray(),
         success: function(response) {
           workshopsHandleResponse(response, modal, 'new_workshop_submit_info');
+          var message = $(
+            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+              Workshop created!\
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+            </div>'
+          );
+          $('#messages_box').append(message);
         }
       });
     });
@@ -146,6 +152,13 @@ $(function() {
       data: $('#edit_workshop_form').serializeArray(),
       success: function(response) {
         workshopsHandleResponse(response, modal, 'edit_workshop_submit_info');
+        var message = $(
+          '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+            Workshop data edited!\
+            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+          </div>'
+        );
+        $('#messages_box').append(message);
       }
     });
   });

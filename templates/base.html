@@ -20,7 +20,7 @@
     <header id="navbar" data-refresh-url="{% url 'navbar_refresh_url' %}">
         {% include 'include/navbar.html' %}
     </header>
-    <div style="margin-top: 15px;">
+    <div id="messages_box" style="margin-top: 15px;">
         {% if messages %}
             {% for message in messages %}
                 {% if message.tags == 'error' %}
