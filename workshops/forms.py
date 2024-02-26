@@ -1,6 +1,7 @@
 from django import forms
 from .models import Workshop
 from django.utils.safestring import mark_safe
+from django.utils import timezone
 
 
 class WorkshopForm(forms.ModelForm):
@@ -81,5 +82,6 @@ class WorkshopForm(forms.ModelForm):
         self.instance.phone_number = phone_number  # set phone number for new workshop
         self.instance.profession = profession  # set profession for new workshop
         self.instance.user = self.logged_user  # set author user for new workshop
+        self.instance.last_edit_date = timezone.now()
 
         return self.cleaned_data
