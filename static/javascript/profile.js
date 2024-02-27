@@ -1,5 +1,5 @@
 $(function() {
-  var modal = new bootstrap.Modal(document.getElementById("edit_profile_modal"));
+  var modal = new bootstrap.Modal($("#edit_profile_modal"));
 
   $(".save-edit-profile").on("click", function(event) {
 

@@ -91,7 +91,7 @@ $(function(){
 
 // Handles new workshop creation request
 $(function() {  
-  var modal = new bootstrap.Modal(document.getElementById("new_workshop_modal"));
+  var modal = new bootstrap.Modal($("#new_workshop_modal"));
 
     $(".save-new-workshop").on("click", function(event) {
       event.preventDefault();
@@ -136,7 +136,7 @@ $(function() {
 
 // Handles workshop edit request
 $(function() {
-  var modal = new bootstrap.Modal(document.getElementById("workshop_details_modal"));
+  var modal = new bootstrap.Modal($("#workshop_details_modal"));
 
   $('#workshop_details_modal').on('click', '.save-edit-workshop-data', function(event) {
     event.preventDefault();
@@ -173,12 +173,12 @@ $(function(){
 
 // Handling wheter to close modal or redirect to previous one
 $(function() {
-  var modal = new bootstrap.Modal(document.getElementById("workshop_details_modal"));
+  var modal = new bootstrap.Modal($("#workshop_details_modal"));
 
   $('#workshop_details_modal').on('click', '.redirect-to-workshop-list', function() {
     modal.hide();
     if ($('#workshop_details_modal').data('modal-redirect') == true){
-      var newModal = new bootstrap.Modal(document.getElementById("workshops_list_modal"));
+      var newModal = new bootstrap.Modal($("#workshops_list_modal"));
       newModal.show();
       $('#workshop_details_modal').removeData('modal-redirect');
       $('.redirect-to-workshop-list').html('Close');
