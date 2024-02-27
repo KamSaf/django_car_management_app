@@ -112,7 +112,16 @@ $(function() {
               <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
             </div>'
           );
-          $('#messages_box').append(message);
+          modal.hide();
+          if ($('#workshop_details_modal').data('modal-redirect') == true){
+            var newModal = new bootstrap.Modal($("#workshops_list_modal"));
+            newModal.show();
+            $('#workshop_details_modal').removeData('modal-redirect');
+            clearWorkshopForm('new_workshop_form');
+            $('#workshops_list_messages_box').append(message);
+          } else {
+            $('#messages_box').append(message);
+          }
         }
       });
     });
@@ -129,8 +138,7 @@ $(function(){
 $(function() {  
     $('.workshop-list').on('click', '.show-workshop-details', function(){
       var url = $(this).data('url');
-      var $modalContent = $('#workshop_details_modal_content');
-      $modalContent.load(url);
+      $('#workshop_details_modal_content').load(url);
     });
 });
 
@@ -157,6 +165,7 @@ $(function() {
             <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
           </div>'
         );
+        $('#workshop_data').load($('#workshop_data').data('url'));
         $('#messages_box').append(message);
       }
     });
@@ -165,7 +174,8 @@ $(function() {
 
 // Assigns redirect action to dismissing workshop details modal
 $(function(){
-  $('#workshops_list').on('click', '.set-modal-redirect', function(){
+  $('#workshops_list_modal').on('click', '.set-modal-redirect', function(){
+    console.log('dupa');
     $('#workshop_details_modal').data('modal-redirect', true);
     $('.redirect-to-workshop-list').html('Go back');
   });
@@ -181,7 +191,6 @@ $(function() {
       var newModal = new bootstrap.Modal($("#workshops_list_modal"));
       newModal.show();
       $('#workshop_details_modal').removeData('modal-redirect');
-      // $('.redirect-to-workshop-list').html('Close');
     }
   });
 });

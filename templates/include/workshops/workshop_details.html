@@ -23,51 +23,7 @@
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <div style="margin-bottom: 15px;" class="row">
-                                <span class="col text-center">
-                                    <span class="float-start"><i class="bi bi-person-vcard"></i> Name:</span>
-                                    <span class="float-end">
-                                        {{ workshop.name }}
-                                    </span>
-                                </span>
-                            </div>
-                            <div style="margin-bottom: 15px;" class="row">
-                                <span class="col text-start">
-                                    <span class="float-start"><i class="bi bi-map"></i> City:</span>
-                                    <span class="float-end">
-                                        {{ workshop.city }}
-                                    </span>
-                                </span>
-                            </div>
-                            
-                            <div style="margin-bottom: 15px;" class="row">
-                                <span class="col text-start">
-                                    <span class="float-start"><i class="bi bi-geo-alt"></i> Address:</span>
-                                    <span class="float-end">
-                                        {{ workshop.address }}
-                                    </span>
-                                </span>
-                            </div>
-                            <div style="margin-bottom: 15px;" class="row">
-                                <span class="col text-start">
-                                    <span class="float-start"><i class="bi bi-telephone"></i> Phone number:</span>
-                                    <span class="float-end">
-                                        tel.
-                                        {{ workshop.phone_number|slice:"0:3" }}
-                                        {{ workshop.phone_number|slice:"3:6" }}
-                                        {{ workshop.phone_number|slice:"6:9" }}
-                                    </span>
-                                </span>
-                            </div>
-                            <div style="margin-bottom: 15px;" class="row">
-                                <span class="col text-start">
-                                    <span class="float-start"><i class="bi bi-wrench-adjustable-circle"></i> Workshop profession:</span>
-                                    <span class="float-end">
-                                        {{ workshop.profession }}
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
+                            {% include 'include/workshops/workshop_data.html' %}
                         <div class="col-1"></div>
                     </div>
                 <div class="modal-footer">
@@ -83,13 +39,14 @@
             <div class="tab-pane fade" id="form-tab" role="tabpanel" aria-labelledby="workshop-edit-tab">
                 <div style="margin-top: 25px;" class="container">
                     <form id="edit_workshop_form" method="POST">
+                        <div id="workshop_edit_messages_box" style="margin-top: 15px;"></div>
                         <div class="modal-body">
                             <div id="edit_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                             {% csrf_token %}
                             {{ edit_workshop_form|crispy }}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' workshop_id=workshop.id %}">Save</button>
+                            <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' workshop_id=workshop.id %}" data-refresh-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">Save</button>
                             <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
                         </div>
                     </form>

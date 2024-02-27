@@ -172,5 +172,27 @@ def async_delete_workshop(request, workshop_id):
         })
 
     workshop.delete()
-
     return Response({'status': 'success'})
+
+
+@api_view(['GET'])
+@login_required
+def async_refresh_workshop_data(request, workshop_id):
+    """
+        Endpoint for refreshing workshop (for AJAX)
+    """
+    try:
+        workshop = Workshop.objects.get(id=workshop_id)
+    except Exception(Workshop.DoesNotExist):
+        return Response({
+            'status': 'fail',
+            'errors': 'This item does not exist.',
+        })
+
+    return render(
+        request=request,
+        template_name='include/workshops/workshop_data.html',
+        context={
+            'workshop': workshop,
+        },
+    )

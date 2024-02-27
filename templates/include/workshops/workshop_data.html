@@ -1,0 +1,47 @@
+<div id="workshop_data" data-url="{% url 'refresh_workshop_data_url' workshop_id=workshop.id %}">
+    <div style="margin-bottom: 15px;" class="row">
+        <span class="col text-center">
+            <span class="float-start"><i class="bi bi-person-vcard"></i> Name:</span>
+            <span class="float-end">
+                {{ workshop.name }}
+            </span>
+        </span>
+    </div>
+    <div style="margin-bottom: 15px;" class="row">
+        <span class="col text-start">
+            <span class="float-start"><i class="bi bi-map"></i> City:</span>
+            <span class="float-end">
+                {{ workshop.city }}
+            </span>
+        </span>
+    </div>
+    
+    <div style="margin-bottom: 15px;" class="row">
+        <span class="col text-start">
+            <span class="float-start"><i class="bi bi-geo-alt"></i> Address:</span>
+            <span class="float-end">
+                {{ workshop.address }}
+            </span>
+        </span>
+    </div>
+    <div style="margin-bottom: 15px;" class="row">
+        <span class="col text-start">
+            <span class="float-start"><i class="bi bi-telephone"></i> Phone number:</span>
+            <span class="float-end">
+                tel.
+                {{ workshop.phone_number|slice:"0:3" }}
+                {{ workshop.phone_number|slice:"3:6" }}
+                {{ workshop.phone_number|slice:"6:9" }}
+            </span>
+        </span>
+    </div>
+    <div style="margin-bottom: 15px;" class="row">
+        <span class="col text-start">
+            <span class="float-start"><i class="bi bi-wrench-adjustable-circle"></i> Workshop profession:</span>
+            <span class="float-end">
+                {{ workshop.profession }}
+            </span>
+        </span>
+    </div>
+</div>
+</div>
