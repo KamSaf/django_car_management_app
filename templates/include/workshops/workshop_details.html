@@ -4,7 +4,9 @@
 <div id="workshop_details_modal_content" class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title" id="workshop_details_modal_label">{{ workshop.name }}</h5>
-        <button type="button" class="btn btn-sm btn-danger delete-workshop redirect-to-workshop-list float-end" data-url="{% url 'delete_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-trash"></i></button>
+        <button type="button" class="btn btn-sm btn-danger delete-workshop  float-end" data-url="{% url 'delete_workshop_url' workshop_id=workshop.id %}" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
+            <i class="bi bi-trash"></i>
+        </button>
     </div>
     <div class="modal-body">
         <ul class="nav nav-tabs" role="tablist">

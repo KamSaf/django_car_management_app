@@ -215,31 +215,37 @@ $(function(){
 // Deleting workshop
 $(function(){
   $('#workshop_details_modal_content').on('click', '.delete-workshop', function(){
-    console.log('dupa')
-    var $this = $(this);
+    if ($(this).data('confirmed') != true){
+      $(this).popover('show')
+        .html('Yes')
+        .data('confirmed', true)
+    } else{
+      var $this = $(this);
 
-    $.ajax({
-      type: "GET",
-      url: $this.data('url'),
-      success: function(response) {
-        if (response['status'] == 'success'){
-          var message = $(
-            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-              Workshop deleted.\
-              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-            </div>'
-          );
-          $('#messages_box').append(message);
-          $('#workshops_list').load($('#workshops_list').data('url'));
-          $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
-
-          if ($('#workshop_details_modal').data('modal-redirect') == true){
-            var newModal = new bootstrap.Modal(document.getElementById("workshops_list_modal"));
-            $('#workshop_details_modal').removeData('modal-redirect');
-            newModal.show();
+      $.ajax({
+        type: "GET",
+        url: $this.data('url'),
+        success: function(response) {
+          if (response['status'] == 'success'){
+            var message = $(
+              '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+                Workshop deleted.\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            $('#messages_box').append(message);
+            $('#workshops_list').load($('#workshops_list').data('url'));
+            $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
+  
+            if ($('#workshop_details_modal').data('modal-redirect') == true){
+              var newModal = new bootstrap.Modal(document.getElementById("workshops_list_modal"));
+              $('#workshop_details_modal').removeData('modal-redirect');
+              $('.popover-body').add("Are you sure? <button class='btn btn-sm btn-danger'>Yes</button>");
+              newModal.show();
+            }
           }
         }
-      }
-    });
+      });
+    }
   });
 });
