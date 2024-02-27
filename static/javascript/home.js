@@ -185,3 +185,27 @@ $(function() {
     }
   });
 });
+
+$(function(){
+  $('#workshop_details_modal').on('click', '.toggle-favourite-workshop', function(){
+    var $this = $(this);
+
+    $.ajax({
+      type: "POST",
+      url: $this.data('url'),
+      data: $('#edit_workshop_form').serializeArray(),
+      success: function(response) {
+        if (response['status'] == 'success'){
+          if (response['state'] == 'untoggled'){
+            $('#favourite_workshop_toggle_button').html('<i class="bi bi-star"></i> Add to favourites');
+            $this.data('favourite', false);
+          } else if (response['state'] == 'toggled') {
+            $('#favourite_workshop_toggle_button').html('<i class="bi bi-star-fill"></i> Delete from favourites');
+            $this.data('favourite', true);
+          }
+        }
+        // odświeżanie list z warsztatami
+      }
+    });
+  });
+});

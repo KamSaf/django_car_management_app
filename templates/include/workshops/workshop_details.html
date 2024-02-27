@@ -70,9 +70,9 @@
                     </div>
                 <div class="modal-footer">
                     {% if workshop.favourite %}
-                        <button type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start"><i class="bi bi-star-fill"></i> Delete from favourites</button>
+                        <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star-fill"></i> Delete from favourites</button>
                     {% else %}
-                        <button type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start"><i class="bi bi-star"></i> Add to favourites</button>
+                        <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star"></i> Add to favourites</button>
                     {% endif %}
                     <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
                 </div>

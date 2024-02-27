@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from .forms import WorkshopForm
 from .models import Workshop
 from django.shortcuts import render
+from django.utils import timezone
 
 
 @api_view(['POST'])
@@ -82,3 +83,36 @@ def async_edit_workshop(request, workshop_id):
         'status': 'fail',
         'errors': form.data_errors,
     })
+
+
+@api_view(['POST'])
+@login_required
+def async_toggle_favourite_workshop(request, workshop_id):
+    """
+        Endpoint for toggling favourite workshops (for AJAX)
+    """
+    if request.method == 'POST':
+        try:
+            workshop = Workshop.objects.get(id=workshop_id)
+        except Workshop.DoesNotExist:
+            return Response({
+                'status': 'fail',
+                'errors': {
+                    'db_error': 'This item does not exist in the database.'
+                },
+            })
+        if request.user.id != workshop.user_id:
+            return Response({
+                'status': 'fail',
+                'errors': {
+                    'access_error': 'You are not permitted to perform this action.'
+                },
+            })
+        if workshop:
+            workshop.last_edit_date = timezone.now()
+            workshop.favourite = not workshop.favourite
+            workshop.save()
+        if workshop and workshop.favourite:
+            return Response({'status': 'success', 'state': 'toggled'})
+        else:
+            return Response({'status': 'success', 'state': 'untoggled'})
