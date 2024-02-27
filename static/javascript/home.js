@@ -47,6 +47,12 @@ function validateWorkshopData(submit_info_box_id, form_id){
   return true;
 };
 
+// Function for refreshing workshops lists
+function refreshWorkshopsLists(){
+  $('#workshops_list').load($('#workshops_list').data('url'));
+  $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
+}
+
 // Function for handling workshop create/edit errors and refreshing workshops lists
 function workshopsHandleResponse(response, modal, submit_info_box_id){
   let errors = "";
@@ -61,11 +67,12 @@ function workshopsHandleResponse(response, modal, submit_info_box_id){
   if (errors){
     $('#' + submit_info_box_id).html(errors).prop('style', 'display: block;');
   } else {
-    // odświeżanie obu list warsztatów
+    refreshWorkshopsLists();
     clearWorkshopForm();
     modal.hide();
   }
 };
+
 
 // ################## jQuery #########################
 
@@ -214,8 +221,7 @@ $(function(){
             $this.data('favourite', true);
           }
         }
-        $('#workshops_list').load($('#workshops_list').data('url'));
-        $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
+        refreshWorkshopsLists();
       }
     });
   });
@@ -228,6 +234,7 @@ $(function(){
       $(this).popover('show')
         .html('Yes')
         .data('confirmed', true)
+        .attr('data-bs-dismiss', 'modal')
     } else{
       var $this = $(this);
 
@@ -242,15 +249,15 @@ $(function(){
                 <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
               </div>'
             );
-            $('#messages_box').append(message);
-            $('#workshops_list').load($('#workshops_list').data('url'));
-            $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
-  
+            refreshWorkshopsLists();
+            $('.popover').remove();
             if ($('#workshop_details_modal').data('modal-redirect') == true){
-              var newModal = new bootstrap.Modal(document.getElementById("workshops_list_modal"));
+              var newModal = new bootstrap.Modal($("#workshops_list_modal"));
+              $('#workshops_list_messages_box').append(message);
               $('#workshop_details_modal').removeData('modal-redirect');
-              $('.popover-body').add("Are you sure? <button class='btn btn-sm btn-danger'>Yes</button>");
               newModal.show();
+            } else {
+              $('#messages_box').append(message);
             }
           }
         }
