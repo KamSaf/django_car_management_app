@@ -1,4 +1,4 @@
-<div class="overflow-auto" style="max-height: 175px;" data-url="">
+<div id="favourite_workshops_list" class="overflow-auto workshop-list" style="max-height: 175px;" data-url="{% url 'load_favourite_workshops_list_url' %}">
     <ul class="list-group w-auto" style="list-style: none;">
         {% for workshop in favourite_workshops %}
             <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">

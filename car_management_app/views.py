@@ -32,7 +32,7 @@ def home(request):
     """
         View for rendering home page
     """
-    workshops = Workshop.objects.filter(user=request.user).all()
+    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
     favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
     if request.user.is_authenticated:
         workshop_form = WorkshopForm(logged_user=request.user)

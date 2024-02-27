@@ -128,7 +128,7 @@ def async_load_favourite_workshops_list(request):
 
     return render(
         request=request,
-        template_name='favourite_workshops_list.html',
+        template_name='include/workshops/favourite_workshops_list.html',
         context={'favourite_workshops': favourite_workshops}
     )
 
@@ -139,10 +139,10 @@ def async_load_workshops_list(request):
     """
         Endpoint for loading all workshops list (for AJAX)
     """
-    workshops = Workshop.objects.filter(user=request.user).all()
+    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
 
     return render(
         request=request,
-        template_name='modal_workshops_list.html',
+        template_name='include/workshops/modal_workshops_list.html',
         context={'workshops': workshops}
     )

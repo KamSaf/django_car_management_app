@@ -127,7 +127,7 @@ $(function(){
 
 // Loads content of the workshop details modal
 $(function() {  
-    $(".show-workshop-details").on("click", function() {
+    $('.workshop-list').on('click', '.show-workshop-details', function(){
       var url = $(this).data('url');
       var $modalContent = $('#workshop_details_modal_content');
       $modalContent.load(url);
@@ -205,6 +205,8 @@ $(function(){
           }
         }
         // odświeżanie list z warsztatami
+        $('#workshops_list').load($('#workshops_list').data('url'));
+        $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
       }
     });
   });
