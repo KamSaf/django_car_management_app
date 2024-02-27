@@ -146,3 +146,31 @@ def async_load_workshops_list(request):
         template_name='include/workshops/modal_workshops_list.html',
         context={'workshops': workshops}
     )
+
+
+@api_view(['GET'])
+@login_required
+def async_delete_workshop(request, workshop_id):
+    """
+        Endpoint for deleting workshop (for AJAX)
+    """
+    try:
+        workshop = Workshop.objects.get(id=workshop_id)
+    except Workshop.DoesNotExist:
+        return Response({
+            'status': 'fail',
+            'errors': {
+                'db_error': 'This item does not exist in the database.'
+            },
+        })
+    if request.user.id != workshop.user_id:
+        return Response({
+            'status': 'fail',
+            'errors': {
+                'access_error': 'You are not permitted to perform this action.'
+            },
+        })
+
+    workshop.delete()
+
+    return Response({'status': 'success'})

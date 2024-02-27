@@ -8,4 +8,5 @@ urlpatterns = [
     path('toggle_favourite/<int:workshop_id>/', views.async_toggle_favourite_workshop, name='toggle_favourite_workshop_url'),
     path('load_favourite_workshops/', views.async_load_favourite_workshops_list, name='load_favourite_workshops_list_url'),
     path('load_workshops/', views.async_load_workshops_list, name='load_workshops_list_url'),
+    path('delete_workshop/<int:workshop_id>/', views.async_delete_workshop, name='delete_workshop_url'),
 ]
