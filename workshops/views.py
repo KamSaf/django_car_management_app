@@ -89,7 +89,7 @@ def async_edit_workshop(request, workshop_id):
 @login_required
 def async_toggle_favourite_workshop(request, workshop_id):
     """
-        Endpoint for toggling favourite workshops (for AJAX)
+        Endpoint for toggling favourite workshop option (for AJAX)
     """
     if request.method == 'POST':
         try:
@@ -116,3 +116,33 @@ def async_toggle_favourite_workshop(request, workshop_id):
             return Response({'status': 'success', 'state': 'toggled'})
         else:
             return Response({'status': 'success', 'state': 'untoggled'})
+
+
+@api_view(['GET'])
+@login_required
+def async_load_favourite_workshops_list(request):
+    """
+        Endpoint for loading favourite workshops list (for AJAX)
+    """
+    favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
+
+    return render(
+        request=request,
+        template_name='favourite_workshops_list.html',
+        context={'favourite_workshops': favourite_workshops}
+    )
+
+
+@api_view(['GET'])
+@login_required
+def async_load_workshops_list(request):
+    """
+        Endpoint for loading all workshops list (for AJAX)
+    """
+    workshops = Workshop.objects.filter(user=request.user).all()
+
+    return render(
+        request=request,
+        template_name='modal_workshops_list.html',
+        context={'workshops': workshops}
+    )
