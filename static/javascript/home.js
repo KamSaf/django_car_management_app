@@ -265,3 +265,18 @@ $(function(){
     }
   });
 });
+
+// Workshops filtering reset
+$(function(){
+  $('.reset-workshop-filter').on('click', function(){
+    $('#workshops_list').load($('#workshops_list').data('url'));
+  });
+});
+
+// Workshops filtering
+$(function(){
+  $('.apply-workshop-filter').on('click', function(event){
+    event.preventDefault();
+    $('#workshops_list').load($('#workshops_list').data('url') + $('#workshop_filter_category').val() + '/' + $('#workshop_filter_phrase').val());
+  });
+});

@@ -186,25 +186,29 @@
             </div>
             <div class="collapse" id="filter_options">
                 <div class="card card-body container">
-                    <div class="row">
-                        <div class="col-3 text-start">
-                            <select class="form-select" id="workshop_filter_categories">
-                                <option value="name">Name</option>
-                                <option value="city">City</option>
-                                <option value="address">Address</option>
-                                <option value="profession">Profession</option>
-                              </select>
+                    <form>
+                        <div class="row">
+                            <div class="col-3 text-start">
+                                <select id="workshop_filter_category" class="form-select filter-input">
+                                    <option value="name">Name</option>
+                                    <option value="city">City</option>
+                                    <option value="address">Address</option>
+                                    <option value="phone_num">Phone number</option>
+                                    <option value="profession">Profession</option>
+                                </select>
+                            </div>
+                            <div class="col-3 text-start">
+                                <input id="workshop_filter_phrase" style="margin-left: 5px;" class="form-control filter-input" type="text" placeholder="Enter phrase to filter by">
+                            </div>
+                            <div class="col-2 text-start">
+                                <button type="submit" class="btn btn-outline-dark apply-workshop-filter">Apply filters</button>
+                            </div>
+                            <div class="col-4 text-end">
+                                <button type="button" class="btn btn-outline-dark reset-workshop-filter">Reset filters</button>
+                            </div>
                         </div>
-                        <div class="col-3 text-start">
-                            <input id="" style="margin-left: 5px;" class="form-control" type="text" placeholder="Enter phrase to filter by">
-                        </div>
-                        <div class="col-2 text-start">
-                            <button class="btn btn-outline-dark">Apply filters</button>
-                        </div>
-                        <div class="col-4 text-end">
-                            <button class="btn btn-outline-dark">Reset filters</button>
-                        </div>
-                    </div>
+    
+                    </form>
                 </div>
             </div>
         </div>

@@ -135,11 +135,23 @@ def async_load_favourite_workshops_list(request):
 
 @api_view(['GET'])
 @login_required
-def async_load_workshops_list(request):
+def async_load_workshops_list(request, category=None, filter=None):
     """
         Endpoint for loading all workshops list (for AJAX)
     """
-    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
+    match(category):
+        case 'name':
+            workshops = Workshop.objects.filter(user=request.user, name__icontains=filter).order_by('create_date').all()
+        case 'city':
+            workshops = Workshop.objects.filter(user=request.user, city__icontains=filter).order_by('create_date').all()
+        case 'address':
+            workshops = Workshop.objects.filter(user=request.user, address__icontains=filter).order_by('create_date').all()
+        case 'profession':
+            workshops = Workshop.objects.filter(user=request.user, profession__icontains=filter).order_by('create_date').all()
+        case 'phone_num':
+            workshops = Workshop.objects.filter(user=request.user, phone_number__icontains=filter).order_by('create_date').all()
+        case _:
+            workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
 
     return render(
         request=request,
