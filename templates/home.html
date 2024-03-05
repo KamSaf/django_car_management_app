@@ -191,7 +191,25 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success add-new-car" data-bs-dismiss="modal" id="add_new_car_button">Add new car +</button>
+                <button type="button" class="btn btn-success add-new-car" data-bs-toggle="modal" data-bs-target="#new_car_modal">Add new car +</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- New car modal -->
+    <div class="modal fade" id="new_car_modal" tabindex="-1" role="dialog" aria-labelledby="new_car_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="new_car_modal_label">New car</h5>
+            </div>
+            <div class="modal-body">
+                new car
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal">Go back</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
         </div>
