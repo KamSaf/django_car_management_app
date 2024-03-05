@@ -14,7 +14,7 @@
         <div style="margin-top: 25px;" class="shadow bg-body rounded card">
             <div class="card-body">
                 <h5 class="card-title">
-                    <b>CAR NAME</b>
+                    <b>{{ viewed_car.make }} {{ viewed_car.model }}</b>
                     <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal"><i class="bi bi-chevron-down"></i></button>
                     <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#car_details_modal">Car details</button>
                 </h5>
@@ -136,7 +136,11 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-grid gap-2">
-                                        <button class="btn btn-sm btn-outline-dark">{{ car.make }} {{ car.model }}</button>
+                                        {% if viewed_car.id == car.id %}
+                                            <button class="btn btn-sm btn-dark">{{ car.make }} {{ car.model }}</button>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-outline-dark">{{ car.make }} {{ car.model }}</button>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-3">

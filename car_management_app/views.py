@@ -37,7 +37,11 @@ def home(request):
     if request.user.is_authenticated:
         workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
         favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
-        cars = Car.objects.filter(user=request.user).all()
+        cars = Car.objects.filter(user=request.user).order_by('create_date').all()
+        try:
+            viewed_car = Car.objects.filter(favourite=True).first()
+        except Car.DoesNotExist:
+            viewed_car = cars[0]
         workshop_form = WorkshopForm(logged_user=request.user)
         car_form = CarForm(logged_user=request.user)
         return render(
@@ -47,6 +51,7 @@ def home(request):
                 'new_workshop_form': workshop_form,
                 'new_car_form': car_form,
                 'cars': cars,
+                'viewed_car': viewed_car,
                 'workshops': workshops,
                 'favourite_workshops': favourite_workshops
             }
