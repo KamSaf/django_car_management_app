@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from cars.models import Car
 
 
 def register(request):
@@ -31,9 +32,10 @@ def user_profile(request):
         View rendering User account information page
     """
     form = UserUpdateForm()
+    cars_number = len(Car.objects.filter(user=request.user).all())
     if request.user:
         form = form.set_initial(user=request.user)
-    return render(request=request, template_name='users/profile.html', context={'form': form, 'cars_number': 3})
+    return render(request=request, template_name='users/profile.html', context={'form': form, 'cars_number': cars_number})
 
 
 @login_required

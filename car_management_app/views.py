@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from workshops.forms import WorkshopForm
 from workshops.models import Workshop
-# from cars.models import Car
+from cars.models import Car
 from cars.forms import CarForm
 
 
@@ -34,9 +34,10 @@ def home(request):
     """
         View for rendering home page
     """
-    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
-    favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
     if request.user.is_authenticated:
+        workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
+        favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
+        cars = Car.objects.filter(user=request.user).all()
         workshop_form = WorkshopForm(logged_user=request.user)
         car_form = CarForm(logged_user=request.user)
         return render(
@@ -45,6 +46,7 @@ def home(request):
             context={
                 'new_workshop_form': workshop_form,
                 'new_car_form': car_form,
+                'cars': cars,
                 'workshops': workshops,
                 'favourite_workshops': favourite_workshops
             }
