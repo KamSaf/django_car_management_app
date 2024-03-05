@@ -204,17 +204,17 @@
             <div class="modal-header">
             <h5 class="modal-title" id="new_car_modal_label">New car</h5>
             </div>
-            <div class="modal-body">
-                <form id="new_car_form" method="POST">
-                    <div id="new_car_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
-                    {% csrf_token %}
-                    {{ new_car_form|crispy }}
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal">Go back</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
-            </div>
+            <form id="new_car_form" action="{% url 'add_new_car' %}" method="POST">
+                <div class="modal-body">
+                        <div id="new_car_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                        {% csrf_token %}
+                        {{ new_car_form|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal">Go back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
         </div>
         </div>
     </div>

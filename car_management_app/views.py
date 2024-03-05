@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from workshops.forms import WorkshopForm
 from workshops.models import Workshop
-from cars.models import Car
+# from cars.models import Car
 from cars.forms import CarForm
 
 

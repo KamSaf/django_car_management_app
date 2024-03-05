@@ -53,8 +53,8 @@ class CarForm(forms.ModelForm):
     def clean(self):
         make = self.cleaned_data.get('make')
         model = self.cleaned_data.get('model')
-        prod_year = self.cleaned_data.get('prod_year')
         num_plate = self.cleaned_data.get('num_plate')
+        prod_year = self.cleaned_data.get('prod_year')
         fuel_type = self.cleaned_data.get('fuel_type')
         vin = self.cleaned_data.get('vin')
 
@@ -63,6 +63,7 @@ class CarForm(forms.ModelForm):
         except TypeError:
             self.data_errors['id_displacement'] = self.error_messages['displacement_invalid']
             self._errors['displacement'] = self.error_class([self.error_messages["displacement_invalid"]])
+            return self.cleaned_data
 
         if len(make) > 100:  # checks if make field is proper length
             self.data_errors['id_make'] = self.error_messages['make_too_long']
@@ -74,7 +75,9 @@ class CarForm(forms.ModelForm):
             self._errors['model'] = self.error_class([f'Model {self.error_messages["field_too_long"]}'])
             return self.cleaned_data
 
-        if len(prod_year) not in years_list():  # checks if production year field is valid
+        prod_year_options = [option[1] for option in years_list()]
+
+        if prod_year not in prod_year_options:  # checks if production year field is valid
             self.data_errors['id_prod_year'] = self.error_messages['invalid_production_year']
             self._errors['prod_year'] = self.error_class([self.error_messages['production_year_invalid']])
             return self.cleaned_data
@@ -90,7 +93,7 @@ class CarForm(forms.ModelForm):
             return self.cleaned_data
 
         if len(vin) > 25:  # checks if vin field is proper length
-            self.data_errors['id_vin'] = self.error_messages['vin_too_long']
+            self.data_errors['id_vin'] = f'VIN {self.error_messages["field_too_long"]}'
             self._errors['vin'] = self.error_class([f'VIN {self.error_messages["field_too_long"]}'])
             return self.cleaned_data
 
