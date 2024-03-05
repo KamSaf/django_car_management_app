@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class WorkshopForm(forms.ModelForm):
     """
-        Form for creating and editing new workshops
+        Form for creating and editing workshops
     """
 
     def __init__(self, *args, **kwargs):
@@ -22,7 +22,7 @@ class WorkshopForm(forms.ModelForm):
     field_order = ['name', 'city', 'address', 'phone_number', 'profession']
 
     error_messages = {
-        'field_too_long': "field is too long.",
+        'field_too_long': "field value is too long.",
         'invalid_phone_number': "Provided phone number is invalid."
     }
 

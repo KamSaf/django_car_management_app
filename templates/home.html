@@ -205,7 +205,11 @@
             <h5 class="modal-title" id="new_car_modal_label">New car</h5>
             </div>
             <div class="modal-body">
-                new car
+                <form id="new_car_form" method="POST">
+                    <div id="new_car_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                    {% csrf_token %}
+                    {{ new_car_form|crispy }}
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal">Go back</button>
