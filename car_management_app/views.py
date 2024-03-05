@@ -38,10 +38,11 @@ def home(request):
         workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
         favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
         cars = Car.objects.filter(user=request.user).order_by('create_date').all()
-        try:
-            viewed_car = Car.objects.filter(favourite=True).first()
-        except Car.DoesNotExist:
+        viewed_car = Car.objects.filter(favourite=True).first()
+
+        if not viewed_car:
             viewed_car = cars[0]
+
         workshop_form = WorkshopForm(logged_user=request.user)
         car_form = CarForm(logged_user=request.user)
         return render(
