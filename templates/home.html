@@ -129,6 +129,7 @@
             <h5 class="modal-title" id="cars_list_modal_label">Your cars</h5>
             </div>
             <div class="modal-body">
+                <div id="favourite_car_error_box" class="alert alert-danger" role="alert" style="display: none;"></div>
                 <ul class="list-group container">
                     {% for car in cars %}
                         <li class="list-group-item container border {% if viewed_car.id == car.id %} border-info {% endif %}" style="margin-bottom: 5px;">
@@ -143,9 +144,9 @@
                                     <form id="favourite_car_form_{{ car.id }}" method="POST">
                                         <input name="car_id" value="{{ car.id }}" hidden>
                                     {% if car.favourite %}
-                                        <button type="submit" class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="true" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star-fill"></i></button>
+                                        <button class="btn btn-sm btn-primary car-toggle-favourite favourite-car float-end" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star-fill"></i></button>
                                     {% else %}
-                                        <button type="submit" class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="false" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star"></i></button>
+                                        <button class="btn btn-sm btn-primary car-toggle-favourite float-end" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star"></i></button>
                                     {% endif %}
                                     {% csrf_token %}
                                     </form>

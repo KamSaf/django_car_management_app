@@ -285,15 +285,27 @@ $(function(){
 $(function(){
   $('.car-toggle-favourite').on('click', function(event){
     event.preventDefault();
-    var carId = $(this).data('carId');
-    console.log(carId);
+    var $this = $(this);
+    var carId = $this.data('carId');
     
     $.ajax({
       type: "POST",
       data: $('#favourite_car_form_' + carId).serializeArray(),
-      url: $(this).data('url'),
+      url: $this.data('url'),
       success: function(response) {
-        console.log(response);
+        if (response['status'] == 'failed'){
+          let error_dismiss_button = '<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>';
+          $('#favourite_car_error_box').html(response['error'] + error_dismiss_button).prop('style', 'display: block;');
+        } else {
+          let current_favourite_car = $('.favourite-car');
+
+          if ($this.hasClass('favourite-car')){
+            $this.removeClass('favourite-car').html('<i class="bi bi-star"></i>');
+          } else {
+            current_favourite_car.removeClass('favourite-car').html('<i class="bi bi-star"></i>');
+            $this.addClass('favourite-car').html('<i class="bi bi-star-fill"></i>');
+          }  
+        }
       }
     });
   });

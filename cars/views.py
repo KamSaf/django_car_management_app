@@ -36,22 +36,22 @@ def async_toggle_favourite_car(request):
     """
         Endpoint for toggling favourite car (for AJAX)
     """
-    car_id = request.POST.get('car_id')
-
+    car_id = int(request.POST.get('car_id'))
     current_favourite_car = Car.objects.filter(favourite=True).first()
 
     if current_favourite_car:
         current_favourite_car.favourite = False
+        current_favourite_car.last_edit_date = timezone.now()
         current_favourite_car.save()
 
         if current_favourite_car.id == car_id:
-            return Response({'status': 'success'})
+            return Response({'status': 'success', 'dupa': 'dupa'})
 
     try:
         new_favourite_car = Car.objects.get(id=car_id)
         new_favourite_car.favourite = True
+        new_favourite_car.last_edit_date = timezone.now()
         new_favourite_car.save()
         return Response({'status': 'success'})
-
     except Car.DoesNotExist:
         return Response({'status': 'failed', 'error': 'This car does not exist.'})
