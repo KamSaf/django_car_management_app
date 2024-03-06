@@ -30,32 +30,39 @@ def refresh_navbar(request):
     )
 
 
-def home(request):
+def home(request, car_id=None):
     """
-        View for rendering home page
+        View for rendering home page.
+        If car_id is defined then this car is being displayed, else favourite car or first car (if there is no favourite) in database is displayed.
     """
-    if request.user.is_authenticated:
-        workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
-        favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
-        cars = Car.objects.filter(user=request.user).order_by('create_date').all()
-        viewed_car = Car.objects.filter(favourite=True).first()
+    if not request.user.is_authenticated:
+        return redirect(to='welcome_page')
 
-        if not viewed_car:
+    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
+    favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
+    cars = Car.objects.filter(user=request.user).order_by('create_date').all()
+
+    viewed_car = None
+    if car_id:
+        viewed_car = Car.objects.filter(id=car_id).first()
+
+    if not viewed_car:
+        try:
+            viewed_car = Car.objects.get(favourite=True)
+        except Car.DoesNotExist:
             viewed_car = cars[0]
 
-        workshop_form = WorkshopForm(logged_user=request.user)
-        car_form = CarForm(logged_user=request.user)
-        return render(
-            request=request,
-            template_name='home.html',
-            context={
-                'new_workshop_form': workshop_form,
-                'new_car_form': car_form,
-                'cars': cars,
-                'viewed_car': viewed_car,
-                'workshops': workshops,
-                'favourite_workshops': favourite_workshops
-            }
-        )
-    else:
-        return redirect(to='welcome_page')
+    workshop_form = WorkshopForm(logged_user=request.user)
+    car_form = CarForm(logged_user=request.user)
+    return render(
+        request=request,
+        template_name='home.html',
+        context={
+            'new_workshop_form': workshop_form,
+            'new_car_form': car_form,
+            'cars': cars,
+            'viewed_car': viewed_car,
+            'workshops': workshops,
+            'favourite_workshops': favourite_workshops
+        }
+    )

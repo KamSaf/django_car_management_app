@@ -28,22 +28,22 @@
     </div>
 
     <div style="margin-top: 25px;" class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        Exploatation History
-                        <a class="btn btn-sm btn-outline-info float-end">See full history</a>
-                    </h5>
-                    <hr>
-                    <h1>placeholder</h1>
+        <div class="row">
+            <div class="col">
+                <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Exploatation History
+                            <a class="btn btn-sm btn-outline-info float-end">See full history</a>
+                        </h5>
+                        <hr>
+                        <h1>placeholder</h1>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                <div class="card-body">
+            <div class="col">
+                <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                    <div class="card-body">
                         <ul class="nav nav-tabs" id="monthTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
@@ -89,11 +89,11 @@
                                         <p class="text-muted fw-lighter">1,63 zł per kilometer</p>
                                     </div>
                                     <hr>
+                                </div>
                                 <div class="row">
                                     <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>70%</b></div>
                                     <div class="col"><i class="bi bi-tools"></i> Service: <b>15%</b></div>
                                     <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>15%</b></div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -132,25 +132,21 @@
             <div class="modal-body">
                 <ul class="list-group container">
                     {% for car in cars %}
-                        <li class="list-group-item container">
+                        <li class="list-group-item container border {% if viewed_car.id == car.id %} border-info {% endif %}" style="margin-bottom: 5px;">
                             <div class="row">
-                                <div class="col-9">
-                                    <div class="d-grid gap-2">
-                                        {% if viewed_car.id == car.id %}
-                                            <button class="btn btn-sm btn-dark">{{ car.make }} {{ car.model }}</button>
-                                        {% else %}
-                                            <button class="btn btn-sm btn-outline-dark">{{ car.make }} {{ car.model }}</button>
-                                        {% endif %}
-                                    </div>
+                                <div class="col-4">
+                                    {{ car.make }} {{ car.model }}
                                 </div>
-                                <div class="col-3">
-                                    <div class="d-grid gap-2">
-                                        {% if car.favourite %}
-                                            <button class="btn btn-sm btn-primary"><i class="bi bi-star-fill"></i></button>
-                                        {% else %}
-                                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-star"></i></button>
-                                        {% endif %}
-                                    </div>
+                                <div class="col-4">
+                                    {{ car.num_plate }}
+                                </div>
+                                <div class="col-4">
+                                    {% if car.favourite %}
+                                        <button class="btn btn-sm btn-primary float-end"><i class="bi bi-star-fill"></i></button>
+                                    {% else %}
+                                        <button class="btn btn-sm btn-primary float-end"><i class="bi bi-star"></i></button>
+                                    {% endif %}
+                                    <a class="btn btn-sm btn-dark float-end" href="{% url 'home_page' car_id=car.id %}" style="margin-right: 15px;">View</a>
                                 </div>
                             </div>
                         </li>
