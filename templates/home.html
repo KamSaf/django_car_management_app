@@ -140,11 +140,15 @@
                                     {{ car.num_plate }}
                                 </div>
                                 <div class="col-4">
+                                    <form id="favourite_car_form_{{ car.id }}" method="POST">
+                                        <input name="car_id" value="{{ car.id }}" hidden>
                                     {% if car.favourite %}
-                                        <button class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="true"><i class="bi bi-star-fill"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="true" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star-fill"></i></button>
                                     {% else %}
-                                        <button class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="false"><i class="bi bi-star"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="false" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star"></i></button>
                                     {% endif %}
+                                    {% csrf_token %}
+                                    </form>
                                     <a class="btn btn-sm btn-dark float-end" href="{% url 'home_page' car_id=car.id %}" style="margin-right: 15px;">View</a>
                                 </div>
                             </div>

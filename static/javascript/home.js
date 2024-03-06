@@ -280,3 +280,21 @@ $(function(){
     $('#workshops_list').load($('#workshops_list').data('url') + $('#workshop_filter_category').val() + '/' + $('#workshop_filter_phrase').val());
   });
 });
+
+// Toggle favourite car
+$(function(){
+  $('.car-toggle-favourite').on('click', function(event){
+    event.preventDefault();
+    var carId = $(this).data('carId');
+    console.log(carId);
+    
+    $.ajax({
+      type: "POST",
+      data: $('#favourite_car_form_' + carId).serializeArray(),
+      url: $(this).data('url'),
+      success: function(response) {
+        console.log(response);
+      }
+    });
+  });
+});

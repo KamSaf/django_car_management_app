@@ -68,9 +68,10 @@ def async_edit_user(request):
     })
 
 
+@login_required
 def refresh_user_data(request):
     """
-        Endpoint returnig user data template (for AJAX user data refresh)
+        Endpoint returning user data template (for AJAX user data refresh)
     """
     return render(
         request=request,
