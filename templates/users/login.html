@@ -4,35 +4,30 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
-                <div class="card-body">
-                    {% if user.is_authenticated %}
-                        <div class="text-center mb-3 shadow bg-body rounded card">
-                            You are logged in as {{ user.username }} ({{ user.email }}) <a href="{% url 'logout_url' %}">Logout</a>
-                        </div>
-                    {% endif %}
-                    <form style="margin-bottom: 15px;" method="POST">
-                        <h1 class="h3 mb-3 font-weight-normal text-center">Sign in</h1>
-                        <hr>
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                            {{ form|crispy }}
-                        </fieldset>
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <button style="margin-top: 25px;" class="btn btn-sm btn-success" type="submit">Sign in</button>
-                        </div>
-                    </form>
-                    <small class="text-muted">Need an account? <a class="ml-2" href="{% url 'register_page' %}">Join now</a></small>
-
-                </div>
-                
+    <div class="row">
+        <div class="col"></div>
+        <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
+            <div class="card-body">
+                {% if user.is_authenticated %}
+                    <div class="text-center mb-3 shadow bg-body rounded card">
+                        You are logged in as {{ user.username }} ({{ user.email }}) <a href="{% url 'logout_url' %}">Logout</a>
+                    </div>
+                {% endif %}
+                <form style="margin-bottom: 15px;" method="POST">
+                    <h1 class="h3 mb-3 font-weight-normal text-center">Sign in</h1>
+                    <hr>
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button style="margin-top: 25px;" class="btn btn-sm btn-success" type="submit">Sign in</button>
+                    </div>
+                </form>
+                <small class="text-muted">Need an account? <a class="ml-2" href="{% url 'register_page' %}">Join now</a></small>
             </div>
-            <div class="col"></div>
         </div>
+        <div class="col"></div>
     </div>
-
 {% endblock %}
 

@@ -8,7 +8,6 @@
         <script src="{% static '/javascript/clock.js' %}" type="text/javascript"></script>
 {% endblock %}
 
-
 {% block body %}
     <div style="margin-top: 25px;" class="container-fluid">
         <div style="margin-top: 25px;" class="shadow bg-body rounded card">
@@ -67,11 +66,11 @@
                                         <p class="text-muted fw-lighter">1,20 zł per kilometer</p>
                                     </div>
                                     <hr>
+                                </div>
                                 <div class="row">
                                     <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>86%</b></div>
                                     <div class="col"><i class="bi bi-tools"></i> Service: <b>10%</b></div>
                                     <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>4%</b></div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -142,9 +141,9 @@
                                 </div>
                                 <div class="col-4">
                                     {% if car.favourite %}
-                                        <button class="btn btn-sm btn-primary float-end"><i class="bi bi-star-fill"></i></button>
+                                        <button class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="true"><i class="bi bi-star-fill"></i></button>
                                     {% else %}
-                                        <button class="btn btn-sm btn-primary float-end"><i class="bi bi-star"></i></button>
+                                        <button class="btn btn-sm btn-primary car-toggle-favourite float-end" data-favourite-car="false"><i class="bi bi-star"></i></button>
                                     {% endif %}
                                     <a class="btn btn-sm btn-dark float-end" href="{% url 'home_page' car_id=car.id %}" style="margin-right: 15px;">View</a>
                                 </div>
@@ -250,7 +249,6 @@
                                 <button type="button" class="btn btn-outline-dark reset-workshop-filter">Reset filters</button>
                             </div>
                         </div>
-    
                     </form>
                 </div>
             </div>

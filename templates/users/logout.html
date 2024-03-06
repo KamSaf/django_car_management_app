@@ -3,19 +3,16 @@
 {% block title %}You have been logged out{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
-                <div class="card-body">
-                    <h1 class="h3 mb-3 font-weight-normal text-center">You have been logged out</h1>
-                    <hr>
-                    <small class="text-muted"><a class="ml-2" href="{% url 'login_page' %}">Log in again</a></small>
-                </div>
+    <div class="row">
+        <div class="col"></div>
+        <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
+            <div class="card-body">
+                <h1 class="h3 mb-3 font-weight-normal text-center">You have been logged out</h1>
+                <hr>
+                <small class="text-muted"><a class="ml-2" href="{% url 'login_page' %}">Log in again</a></small>
             </div>
-            <div class="col"></div>
         </div>
+        <div class="col"></div>
     </div>
-
 {% endblock %}
 
