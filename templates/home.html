@@ -188,10 +188,10 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="car_details_modal_label">Your cars</h5>
+            <h5 class="modal-title" id="car_details_modal_label">Car details</h5>
             </div>
             <div class="modal-body">
-                car details
+                {% include 'include/cars/car_data.html' %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -1,0 +1,72 @@
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-car-front"></i> Make:</span>
+        <span class="float-end">
+            {{ viewed_car.make }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-box"></i> Model:</span>
+        <span class="float-end">
+            {{ viewed_car.model }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-calendar"></i> Production year:</span>
+        <span class="float-end">
+            {% if viewed_car.prod_year %}
+                {{ viewed_car.prod_year }}
+            {% else %}
+                -
+            {% endif %}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-123"></i> Number plate:</span>
+        <span class="float-end">
+            {{ viewed_car.num_plate }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-fuel-pump"></i> Fuel type:</span>
+        <span class="float-end">
+            {% if viewed_car.fuel_type %}
+                {{ viewed_car.fuel_type }}
+            {% else %}
+                -
+            {% endif %}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-arrows-angle-expand"></i> Displacement:</span>
+        <span class="float-end">
+            {% if viewed_car.displacement %}
+            {{ viewed_car.displacement }}
+        {% else %}
+            -
+        {% endif %}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start"><i class="bi bi-pencil-square"></i> VIN number:</span>
+        <span class="float-end">
+            {% if viewed_car.vin %}
+            {{ viewed_car.vin }}
+        {% else %}
+            -
+        {% endif %}
+        </span>
+    </span>
+</div>

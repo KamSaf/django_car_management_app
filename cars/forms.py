@@ -17,7 +17,7 @@ class CarForm(forms.ModelForm):
     make = forms.Field(required=True, label=mark_safe('<i class="bi bi-car-front"></i> Make'))
     model = forms.Field(required=True, label=mark_safe('<i class="bi bi-box"></i> Model'))
     prod_year = forms.ChoiceField(required=False, label=mark_safe('<i class="bi bi-calendar"></i> Production year'), choices=years_list())
-    num_plate = forms.Field(required=False, label=mark_safe('<i class="bi bi-123"></i> Number plate'))
+    num_plate = forms.Field(required=True, label=mark_safe('<i class="bi bi-123"></i> Number plate'))
     fuel_type = forms.Field(required=False, label=mark_safe('<i class="bi bi-fuel-pump"></i> Fuel type'))
     displacement = forms.IntegerField(required=False, label=mark_safe('<i class="bi bi-arrows-angle-expand"></i> Displacement (in cm3)'))
     vin = forms.Field(required=False, label=mark_safe('<i class="bi bi-pencil-square"></i> VIN number'))
