@@ -53,13 +53,17 @@ def home(request, car_id=None):
             viewed_car = cars[0]
 
     workshop_form = WorkshopForm(logged_user=request.user)
-    car_form = CarForm(logged_user=request.user)
+    new_car_form = CarForm(logged_user=request.user)
+    edit_car_form = CarForm(instance=viewed_car, logged_user=request.user)
+    edit_car_form.set_initial(car=viewed_car)
+
     return render(
         request=request,
         template_name='home.html',
         context={
             'new_workshop_form': workshop_form,
-            'new_car_form': car_form,
+            'new_car_form': new_car_form,
+            'edit_car_form': edit_car_form,
             'cars': cars,
             'viewed_car': viewed_car,
             'workshops': workshops,

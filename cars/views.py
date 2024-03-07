@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .forms import CarForm
 from .models import Car
 from django.contrib.auth.decorators import login_required
@@ -15,6 +15,7 @@ def add_new_car(request):
     """
     if not request.user.is_authenticated:
         messages.error(request, 'You have no permission do perform this action.')
+        return redirect(to="home_page")
 
     if request.method == 'POST':
         form = CarForm(request.POST, logged_user=request.user)
@@ -22,12 +23,12 @@ def add_new_car(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'New car added!')
-            return redirect(to="home_page")
-        errors = ''
-        for value in form.data_errors.values():
-            errors = errors.join(value)
-        messages.error(request, errors)
-        return redirect(to="home_page")
+        else:
+            errors = ''
+            for value in form.data_errors.values():
+                errors = errors.join(value)
+            messages.error(request, errors)
+    return redirect(to="home_page")
 
 
 @api_view(['POST'])
@@ -55,3 +56,35 @@ def async_toggle_favourite_car(request):
         return Response({'status': 'success'})
     except Car.DoesNotExist:
         return Response({'status': 'failed', 'error': 'This car does not exist.'})
+
+
+@login_required
+def edit_car(request):
+    """
+        View for editing car data
+    """
+    errors = False
+    car_id = int(request.POST.get('car_id'))
+    print(messages.error)
+    try:
+        car = Car.objects.get(id=car_id)
+    except Car.DoesNotExist:
+        messages.error(request, 'This car does not exist in the database.')
+        errors = True
+
+    if not request.user.is_authenticated or request.user.id != car.user.id:
+        messages.error(request, 'You have no permission do perform this action.')
+        errors = True
+
+    if not errors and request.method == 'POST':
+        form = CarForm(request.POST, instance=car, logged_user=request.user)
+        form.clear_errors()
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Data edited!')
+        else:
+            errors_messages = ''
+            for value in form.data_errors.values():
+                errors_messages = errors_messages.join(value)
+            messages.error(request, errors_messages)
+    return redirect(to="home_page")

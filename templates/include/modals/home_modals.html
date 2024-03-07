@@ -78,8 +78,31 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success edit-car-details" data-bs-dismiss="modal" id="edit_car_details_button">Edit</button>
+            <button type="button" class="btn btn-success edit-car-details" data-bs-toggle="modal" data-bs-target="#edit_car_modal">Edit</button>
         </div>
+    </div>
+    </div>
+</div>
+
+<!-- Edit car modal -->
+<div class="modal fade" id="edit_car_modal" tabindex="-1" role="dialog" aria-labelledby="edit_car_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="edit_car_modal_label">Edit car data</h5>
+        </div>
+        <form id="edit_car_form" action="{% url 'edit_car' %}" method="POST">
+            <div class="modal-body">
+                <div id="edit_car_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                {% csrf_token %}
+                <input name="car_id" value="{{ viewed_car.id }}" hidden>
+                {{ edit_car_form|crispy }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#car_details_modal">Go back</button>
+                <button type="submit" class="btn btn-success" data-url="{% url 'edit_car' %}">Save</button>
+            </div>
+        </form>
     </div>
     </div>
 </div>
@@ -104,7 +127,7 @@
                     <div class="col-8">
                         <span class="float-end">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success new-workshop-embedded set-modal-redirect" data-bs-target="#new_workshop_modal" data-bs-toggle="modal" id="edit_car_details_button">Add new workshop +</button>    
+                            <button type="button" class="btn btn-success new-workshop-embedded set-modal-redirect" data-bs-target="#new_workshop_modal" data-bs-toggle="modal">Add new workshop +</button>    
                         </span>
                     </div>
                 </div>
@@ -162,7 +185,7 @@
             </div>
             <div class="modal-footer">
                 <button id="new_workshop_close_modal_button" type="button" class="btn btn-secondary close-new-workshop-modal" data-bs-target="#workshops_list_modal" data-bs-toggle="modal">Go back</button>
-                <button type="button" class="btn btn-success save-new-workshop" id="edit_car_details_button" data-url="{% url 'add_new_workshop_url' %}">Save</button>
+                <button type="button" class="btn btn-success save-new-workshop" data-url="{% url 'add_new_workshop_url' %}">Save</button>
             </div>
         </form>
     </div>
