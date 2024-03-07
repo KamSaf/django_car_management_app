@@ -71,7 +71,8 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="car_details_modal_label">Car details</h5>
+            <h5 class="modal-title float-start" id="car_details_modal_label">Car details</h5>
+            <button type="submit" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#confirm_car_delete_modal"><i class="bi bi-trash"></i></button>
         </div>
         <div class="modal-body">
             {% include 'include/cars/car_data.html' %}
@@ -81,6 +82,28 @@
             <button type="button" class="btn btn-success edit-car-details" data-bs-toggle="modal" data-bs-target="#edit_car_modal">Edit</button>
         </div>
     </div>
+    </div>
+</div>
+
+<!-- Confirm car delete -->
+<div class="modal fade" id="confirm_car_delete_modal" tabindex="-1" role="dialog" aria-labelledby="confirm_car_delete_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm_car_delete_modal_label">Confirm car deletion</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#car_details_modal">Cancel</button>
+                <form method="POST" action="{% url 'delete_car' %}">
+                    <input name="car_id" value="{{ viewed_car.id }}" hidden>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

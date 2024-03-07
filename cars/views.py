@@ -28,7 +28,7 @@ def add_new_car(request):
             for value in form.data_errors.values():
                 errors = errors.join(value)
             messages.error(request, errors)
-    return redirect(to="home_page")
+    return redirect(to="home_page", car_id=form.instance.id)
 
 
 @api_view(['POST'])
@@ -65,7 +65,7 @@ def edit_car(request):
     """
     errors = False
     car_id = int(request.POST.get('car_id'))
-    print(messages.error)
+
     try:
         car = Car.objects.get(id=car_id)
     except Car.DoesNotExist:
@@ -87,4 +87,30 @@ def edit_car(request):
             for value in form.data_errors.values():
                 errors_messages = errors_messages.join(value)
             messages.error(request, errors_messages)
+    return redirect(to="home_page")
+
+
+@login_required
+def delete_car(request):
+    """
+        View for deleting car from database
+    """
+    errors = False
+    car_id = int(request.POST.get('car_id'))
+
+    try:
+        car = Car.objects.get(id=car_id)
+    except Car.DoesNotExist:
+        messages.error(request=request, message='This car does not exist in the database.')
+        errors = True
+
+    if not request.user.is_authenticated or request.user.id != car.user.id:
+        messages.error(request=request, message='You have no permission do perform this action.')
+        errors = True
+
+    if not errors and request.method == 'POST':
+        car.delete()
+        messages.success(request=request, message=f'{car.make} {car.model} ({car.num_plate}) has been deleted.')
+    else:
+        messages.error(request=request, message='Error occured while trying to delete this object.')
     return redirect(to="home_page")

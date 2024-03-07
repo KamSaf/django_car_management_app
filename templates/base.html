@@ -24,12 +24,10 @@
     <div id="messages_box" style="margin-top: 15px;">
         {% if messages %}
             {% for message in messages %}
-                {% if message.tags == 'error' %}
-                    <div class="alert {% if message.tags == 'error' %} alert-danger {% else %} alert-success {% endif %}">
-                        {{ message }}
-                        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
+                <div class="alert {% if message.tags == 'error' %} alert-danger {% else %} alert-success {% endif %}">
+                    {{ message }}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             {% endfor %}
         {% endif %}
     </div>
