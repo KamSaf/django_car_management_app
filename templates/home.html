@@ -26,74 +26,112 @@
         </div>
     </div>
 
-    <div style="margin-top: 25px;" class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                    <div class="card-body">
+    <div style="margin-top: 25px;" class="container-fluid h-75">
+        <div class="row h-100">
+            <div class="col h-100">
+                <div style="margin-top: 25px;" class="shadow bg-body rounded card h-75">
+                    <div class="card-body h-100">
                         <h5 class="card-title">
                             Exploatation History
                             <a class="btn btn-sm btn-outline-info float-end">See full history</a>
                         </h5>
                         <hr>
-                        <h1>placeholder</h1>
+                        <div class="h-75" style="margin-top: 35px;">
+                            <ul class="list-group h-100 scrollable overflow-auto">
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li> 
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                                <li class="list-group-item">hello</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs" id="monthTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="monthTabContent">
-                        <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
-                            <div style="margin-left: 25px; margin-top: 25px;" class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>Expenses:</h6>
-                                        <h4 class="text-danger fw-bold">37,21 zł</h4>
-                                        <p class="text-muted fw-lighter">4,23 zł per day</p>
+            <div class="col h-100">
+                <div class="container">
+                    <div class="row">
+                        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="monthTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="monthTabContent">
+                                    <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
+                                        <div style="margin-left: 25px; margin-top: 25px;" class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6>Expenses:</h6>
+                                                    <h4 class="text-danger fw-bold">37,21 zł</h4>
+                                                    <p class="text-muted fw-lighter">4,23 zł per day</p>
+                                                </div>
+                                                <div class="col">
+                                                    <h6>Fuel economy:</h6>
+                                                    <h4 class="text-warning fw-bold">8,9l / 100 km</h4>
+                                                    <p class="text-muted fw-lighter">1,20 zł per kilometer</p>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>86%</b></div>
+                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>10%</b></div>
+                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>4%</b></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <h6>Fuel economy:</h6>
-                                        <h4 class="text-warning fw-bold">8,9l / 100 km</h4>
-                                        <p class="text-muted fw-lighter">1,20 zł per kilometer</p>
+                                    <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
+                                        <div style="margin-left: 25px; margin-top: 25px;" class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6>Expenses:</h6>
+                                                    <h4 class="text-danger fw-bold">21,37 zł</h4>
+                                                    <p class="text-muted fw-lighter">6,90 zł per day</p>
+                                                </div>
+                                                <div class="col">
+                                                    <h6>Fuel economy:</h6>
+                                                    <h4 class="text-warning fw-bold">9,3l / 100 km</h4>
+                                                    <p class="text-muted fw-lighter">1,63 zł per kilometer</p>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>70%</b></div>
+                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>15%</b></div>
+                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>15%</b></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>86%</b></div>
-                                    <div class="col"><i class="bi bi-tools"></i> Service: <b>10%</b></div>
-                                    <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>4%</b></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
-                            <div style="margin-left: 25px; margin-top: 25px;" class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>Expenses:</h6>
-                                        <h4 class="text-danger fw-bold">21,37 zł</h4>
-                                        <p class="text-muted fw-lighter">6,90 zł per day</p>
-                                    </div>
-                                    <div class="col">
-                                        <h6>Fuel economy:</h6>
-                                        <h4 class="text-warning fw-bold">9,3l / 100 km</h4>
-                                        <p class="text-muted fw-lighter">1,63 zł per kilometer</p>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>70%</b></div>
-                                    <div class="col"><i class="bi bi-tools"></i> Service: <b>15%</b></div>
-                                    <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>15%</b></div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Favourite workshops:
+                                    <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#workshops_list_modal">See all saved workshops</button>
+                                </h5>
+                                <hr>
+                                    {% include 'include/workshops/favourite_workshops_list.html' %}
+                                <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success new-workshop-main float-end" data-bs-toggle="modal" data-bs-target="#new_workshop_modal">Add new workshop <i class="bi bi-plus-circle"></i></button>
                             </div>
                         </div>
                     </div>
@@ -101,7 +139,9 @@
             </div>
         </div>
     </div>
-    
+
+
+    {% comment %}
     <div class="row">
         <div class="col"></div>
         <div class="col">
@@ -118,7 +158,11 @@
             </div>
         </div>
     </div>
+    {% endcomment %}
 
-<!-- MODALS -->
+
+
+
+    <!-- MODALS -->
     {% include 'include/modals/home_modals.html' %}
 {% endblock %}
