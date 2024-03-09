@@ -231,13 +231,14 @@
         </div>
         <form id="new_entry_form" method="POST">
             <div class="modal-body">
-                    <div id="new_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
-                    {% csrf_token %}
-                    {{ new_entry_form|crispy }}
+                <div id="new_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                {% csrf_token %}
+                {{ new_entry_form|crispy }}
+                <input name="car_id" value="{{ viewed_car.id }}" hidden>
             </div>
             <div class="modal-footer">
                 <button id="new_entry_close_modal_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success" data-url="#">Save</button>
+                <button type="button" class="btn btn-success save-new-entry" data-url="{% url 'add_new_entry_url' %}">Save</button>
             </div>
         </form>
     </div>

@@ -5,6 +5,7 @@ from cars.models import Car
 from cars.forms import CarForm
 from entries.forms import EntryForm
 from entries.models import Entry
+from .utils import get_viewed_car
 
 
 def welcome(request):
@@ -44,21 +45,13 @@ def home(request, car_id=None):
     favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
     cars = Car.objects.filter(user=request.user).order_by('create_date').all()
 
-    viewed_car = None
-    if car_id:
-        viewed_car = Car.objects.filter(id=car_id).first()
-
-    if not viewed_car:
-        try:
-            viewed_car = Car.objects.get(favourite=True)
-        except Car.DoesNotExist:
-            viewed_car = cars[0]
+    viewed_car = get_viewed_car(user=request.user, car_id=car_id)
 
     last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
     viewed_car_mileage = last_entry.mileage if last_entry else 0
     new_workshop_form = WorkshopForm(logged_user=request.user)
     new_car_form = CarForm(logged_user=request.user)
-    new_entry_form = EntryForm(logged_user=request.user)
+    new_entry_form = EntryForm(logged_user=request.user, car=viewed_car)
     edit_car_form = CarForm(instance=viewed_car, logged_user=request.user)
     edit_car_form.set_initial(car=viewed_car)
 

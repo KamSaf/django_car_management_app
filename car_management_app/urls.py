@@ -31,7 +31,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout_url'),
     path('cars/', include('cars.urls')),
     path('users/', include('users.urls')),
-    # path('', include('enties.urls')),
+    path('', include('entries.urls')),
     path('', include('workshops.urls')),
     path('navbar_refresh/', main_views.refresh_navbar, name="navbar_refresh_url"),
 ]

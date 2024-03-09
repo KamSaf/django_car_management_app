@@ -9,7 +9,7 @@ class EntryForm(forms.ModelForm):
         Form for creating and editing exploitation history entries
     """
 
-    category = forms.Field(required=True, label=mark_safe('Category'))
+    category = forms.ChoiceField(required=True, label=mark_safe('Category'), choices=Entry.TYPES_OF_ENTRIES)
     place = forms.Field(required=False, label=mark_safe('Place'))
     mileage = forms.Field(required=True, label=mark_safe('Mileage'))
     cost = forms.Field(required=True, label=mark_safe('Cost'))
@@ -20,7 +20,8 @@ class EntryForm(forms.ModelForm):
 
     error_messages = {
         'field_value_too_long': 'field value is too long.',
-        'mileage_smaller': 'Mileage cannot be smaller than in last entry.',
+        'mileage_smaller': 'Mileage cannot be smaller than in an entry before it.',
+        'date_error': 'Entry date must not be in the future.',
     }
 
     class Meta:
@@ -33,6 +34,7 @@ class EntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.logged_user = kwargs.pop('logged_user')
         self.request = kwargs.pop('request', None)
+        self.car = kwargs.pop('car')
         super(EntryForm, self).__init__(*args, **kwargs)
 
     # sets initial value of fields
@@ -58,12 +60,20 @@ class EntryForm(forms.ModelForm):
         category = self.cleaned_data.get('category')
         place = self.cleaned_data.get('place')
         details = self.cleaned_data.get('details')
+        date = self.cleaned_data.get('date')
+
+        # check if given date is not in the future
+        if date > timezone.now():
+            date_error = self.error_messages['date_error']
+            self.data_errors['id_date'] = date_error
+            self._errors['date'] = self.error_class(date_error)
+            return self.cleaned_data
 
         # check if type of cost is valid
         try:
             cost = int(self.cleaned_data.get('cost'))
         except TypeError:
-            cost_error = Entry.__invalid_field_value(field_name='cost')
+            cost_error = EntryForm.__invalid_field_value(field_name='cost')
             self.data_errors['id_cost'] = cost_error
             self._errors['cost'] = self.error_class(cost_error)
             return self.cleaned_data
@@ -72,13 +82,13 @@ class EntryForm(forms.ModelForm):
         try:
             mileage = int(self.cleaned_data.get('mileage'))
         except TypeError:
-            mileage_error = Entry.__invalid_field_value(field_name='mileage')
+            mileage_error = EntryForm.__invalid_field_value(field_name='mileage')
             self.data_errors['id_mileage'] = mileage_error
             self._errors['mileage'] = self.error_class(mileage_error)
             return self.cleaned_data
 
         # check if mileage field value is smaller than in last saved entry
-        last_entry = Entry.objects.filter(user=self.logged_user).exclude(id=self.instance.id).order_by('-date').first()
+        last_entry = Entry.objects.filter(user=self.logged_user, date__lte=date).exclude(id=self.instance.id).order_by('-date').first()
         if last_entry and last_entry.mileage > mileage:
             mileage_error = self.error_messages['mileage_smaller']
             self.data_errors['id_mileage'] = mileage_error
@@ -87,7 +97,7 @@ class EntryForm(forms.ModelForm):
 
         # check if category field value is valid
         if category not in Entry.TYPES_OF_ENTRIES:
-            category_error = Entry.__invalid_field_value(field_name='category')
+            category_error = EntryForm.__invalid_field_value(field_name='category')
             self.data_errors['id_category'] = category_error
             self._errors['category'] = category_error
             return self.cleaned_data
@@ -114,5 +124,6 @@ class EntryForm(forms.ModelForm):
         self.instance.last_edit_date = timezone.now()
         self.instance.create_date = timezone.now()
         self.instance.user = self.logged_user
+        self.instance.car = self.car
 
         return self.cleaned_data

@@ -11,13 +11,12 @@ function checkIfValidPhoneNumber(phoneNumber){
   };
 }
 
-// Function for clearing current form errors and entered data
-function clearWorkshopForm(form_id){
+// Function for clearing form errors and entered data
+function clearForm(form_id){
   clearErrors();
-  var fieldsToClear = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
-  for (var i = 0; i < fieldsToClear.length; i++) {
-    $('#' + form_id + ' ' + fieldsToClear[i]).val('');
-  }
+  $('#' + form_id + ' *').filter(':input').each(function(){
+    $(this).val('');
+  });
 };
 
 // Function for workshop form data validation
@@ -53,8 +52,8 @@ function refreshWorkshopsLists(){
   $('#favourite_workshops_list').load($('#favourite_workshops_list').data('url'));
 }
 
-// Function for handling workshop create/edit errors and refreshing workshops lists
-function workshopsHandleResponse(response, modal, submit_info_box_id){
+// Function for handling ajax response
+function handleAjaxResponse(response, modal, submit_info_box_id, form_id){
   let errors = "";
   if (response['errors']){
     for (key in response['errors']){
@@ -67,17 +66,16 @@ function workshopsHandleResponse(response, modal, submit_info_box_id){
   if (errors){
     $('#' + submit_info_box_id).html(errors).prop('style', 'display: block;');
   } else {
-    refreshWorkshopsLists();
-    clearWorkshopForm();
+    clearForm(form_id);
     modal.hide();
   }
 };
 
 
-// ################## jQuery #########################
 
 
-// Function altering modals buttons based on the way it was opened
+
+// Altering new workshop modal close button based on the way it was opened
 $(function(){
     $(".new-workshop-main").on("click", function() {
         $('#new_workshop_close_modal_button')
@@ -96,6 +94,58 @@ $(function(){
     });
 });
 
+// Clears workshop form when leaving modal
+$(function(){
+  $('#new_workshop_modal').on('hidden.bs.modal', function () {
+    clearForm('new_workshop_form');
+  });
+});
+
+// Loads content of the workshop details modal
+$(function() {  
+    $('.workshop-list').on('click', '.show-workshop-details', function(){
+      var url = $(this).data('url');
+      $('#workshop_details_modal_content').load(url);
+    });
+});
+
+// Assigns redirect action to dismissing workshop details modal
+$(function(){
+  $('#workshops_list_modal').on('click', '.set-modal-redirect', function(){
+    $('#workshop_details_modal').data('modal-redirect', true);
+    $('.redirect-to-workshop-list').html('Go back');
+  });
+});
+
+// Handling wheter to close modal or redirect to previous one
+$(function() {
+  var modal = new bootstrap.Modal($("#workshop_details_modal"));
+
+  $('#workshop_details_modal').on('click', '.redirect-to-workshop-list', function() {
+    modal.hide();
+    if ($('#workshop_details_modal').data('modal-redirect') == true){
+      var newModal = new bootstrap.Modal($("#workshops_list_modal"));
+      newModal.show();
+      $('#workshop_details_modal').removeData('modal-redirect');
+    }
+  });
+});
+
+// Workshops filtering reset
+$(function(){
+  $('.reset-workshop-filter').on('click', function(){
+    $('#workshops_list').load($('#workshops_list').data('url'));
+  });
+});
+
+// Workshops filtering
+$(function(){
+  $('.apply-workshop-filter').on('click', function(event){
+    event.preventDefault();
+    $('#workshops_list').load($('#workshops_list').data('url') + $('#workshop_filter_category').val() + '/' + $('#workshop_filter_phrase').val());
+  });
+});
+
 // Handles new workshop creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_workshop_modal"));
@@ -112,7 +162,8 @@ $(function() {
         url: $(this).data('url'),
         data: $('#new_workshop_form').serializeArray(),
         success: function(response) {
-          workshopsHandleResponse(response, modal, 'new_workshop_submit_info', 'new_workshop_form');
+          handleAjaxResponse(response, modal, 'new_workshop_submit_info', 'new_workshop_form', 'new_workshop_form');
+          refreshWorkshopsLists();
           var message = $(
             '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
               Workshop created!\
@@ -124,28 +175,13 @@ $(function() {
             var newModal = new bootstrap.Modal($("#workshops_list_modal"));
             newModal.show();
             $('#workshop_details_modal').removeData('modal-redirect');
-            clearWorkshopForm('new_workshop_form');
+            clearForm('new_workshop_form');
             $('#workshops_list_messages_box').append(message);
           } else {
             $('#messages_box').append(message);
           }
         }
       });
-    });
-});
-
-// Clears workshop form when leaving modal
-$(function(){
-  $('#new_workshop_modal').on('hidden.bs.modal', function () {
-    clearWorkshopForm();
-  });
-});
-
-// Loads content of the workshop details modal
-$(function() {  
-    $('.workshop-list').on('click', '.show-workshop-details', function(){
-      var url = $(this).data('url');
-      $('#workshop_details_modal_content').load(url);
     });
 });
 
@@ -165,7 +201,8 @@ $(function() {
       url: $(this).data('url'),
       data: $('#edit_workshop_form').serializeArray(),
       success: function(response) {
-        workshopsHandleResponse(response, modal, 'edit_workshop_submit_info');
+        handleAjaxResponse(response, modal, 'edit_workshop_submit_info', 'edit_workshop_form');
+        refreshWorkshopsLists();
         var message = $(
           '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
             Workshop data edited!\
@@ -176,29 +213,6 @@ $(function() {
         $('#messages_box').append(message);
       }
     });
-  });
-});
-
-// Assigns redirect action to dismissing workshop details modal
-$(function(){
-  $('#workshops_list_modal').on('click', '.set-modal-redirect', function(){
-    console.log('dupa');
-    $('#workshop_details_modal').data('modal-redirect', true);
-    $('.redirect-to-workshop-list').html('Go back');
-  });
-});
-
-// Handling wheter to close modal or redirect to previous one
-$(function() {
-  var modal = new bootstrap.Modal($("#workshop_details_modal"));
-
-  $('#workshop_details_modal').on('click', '.redirect-to-workshop-list', function() {
-    modal.hide();
-    if ($('#workshop_details_modal').data('modal-redirect') == true){
-      var newModal = new bootstrap.Modal($("#workshops_list_modal"));
-      newModal.show();
-      $('#workshop_details_modal').removeData('modal-redirect');
-    }
   });
 });
 
@@ -266,21 +280,6 @@ $(function(){
   });
 });
 
-// Workshops filtering reset
-$(function(){
-  $('.reset-workshop-filter').on('click', function(){
-    $('#workshops_list').load($('#workshops_list').data('url'));
-  });
-});
-
-// Workshops filtering
-$(function(){
-  $('.apply-workshop-filter').on('click', function(event){
-    event.preventDefault();
-    $('#workshops_list').load($('#workshops_list').data('url') + $('#workshop_filter_category').val() + '/' + $('#workshop_filter_phrase').val());
-  });
-});
-
 // Toggle favourite car
 $(function(){
   $('.car-toggle-favourite').on('click', function(event){
@@ -309,4 +308,50 @@ $(function(){
       }
     });
   });
+});
+
+
+
+
+
+
+
+
+// Handles new entry creation request
+$(function() {  
+  var modal = new bootstrap.Modal($("#new_entry_modal"));
+
+    $(".save-new-entry").on("click", function(event) {
+      event.preventDefault();
+
+      // if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
+        // return false;
+      // }
+
+
+      $.ajax({
+        type: "POST",
+        url: $(this).data('url'),
+        data: $('#new_entry_form').serializeArray(),
+        success: function(response) {
+          handleAjaxResponse(response, modal, 'new_entry_submit_info', 'new_entry_form');
+          var message = $(
+            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+              Entry created!\
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+            </div>'
+          );
+          modal.hide();
+          // if ($('#workshop_details_modal').data('modal-redirect') == true){
+          //   var newModal = new bootstrap.Modal($("#workshops_list_modal"));
+          //   newModal.show();
+          //   $('#workshop_details_modal').removeData('modal-redirect');
+          //   clearForm('new_workshop_form');
+          //   $('#workshops_list_messages_box').append(message);
+          // } else {
+          //   $('#messages_box').append(message);
+          // }
+        }
+      });
+    });
 });
