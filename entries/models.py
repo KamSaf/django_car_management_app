@@ -17,6 +17,8 @@ class Entry(models.Model):
     cost = models.FloatField(default=0)
     category = models.TextField(blank=False, choices=TYPES_OF_ENTRIES)
     date = models.DateTimeField(blank=False)
+    place = models.TextField(blank=True)
+    mileage = models.IntegerField(blank=False, null=True)
     notes = models.TextField(blank=True, max_length=255)
     create_date = models.DateTimeField(default=timezone.now)
     last_edit_date = models.DateTimeField(default=timezone.now)

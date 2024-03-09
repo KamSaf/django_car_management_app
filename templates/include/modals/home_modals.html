@@ -214,3 +214,32 @@
     </div>
     </div>
 </div>
+
+<!-- Entry details modal -->
+<div class="modal fade" id="entry_details_modal" tabindex="-1" role="dialog" aria-labelledby="entry_details_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div id="entry_details_modal_content" class="modal-content">hello</div>
+    </div>
+</div>
+
+<!-- New entry modal -->
+<div class="modal fade" id="new_entry_modal" tabindex="-1" role="dialog" aria-labelledby="new_entry_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="new_entry_modal_label">New entry</h5>
+        </div>
+        <form id="new_entry_form" method="POST">
+            <div class="modal-body">
+                    <div id="new_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                    {% csrf_token %}
+                    {{ new_workshop_form|crispy }}
+            </div>
+            <div class="modal-footer">
+                <button id="new_entry_close_modal_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success" data-url="#">Save</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>

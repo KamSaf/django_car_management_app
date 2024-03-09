@@ -1,8 +1,8 @@
 <div id="favourite_workshops_list" class="overflow-auto workshop-list" style="max-height: 175px;" data-url="{% url 'load_favourite_workshops_list_url' %}">
-    <ul class="list-group w-auto" style="list-style: none;">
+    <div class="list-group w-auto" style="list-style: none;">
         {% for workshop in favourite_workshops %}
             <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
-                <li style="max-height: 50px;">
+                <div style="max-height: 50px;">
                     <div class="row">
                         <span class="col text-start">{{ workshop.name }}</span>
                         <span class="col text-center">
@@ -13,8 +13,8 @@
                         </span>
                         <span class="col text-end">{{ workshop.address }}, {{ workshop.city }}</span>
                     </div>
-                </li>
+                </div>
             </button>
         {% endfor %}                            
-    </ul>
+        </div>
 </div>
