@@ -46,9 +46,12 @@ def home(request, car_id=None):
     cars = Car.objects.filter(user=request.user).order_by('create_date').all()
 
     viewed_car = get_viewed_car(user=request.user, car_id=car_id)
+    entries = Entry.objects.filter(user=request.user, car=viewed_car).order_by('-date').all()
 
     last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
     viewed_car_mileage = last_entry.mileage if last_entry else 0
+
+    # create forms
     new_workshop_form = WorkshopForm(logged_user=request.user)
     new_car_form = CarForm(logged_user=request.user)
     new_entry_form = EntryForm(logged_user=request.user, car=viewed_car)
@@ -67,6 +70,7 @@ def home(request, car_id=None):
             'viewed_car': viewed_car,
             'viewed_car_mileage': viewed_car_mileage,
             'workshops': workshops,
-            'favourite_workshops': favourite_workshops
+            'favourite_workshops': favourite_workshops,
+            'entries': entries,
         }
     )

@@ -35,39 +35,19 @@
                         <hr>
                         <div class="h-75" style="margin-top: 25px;">
                             <div class="list-group h-100 scrollable overflow-auto">
-                                <button class="btn btn-outline-warning text-dark" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="#">
-                                    <div style="max-height: 50px;">
-                                        <div class="row">
-                                            <span class="col text-start"><i class="bi bi-fuel-pump"></i> Fuel</span>
-                                            <span class="col text-center">
-                                                on: 09.03.2024
-                                            </span>
-                                            <span class="col text-end">257.33 zł</span>
+                                {% for entry in entries %}
+                                    <button class="btn {% if entry.category == 'fuel' %} btn-outline-warning {% elif entry.category == 'service' %} btn-outline-danger {% else %} btn-outline-info {% endif %} text-dark" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="#">
+                                        <div style="max-height: 50px;">
+                                            <div class="row">
+                                                <span class="col text-start"><i class="bi bi-fuel-pump"></i> {{ entry.category|capfirst }}</span>
+                                                <span class="col text-center">
+                                                    on: {{ entry.date|date:"D d M Y" }}
+                                                </span>
+                                                <span class="col text-end">{{ entry.cost|stringformat:".2f" }} zł</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </button>
-                                <button class="btn btn-outline-danger text-dark" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="#">
-                                    <div style="max-height: 50px;">
-                                        <div class="row">
-                                            <span class="col text-start"><i class="bi bi-tools"></i> Service</span>
-                                            <span class="col text-center">
-                                                on: 19.02.2024
-                                            </span>
-                                            <span class="col text-end">990.00 zł</span>
-                                        </div>
-                                    </div>
-                                </button>
-                                <button class="btn btn-outline-info text-dark" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="#">
-                                    <div style="max-height: 50px;">
-                                        <div class="row">
-                                            <span class="col text-start"><i class="bi bi-cart-plus"></i> Service</span>
-                                            <span class="col text-center">
-                                                on: 03.01.2024
-                                            </span>
-                                            <span class="col text-end">53.00 zł</span>
-                                        </div>
-                                    </div>
-                                </button>
+                                    </button>
+                                {% endfor %}
                             </div>
                         </div>
                         <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
