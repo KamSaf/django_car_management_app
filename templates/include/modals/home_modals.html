@@ -233,7 +233,7 @@
             <div class="modal-body">
                     <div id="new_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                     {% csrf_token %}
-                    {{ new_workshop_form|crispy }}
+                    {{ new_entry_form|crispy }}
             </div>
             <div class="modal-footer">
                 <button id="new_entry_close_modal_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

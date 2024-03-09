@@ -3,6 +3,8 @@ from workshops.forms import WorkshopForm
 from workshops.models import Workshop
 from cars.models import Car
 from cars.forms import CarForm
+from entries.forms import EntryForm
+from entries.models import Entry
 
 
 def welcome(request):
@@ -52,8 +54,9 @@ def home(request, car_id=None):
         except Car.DoesNotExist:
             viewed_car = cars[0]
 
-    workshop_form = WorkshopForm(logged_user=request.user)
+    new_workshop_form = WorkshopForm(logged_user=request.user)
     new_car_form = CarForm(logged_user=request.user)
+    new_entry_form = EntryForm(logged_user=request.user)
     edit_car_form = CarForm(instance=viewed_car, logged_user=request.user)
     edit_car_form.set_initial(car=viewed_car)
 
@@ -61,8 +64,9 @@ def home(request, car_id=None):
         request=request,
         template_name='home.html',
         context={
-            'new_workshop_form': workshop_form,
+            'new_workshop_form': new_workshop_form,
             'new_car_form': new_car_form,
+            'new_entry_form': new_entry_form,
             'edit_car_form': edit_car_form,
             'cars': cars,
             'viewed_car': viewed_car,
