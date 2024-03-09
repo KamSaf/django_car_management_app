@@ -60,6 +60,14 @@
 </div>
 <div style="margin-bottom: 15px;" class="row">
     <span class="col text-start">
+        <span class="float-start"><i class="bi bi-arrows-angle-expand"></i> Mileage:</span>
+        <span class="float-end">
+            {{ viewed_car_mileage }} km
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
         <span class="float-start"><i class="bi bi-pencil-square"></i> VIN number:</span>
         <span class="float-end">
             {% if viewed_car.vin %}

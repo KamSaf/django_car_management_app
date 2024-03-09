@@ -54,6 +54,8 @@ def home(request, car_id=None):
         except Car.DoesNotExist:
             viewed_car = cars[0]
 
+    last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
+    viewed_car_mileage = last_entry.mileage if last_entry else 0
     new_workshop_form = WorkshopForm(logged_user=request.user)
     new_car_form = CarForm(logged_user=request.user)
     new_entry_form = EntryForm(logged_user=request.user)
@@ -70,6 +72,7 @@ def home(request, car_id=None):
             'edit_car_form': edit_car_form,
             'cars': cars,
             'viewed_car': viewed_car,
+            'viewed_car_mileage': viewed_car_mileage,
             'workshops': workshops,
             'favourite_workshops': favourite_workshops
         }
