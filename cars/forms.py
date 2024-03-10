@@ -110,7 +110,6 @@ class CarForm(forms.ModelForm):
         self.instance.vin = vin
         self.instance.displacement = displacement
         self.instance.last_edit_date = timezone.now()
-        self.instance.create_date = timezone.now()
         self.instance.user = self.logged_user
 
         return self.cleaned_data

@@ -37,6 +37,34 @@ def async_add_entry(request):
     })
 
 
+@api_view(['POST'])
+@login_required
+def async_edit_entry(request):
+    """
+        Endpoint for creating new exploitation history entry (for AJAX)
+    """
+    if request.method == 'POST':
+        entry_id = int(request.POST.get('entry_id'))
+
+        try:
+            entry = Entry.objects.get(id=entry_id)
+        except Entry.DoesNotExist:
+            return Response({
+                'status': 'fail',
+                'errors': 'This entry does not exist in the database.',
+            })
+
+        form = EntryForm(request.POST, logged_user=request.user, car=entry.car, instance=entry)
+        form.clear_errors()
+        if form.is_valid():
+            form.save()
+            return Response({'status': 'success'})
+    return Response({
+        'status': 'fail',
+        'errors': form.data_errors,
+    })
+
+
 @api_view(['GET'])
 @login_required
 def async_load_entries_list(request):
@@ -67,8 +95,12 @@ def async_load_entry_details(request, entry_id):
             'message': 'Entry not found',
         })
 
+    edit_entry_form = EntryForm(instance=entry, logged_user=request.user, car=entry.car)
     return render(
         request=request,
         template_name='include/entries/entry_details.html',
-        context={'entry': entry},
+        context={
+            'entry': entry,
+            'edit_entry_form': edit_entry_form,
+            },
     )

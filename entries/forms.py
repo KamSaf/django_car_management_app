@@ -71,7 +71,7 @@ class EntryForm(forms.ModelForm):
 
         # check if type of cost is valid
         try:
-            cost = int(self.cleaned_data.get('cost'))
+            cost = int(float(self.cleaned_data.get('cost')))
         except TypeError:
             cost_error = EntryForm.__invalid_field_value(field_name='cost')
             self.data_errors['id_cost'] = cost_error
@@ -122,7 +122,6 @@ class EntryForm(forms.ModelForm):
         self.instance.cost = cost
         self.instance.mileage = mileage
         self.instance.last_edit_date = timezone.now()
-        self.instance.create_date = timezone.now()
         self.instance.user = self.logged_user
         self.instance.car = self.car
 

@@ -50,8 +50,9 @@
                             {% csrf_token %}
                             {{ edit_entry_form|crispy }}
                         </div>
+                        <input type="hidden" name="entry_id" value="{{ entry.id }}">
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-success" data-url="#" data-refresh-url="#">Save</button>
+                            <button type="button" class="btn btn-sm btn-success save-edit-entry" data-url="{% url 'edit_entry_url' %}" data-refresh-url="{% url 'load_entry_details_url' entry_id=entry.id %}">Save</button>
                             <button type="button" class="btn btn-sm btn-secondary float-end">Close</button>
                         </div>
                     </form>
