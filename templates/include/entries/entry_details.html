@@ -1,0 +1,62 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<div id="entry_details_modal_content" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="workshop_details_modal_label">
+            {% if entry.category == 'fuel' %} 
+                <i class="bi bi-fuel-pump"></i>
+             {% elif entry.category == 'service' %}
+                <i class="bi bi-tools"></i>
+            {% else %}
+                <i class="bi bi-car-plus"></i>
+            {% endif %}
+            {{ entry.category|capfirst }} on {{ entry.date|date:"D d M Y" }}
+        </h5>
+        <button type="button" class="btn btn-sm btn-danger float-end" data-url="#" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="entry_details_tab" data-bs-toggle="tab" data-bs-target="#data-tab" type="button" role="tab" aria-controls="data-tab" aria-selected="true">Details</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="entry_edit_tab" data-bs-toggle="tab" data-bs-target="#form-tab" type="button" role="tab" aria-controls="form-tab" aria-selected="false">Edit</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="data-tab" role="tabpanel" aria-labelledby="entry_details_tab">
+                <div style="margin-top: 25px;" class="container">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            {% include 'include/entries/entry_data.html' %}
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary float-end" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="form-tab" role="tabpanel" aria-labelledby="entry_edit_tab">
+                <div style="margin-top: 25px;" class="container">
+                    <form id="edit_entry_form" method="POST">
+                        <div id="entry_edit_messages_box" style="margin-top: 15px;"></div>
+                        <div class="modal-body">
+                            <div id="edit_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                            {% csrf_token %}
+                            {{ edit_entry_form|crispy }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-success" data-url="#" data-refresh-url="#">Save</button>
+                            <button type="button" class="btn btn-sm btn-secondary float-end">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -54,7 +54,7 @@ class EntryForm(forms.ModelForm):
 
     # returns error message for invalid value name
     def __invalid_field_value(field_name: str) -> str:
-        return f'Invalid {field_name} '.join('field value.')
+        return f'Invalid {field_name} field value.'
 
     def clean(self):
         category = self.cleaned_data.get('category')
@@ -104,14 +104,14 @@ class EntryForm(forms.ModelForm):
 
         # check if place field value is not too long
         if len(place) > 200:
-            place_error = 'Place '.join(self.error_messages['field_value_too_long'])
+            place_error = 'Place ' + self.error_messages['field_value_too_long']
             self.data_errors['id_place'] = place_error
             self._errors['place'] = place_error
             return self.cleaned_data
 
         # check if details field value is not too long
         if len(details) > 1024:
-            details_error = 'Details '.join(self.error_messages['field_value_too_long'])
+            details_error = 'Details ' + self.error_messages['field_value_too_long']
             self.data_errors['id_details'] = details_error
             self._errors['details'] = details_error
             return self.cleaned_data

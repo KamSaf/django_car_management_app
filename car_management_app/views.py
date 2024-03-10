@@ -46,7 +46,7 @@ def home(request, car_id=None):
     cars = Car.objects.filter(user=request.user).order_by('create_date').all()
 
     viewed_car = get_viewed_car(user=request.user, car_id=car_id)
-    entries = Entry.objects.filter(user=request.user, car=viewed_car).order_by('-date').all()
+    entries = Entry.objects.filter(user=request.user, car=viewed_car).order_by('-date', '-create_date').all()
 
     last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
     viewed_car_mileage = last_entry.mileage if last_entry else 0

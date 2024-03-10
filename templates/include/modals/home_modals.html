@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-4">
                                 <form id="favourite_car_form_{{ car.id }}" method="POST">
-                                    <input name="car_id" value="{{ car.id }}" hidden>
+                                    <input name="car_id" value="{{ car.id }}" type="hidden">
                                 {% if car.favourite %}
                                     <button class="btn btn-sm btn-primary car-toggle-favourite favourite-car float-end" data-car-id="{{ car.id }}" data-url="{% url 'toggle_favourite_car_url' %}"><i class="bi bi-star-fill"></i></button>
                                 {% else %}
@@ -98,7 +98,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#car_details_modal">Cancel</button>
                 <form method="POST" action="{% url 'delete_car' %}">
-                    <input name="car_id" value="{{ viewed_car.id }}" hidden>
+                    <input name="car_id" value="{{ viewed_car.id }}" type="hidden">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
@@ -118,7 +118,7 @@
             <div class="modal-body">
                 <div id="edit_car_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                 {% csrf_token %}
-                <input name="car_id" value="{{ viewed_car.id }}" hidden>
+                <input name="car_id" value="{{ viewed_car.id }}" type="hidden">
                 {{ edit_car_form|crispy }}
             </div>
             <div class="modal-footer">
@@ -218,7 +218,7 @@
 <!-- Entry details modal -->
 <div class="modal fade" id="entry_details_modal" tabindex="-1" role="dialog" aria-labelledby="entry_details_modal_label" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div id="entry_details_modal_content" class="modal-content">hello</div>
+        <div id="entry_details_modal_content" class="modal-content"></div>
     </div>
 </div>
 
@@ -234,7 +234,7 @@
                 <div id="new_entry_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                 {% csrf_token %}
                 {{ new_entry_form|crispy }}
-                <input name="car_id" value="{{ viewed_car.id }}" hidden>
+                <input name="car_id" value="{{ viewed_car.id }}" type="hidden">
             </div>
             <div class="modal-footer">
                 <button id="new_entry_close_modal_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

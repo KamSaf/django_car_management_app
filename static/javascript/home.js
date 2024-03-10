@@ -14,7 +14,7 @@ function checkIfValidPhoneNumber(phoneNumber){
 // Function for clearing form errors and entered data
 function clearForm(form_id){
   clearErrors();
-  $('#' + form_id + ' *').filter(':input').each(function(){
+  $('#' + form_id + ' *').filter(':input').not($("input:hidden")).each(function(){
     $(this).val('');
   });
 };
@@ -310,13 +310,6 @@ $(function(){
   });
 });
 
-
-
-
-
-
-
-
 // Handles new entry creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_entry_modal"));
@@ -342,16 +335,16 @@ $(function() {
             </div>'
           );
           modal.hide();
-          // if ($('#workshop_details_modal').data('modal-redirect') == true){
-          //   var newModal = new bootstrap.Modal($("#workshops_list_modal"));
-          //   newModal.show();
-          //   $('#workshop_details_modal').removeData('modal-redirect');
-          //   clearForm('new_workshop_form');
-          //   $('#workshops_list_messages_box').append(message);
-          // } else {
-          //   $('#messages_box').append(message);
-          // }
+          $('#entries_list').load($('#entries_list').data('url'));
+          $('#messages_box').append(message);
         }
       });
     });
+});
+
+// Entries list refresh
+$(function(){
+  $('#entries_list').on('click', '.entry-details', function(){
+    $('#entry_details_modal_content').load($(this).data('url'));
+  });
 });

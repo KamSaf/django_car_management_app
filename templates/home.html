@@ -33,23 +33,7 @@
                     <div class="card-body h-100">
                         <h5 class="card-title">Exploatation History</h5>
                         <hr>
-                        <div class="h-75" style="margin-top: 25px;">
-                            <div class="list-group h-100 scrollable overflow-auto">
-                                {% for entry in entries %}
-                                    <button class="btn {% if entry.category == 'fuel' %} btn-outline-warning {% elif entry.category == 'service' %} btn-outline-danger {% else %} btn-outline-info {% endif %} text-dark" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="#">
-                                        <div style="max-height: 50px;">
-                                            <div class="row">
-                                                <span class="col text-start"><i class="bi bi-fuel-pump"></i> {{ entry.category|capfirst }}</span>
-                                                <span class="col text-center">
-                                                    on: {{ entry.date|date:"D d M Y" }}
-                                                </span>
-                                                <span class="col text-end">{{ entry.cost|stringformat:".2f" }} zł</span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                {% endfor %}
-                            </div>
-                        </div>
+                        {% include 'include/entries/entries_list.html' %}
                         <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
                     </div>
                 </div>

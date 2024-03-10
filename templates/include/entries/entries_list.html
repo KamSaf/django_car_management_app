@@ -1,0 +1,26 @@
+<div id="entries_list" class="h-75" style="margin-top: 25px;" data-url="{% url 'load_entries_list_url' %}">
+    <div class="list-group h-100 scrollable overflow-auto">
+        {% for entry in entries %}
+            <button class="btn {% if entry.category == 'fuel' %} btn-outline-warning {% elif entry.category == 'service' %} btn-outline-danger {% else %} btn-outline-info {% endif %} text-dark entry-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#entry_details_modal" data-url="{% url 'load_entry_details_url' entry_id=entry.id %}">
+                <div style="max-height: 50px;">
+                    <div class="row">
+                        <span class="col text-start">
+                            {% if entry.category == 'fuel' %} 
+                                <i class="bi bi-fuel-pump"></i>
+                            {% elif entry.category == 'service' %}
+                                <i class="bi bi-tools"></i>
+                            {% else %}
+                                <i class="bi bi-car-plus"></i>
+                            {% endif %}
+                            {{ entry.category|capfirst }}
+                        </span>
+                        <span class="col text-center">
+                            on: {{ entry.date|date:"D d M Y" }}
+                        </span>
+                        <span class="col text-end">{{ entry.cost|stringformat:".2f" }} zł</span>
+                    </div>
+                </div>
+            </button>
+        {% endfor %}
+    </div>
+</div>
