@@ -102,5 +102,32 @@ def async_load_entry_details(request, entry_id):
         context={
             'entry': entry,
             'edit_entry_form': edit_entry_form,
-            },
+            }
     )
+
+
+@api_view(['GET'])
+@login_required
+def async_delete_entry(request, entry_id):
+    """
+        Endpoint for deleting entry (for AJAX)
+    """
+    try:
+        entry = Entry.objects.get(id=entry_id)
+    except Entry.DoesNotExist:
+        return Response({
+            'status': 'fail',
+            'errors': {
+                'db_error': 'This item does not exist in the database.'
+            },
+        })
+    if request.user.id != entry.user_id:
+        return Response({
+            'status': 'fail',
+            'errors': {
+                'access_error': 'You are not permitted to perform this action.'
+            },
+        })
+
+    entry.delete()
+    return Response({'status': 'success'})

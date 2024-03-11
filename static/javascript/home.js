@@ -390,3 +390,34 @@ $(function() {
   });
 });
 
+// Deleting entry
+$(function(){
+  $('#entry_details_modal_content').on('click', '.delete-entry', function(){
+    if ($(this).data('confirmed') != true){
+      $(this).popover('show')
+        .html('Yes')
+        .data('confirmed', true)
+        .attr('data-bs-dismiss', 'modal')
+    } else{
+      var $this = $(this);
+
+      $.ajax({
+        type: "GET",
+        url: $this.data('url'),
+        success: function(response) {
+          if (response['status'] == 'success'){
+            var message = $(
+              '<div id="entry_message" class="alert alert-success" role="alert" style="display: block;">\
+                Entry deleted.\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            $('#entries_list').load($('#entries_list').data('url'));
+            $('.popover').remove();
+            $('#messages_box').append(message);
+          }
+        }
+      });
+    }
+  });
+});

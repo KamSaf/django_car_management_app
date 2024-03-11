@@ -13,7 +13,7 @@
             {% endif %}
             {{ entry.category|capfirst }} on {{ entry.date|date:"D d M Y" }}
         </h5>
-        <button type="button" class="btn btn-sm btn-danger float-end" data-url="#" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
+        <button type="button" class="btn btn-sm btn-danger delete-entry float-end" data-url="{% url 'delete_entry_url' entry_id=entry.id %}" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
             <i class="bi bi-trash"></i>
         </button>
     </div>
@@ -53,7 +53,7 @@
                         <input type="hidden" name="entry_id" value="{{ entry.id }}">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-sm btn-success save-edit-entry" data-url="{% url 'edit_entry_url' %}" data-refresh-url="{% url 'load_entry_details_url' entry_id=entry.id %}">Save</button>
-                            <button type="button" class="btn btn-sm btn-secondary float-end">Close</button>
+                            <button type="button" class="btn btn-sm btn-secondary float-end" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
