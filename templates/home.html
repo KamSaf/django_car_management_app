@@ -35,13 +35,13 @@
                             <h5 class="col card-title">
                                 Exploatation History
                             </h5>
-                            <form class="col" role="search">
+                            <form id="entries_search_form" class="col" role="search">
                                 <div class="row">
                                     <span class="col-10">
-                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                        <input name="search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
                                     </span>
                                     <span class="col-2">
-                                        <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>    
+                                        <button type="button" class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>    
                                     </span>    
                                 </div>
                             </form>                        
@@ -51,14 +51,14 @@
                         </div>
                         <div class="card-footer h-25">
                             <div class="row" style="margin-top: 10px;">
-                                <div class="col">
+                                <form id="entries_search_form" class="col">
                                     <select class="form-control" name="category" id="category_filter" style="max-width: 100px; display: inline;">
                                             <option value="fuel">Fuel</option>
                                             <option value="service">Service</option>
                                             <option value="others">Others</option>
                                     </select>
                                     <button type="button" class="btn btn-outline-dark" style="margin-left: 20px;">Filter</button>
-                                </div>
+                                </form>
                             </div>
                             <div class="row" style="margin-top: 15px;">
                                 <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
