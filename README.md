@@ -1,3 +1,5 @@
+# WORK IN PROGRESS
+
 Django web application created to make it easier to keep records of car operating expenses. 
 
 How to run:
