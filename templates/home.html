@@ -28,16 +28,44 @@
 
     <div style="margin-top: 25px;" class="container-fluid h-75">
         <div class="row h-100">
-            <div class="col h-100">
-                <div style="margin-top: 25px;" class="shadow bg-body rounded card h-75">
-                    <div class="card-body h-100">
-                        <h5 class="card-title">Exploatation History</h5>
-                        <hr>
-                        {% include 'include/entries/entries_list.html' %}
-                        <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
+            <div class="row h-100">
+                <div class="col h-100">
+                    <div style="margin-top: 25px;" class="shadow bg-body rounded card h-75">
+                        <div class="card-body h-75 row">
+                            <h5 class="col card-title">
+                                Exploatation History
+                            </h5>
+                            <form class="col" role="search">
+                                <div class="row">
+                                    <span class="col-10">
+                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                    </span>
+                                    <span class="col-2">
+                                        <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>    
+                                    </span>    
+                                </div>
+                            </form>                        
+                            <hr style="margin-top: 10px;">
+                            {% include 'include/entries/entries_list.html' %}
+
+                        </div>
+                        <div class="card-footer h-25">
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col">
+                                    <select class="form-control" name="category" id="category_filter" style="max-width: 100px; display: inline;">
+                                            <option value="fuel">Fuel</option>
+                                            <option value="service">Service</option>
+                                            <option value="others">Others</option>
+                                    </select>
+                                    <button type="button" class="btn btn-outline-dark" style="margin-left: 20px;">Filter</button>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px;">
+                                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="col h-100">
                 <div class="container h-100">
                     <div class="row h-25">
