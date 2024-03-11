@@ -139,19 +139,21 @@ def async_load_workshops_list(request, category=None, filter=None):
     """
         Endpoint for loading all workshops list (for AJAX)
     """
+
+    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()    
     match(category):
         case 'name':
-            workshops = Workshop.objects.filter(user=request.user, name__icontains=filter).order_by('create_date').all()
+            workshops = workshops.filter(name__icontains=filter)
         case 'city':
-            workshops = Workshop.objects.filter(user=request.user, city__icontains=filter).order_by('create_date').all()
+            workshops = workshops.filter(city__icontains=filter)
         case 'address':
-            workshops = Workshop.objects.filter(user=request.user, address__icontains=filter).order_by('create_date').all()
+            workshops = workshops.filter(address__icontains=filter)
         case 'profession':
-            workshops = Workshop.objects.filter(user=request.user, profession__icontains=filter).order_by('create_date').all()
+            workshops = workshops.filter(profession__icontains=filter)
         case 'phone_num':
-            workshops = Workshop.objects.filter(user=request.user, phone_number__icontains=filter).order_by('create_date').all()
+            workshops = workshops.filter(phone_number__icontains=filter)
         case _:
-            workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
+            pass
 
     return render(
         request=request,
