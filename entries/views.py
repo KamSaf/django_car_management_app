@@ -67,21 +67,16 @@ def async_edit_entry(request):
 
 @api_view(['GET', 'POST'])
 @login_required
-def async_load_entries_list(request):
+def async_load_entries_list(request, category=None, search_phrase=None):
     """
         Endpoint for loading exploitation history entries (for AJAX)
     """
-
-    if request.POST:
-        category = request.POST.get('category')
-        search_phrase = request.POST.get('search_phrase')
-
     entries = Entry.objects.filter(user=request.user).order_by('-date', '-create_date').all()
 
-    if category:
+    if category and category in Entry.TYPES_OF_ENTRIES:
         entries = entries.filter(category=category)
 
-    if search_phrase:
+    if search_phrase and search_phrase != '__null':
         entries = entries.filter(details__icontains=search_phrase)
 
     return render(

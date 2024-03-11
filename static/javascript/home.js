@@ -155,6 +155,20 @@ $(function(){
   });
 });
 
+// Entries filtering
+$(function(){
+  $('.apply-entries-filter').on('click', function(event){
+    event.preventDefault();
+    let url = [$(this).data('url').slice(0, -1)];
+    let args = [$('#entries_category_filter').val(), $('#entries_search_phrase').val()]
+
+    args.forEach(function(element) {
+      element !== "" ? url.push(element) : url.push('__null');
+    });
+    $('#entry_details_modal_content').load(url.join('/'));
+  });
+});
+
 // Handles new workshop creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_workshop_modal"));

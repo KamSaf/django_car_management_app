@@ -31,36 +31,33 @@
             <div class="row h-100">
                 <div class="col h-100">
                     <div style="margin-top: 25px;" class="shadow bg-body rounded card h-75">
-                        <div class="card-body h-75 row">
+                        <div class="card-body row" style="height: 80%;">
                             <h5 class="col card-title">
                                 Exploatation History
                             </h5>
                             <form id="entries_search_form" class="col" role="search">
                                 <div class="row">
-                                    <span class="col-10">
-                                        <input name="search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                    <span class="col-3">
+                                        <select class="form-control" id="entries_category_filter">
+                                            <option value="all">All</option>
+                                            <option value="fuel">Fuel</option>
+                                            <option value="service">Service</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-7">
+                                        <input id="entries_search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
                                     </span>
                                     <span class="col-2">
-                                        <button type="button" class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>    
+                                        <button type="button" class="btn btn-outline-dark apply-entries-filter" type="submit" data-url="{% url 'load_entries_list_url' %}"><i class="bi bi-search"></i></button>    
                                     </span>    
                                 </div>
                             </form>                        
                             <hr style="margin-top: 10px;">
                             {% include 'include/entries/entries_list.html' %}
-
                         </div>
-                        <div class="card-footer h-25">
-                            <div class="row" style="margin-top: 10px;">
-                                <form id="entries_search_form" class="col">
-                                    <select class="form-control" name="category" id="category_filter" style="max-width: 100px; display: inline;">
-                                            <option value="fuel">Fuel</option>
-                                            <option value="service">Service</option>
-                                            <option value="others">Others</option>
-                                    </select>
-                                    <button type="button" class="btn btn-outline-dark" style="margin-left: 20px;">Filter</button>
-                                </form>
-                            </div>
-                            <div class="row" style="margin-top: 15px;">
+                        <div class="card-footer" style="height: 15%;">
+                            <div class="row" style="margin-top: 1%;" style="height: 75%;">
                                 <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
                             </div>
                         </div>
