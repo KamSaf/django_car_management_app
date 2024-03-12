@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'cars.apps.CarsConfig',
     'entries.apps.EntriesConfig',
     'workshops.apps.WorkshopsConfig',
+    'reminders.apps.RemindersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
