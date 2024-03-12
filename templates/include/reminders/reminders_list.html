@@ -1,14 +1,14 @@
 {% for reminder in reminders %}
-<li style="margin-bottom: 1%;">
-    <button class="btn btn-sm {% if reminder.category == 'service' %} btn-danger {% elif reminder.category == 'fuel' %} btn-warning {% else %} btn-info {% endif %} w-100">
-        {% if reminder.category == 'service' %}
-            <i class="bi bi-tools"></i>
-        {% elif reminder.category == 'fuel' %}
-            <i class="bi bi-fuel-pump"></i>
-        {% else %}
-            <i class="bi bi-cart-plus"></i>
-        {% endif %}
-        {{ reminder.details }} on: {{ reminder.date }}
-    </button>
-</li>
+    <li style="margin-bottom: 1%;">
+        <button class="btn btn-sm {% if reminder.category == 'service' %} btn-danger {% elif reminder.category == 'fuel' %} btn-warning {% else %} btn-info {% endif %} w-100">
+            {% if reminder.category == 'service' %}
+                <i class="bi bi-tools"></i>
+            {% elif reminder.category == 'fuel' %}
+                <i class="bi bi-fuel-pump"></i>
+            {% else %}
+                <i class="bi bi-cart-plus"></i>
+            {% endif %}
+            {{ reminder.details }} on: {{ reminder.date }}
+        </button>
+    </li>
 {% endfor %}

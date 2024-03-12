@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul id="reminders_list" class="col overflow-auto" style="list-style-type: none; max-height: 85%" data-url="{% url 'load_reminders_list_url' %}">
+                            <ul id="reminders_list" class="col overflow-auto" style="list-style-type: none; max-height: 85%" data-url="{% url 'load_reminders_list_url' car_id=viewed_car.id %}">
                                 {% include 'include/reminders/reminders_list.html' %}
                             </ul>
                         </div>

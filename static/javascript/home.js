@@ -170,6 +170,13 @@ $(function(){
   });
 });
 
+// // Reminders details load
+// $(function(){
+//   $('#entries_list').on('click', '.entry-details', function(){
+//     $('#entry_details_modal_content').load($(this).data('url'));
+//   });
+// });
+
 // Handles new workshop creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_workshop_modal"));
@@ -428,4 +435,36 @@ $(function(){
       });
     }
   });
+});
+
+// Handles new reminder creation request
+$(function() {  
+  var modal = new bootstrap.Modal($("#new_reminder_modal"));
+
+    $(".save-new-reminder").on("click", function(event) {
+      event.preventDefault();
+
+      // if (!validateReminderData('new_reminder_submit_info', 'new_reminder_form')){
+        // return false;
+      // }
+
+      $.ajax({
+        type: "POST",
+        url: $(this).data('url'),
+        data: $('#new_reminder_form').serializeArray(),
+        success: function(response) {
+          handleAjaxResponse(response, modal, 'new_reminder_submit_info', 'new_reminder_form');
+          var message = $(
+            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+              Reminder created!\
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+            </div>'
+          );
+          modal.hide();
+          console.log($('#reminders_list').data('url'));
+          $('#reminders_list').load($('#reminders_list').data('url'));
+          $('#messages_box').append(message);
+        }
+      });
+    });
 });

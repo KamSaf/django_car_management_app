@@ -5,6 +5,7 @@ from .forms import ReminderForm
 from .models import Reminder
 from cars.models import Car
 from django.shortcuts import render
+from django.utils import timezone
 
 
 @api_view(['POST'])
@@ -50,11 +51,11 @@ def async_load_reminders_list(request, car_id):
             'errors': 'This car does not exist in the database.',
         })
 
-    reminders = Reminder.objects.filter(user=request.user, car=car).order_by('date').all()
+    reminders = Reminder.objects.filter(user=request.user, car=car, date__gte=timezone.now()).order_by('date').all()
 
     return render(
         request=request,
-        template_name='include/entries/reminders_list.html',
+        template_name='include/reminders/reminders_list.html',
         context={'reminders': reminders},
     )
 
@@ -75,7 +76,7 @@ def async_load_reminder_details(request, reminder_id):
 
     return render(
         request=request,
-        template_name='include/entries/entry_details.html',
+        template_name='include/reminders/reminder_details.html',
         context={
             'reminder': reminder,
         }

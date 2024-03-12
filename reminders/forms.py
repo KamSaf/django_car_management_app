@@ -12,7 +12,7 @@ class ReminderForm(forms.ModelForm):
 
     category = forms.ChoiceField(required=True, label=mark_safe('Category'), choices=Entry.TYPES_OF_ENTRIES)
     place = forms.Field(required=False, label=mark_safe('Place'))
-    details = forms.Field(required=False, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
+    details = forms.Field(required=True, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
 
     data_errors = {}
     field_order = ['date', 'category', 'place', 'details']

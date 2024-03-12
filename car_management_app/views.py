@@ -8,6 +8,7 @@ from entries.models import Entry
 from reminders.models import Reminder
 from reminders.forms import ReminderForm
 from .utils import get_viewed_car
+from django.utils import timezone
 
 
 def welcome(request):
@@ -57,7 +58,7 @@ def home(request, car_id=None):
     last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
     viewed_car_mileage = last_entry.mileage if last_entry else 0
 
-    reminders = Reminder.objects.filter(car=viewed_car).order_by('date').all()
+    reminders = Reminder.objects.filter(car=viewed_car, date__gte=timezone.now()).order_by('date').all()
 
     # create forms
     new_workshop_form = WorkshopForm(logged_user=request.user)
