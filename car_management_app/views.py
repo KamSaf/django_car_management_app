@@ -41,9 +41,13 @@ def home(request, car_id=None):
     if not request.user.is_authenticated:
         return redirect(to='welcome_page')
 
+    cars = Car.objects.filter(user=request.user).order_by('create_date').all()
+
+    if len(cars) == 0:
+        return redirect(to='add_new_car', first='true')
+
     workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
     favourite_workshops = Workshop.objects.filter(user=request.user, favourite=True).order_by('-last_edit_date').all()
-    cars = Car.objects.filter(user=request.user).order_by('create_date').all()
 
     viewed_car = get_viewed_car(user=request.user, car_id=car_id)
     entries = Entry.objects.filter(user=request.user, car=viewed_car).order_by('-date', '-create_date').all()

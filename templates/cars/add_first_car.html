@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add first car{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 25px;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div style="margin-top: 25px;" class="col shadow bg-body rounded card">
+                <div class="card-body">
+                    <h2 class="text-center"><b>Add Your first car</b></h2>
+                    <hr>
+                    <div class="container">
+                        <div class="row">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <fieldset class="form-group">
+                                    {{ form|crispy }}
+                                </fieldset>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button style="margin-top: 25px;" class="btn btn-sm btn-success" type="submit">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}

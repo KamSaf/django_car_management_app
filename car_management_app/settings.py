@@ -86,9 +86,9 @@ WSGI_APPLICATION = 'car_management_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_django_car_man_app',
-        'USER': 'django_car_man_app',
-        'PASSWORD': 'django_app_password',
+        'NAME': 'db_django',
+        'USER': 'django_app',
+        'PASSWORD': 'password',
         'HOST': '172.17.0.2',
         'PORT': '5432'
     }

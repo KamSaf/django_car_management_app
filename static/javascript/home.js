@@ -148,7 +148,7 @@ $(function(){
   });
 });
 
-// Entries list refresh
+// Entries details load
 $(function(){
   $('#entries_list').on('click', '.entry-details', function(){
     $('#entry_details_modal_content').load($(this).data('url'));
@@ -165,7 +165,8 @@ $(function(){
     args.forEach(function(element) {
       element !== "" ? url.push(element) : url.push('__null');
     });
-    $('#entry_details_modal_content').load(url.join('/'));
+    console.log(url.join('/'));
+    $('#entries_list').load(url.join('/'));
   });
 });
 
@@ -363,13 +364,6 @@ $(function() {
         }
       });
     });
-});
-
-// Entries list refresh
-$(function(){
-  $('#entries_list').on('click', '.entry-details', function(){
-    $('#entry_details_modal_content').load($(this).data('url'));
-  });
 });
 
 // Handles edit entry request
