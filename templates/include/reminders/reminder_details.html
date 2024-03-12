@@ -1,36 +1,49 @@
-<div style="margin-bottom: 15px;" class="row">
-    <span class="col text-start">
-        <span class="float-start">Date:</span>
-        <span class="float-end">
-            {{ reminder.date|date:"D d M Y"  }}
-        </span>
-    </span>
-</div>
-<div style="margin-bottom: 15px;" class="row">
-    <span class="col text-start">
-        <span class="float-start">Category:</span>
-        <span class="float-end">
-            {{ reminder.category }}
-        </span>
-    </span>
-</div>
-<div style="margin-bottom: 15px;" class="row">
-    <span class="col text-start">
-        <span class="float-start">Place:</span>
-        <span class="float-end">
-            {% if reminder.place %}
-                {{ reminder.category }}
-            {% else %}
-                -
-            {% endif %}
-        </span>
-    </span>
-</div>
-<div style="margin-bottom: 15px;" class="row">
-    <span class="col text-start">
-        <span class="float-start">Place:</span>
-        <span class="float-end">
-            {{ reminder.details }}
-        </span>
-    </span>
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title float-start" id="reminder_details_modal_label">Reminder details</h5>
+        <button type="button" class="btn btn-sm btn-danger delete-reminder float-end" data-url="{% url 'delete_reminder_url' reminder_id=reminder.id %}" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
+    <div id="reminder_details_modal_content" class="modal-body">
+        <div style="margin-bottom: 15px;" class="row">
+            <span class="col text-start">
+                <span class="float-start">Date:</span>
+                <span class="float-end">
+                    {{ reminder.date|date:"D d M Y"  }}
+                </span>
+            </span>
+        </div>
+        <div style="margin-bottom: 15px;" class="row">
+            <span class="col text-start">
+                <span class="float-start">Category:</span>
+                <span class="float-end">
+                    {{ reminder.category }}
+                </span>
+            </span>
+        </div>
+        <div style="margin-bottom: 15px;" class="row">
+            <span class="col text-start">
+                <span class="float-start">Place:</span>
+                <span class="float-end">
+                    {% if reminder.place %}
+                        {{ reminder.category }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </span>
+            </span>
+        </div>
+        <div style="margin-bottom: 15px;" class="row">
+            <span class="col text-start">
+                <span class="float-start">Place:</span>
+                <span class="float-end">
+                    {{ reminder.details }}
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
 </div>

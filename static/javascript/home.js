@@ -173,7 +173,7 @@ $(function(){
 // Reminders details load
 $(function(){
   $('#reminders_list').on('click', '.reminder-details', function(){
-    $('#reminder_details_modal_content').load($(this).data('url'));
+    $('#reminder_details_modal_document').load($(this).data('url'));
   });
 });
 
@@ -461,10 +461,41 @@ $(function() {
             </div>'
           );
           modal.hide();
-          console.log($('#reminders_list').data('url'));
           $('#reminders_list').load($('#reminders_list').data('url'));
           $('#messages_box').append(message);
         }
       });
     });
+});
+
+// Deleting reminder
+$(function(){
+  $('#reminder_details_modal').on('click', '.delete-reminder', function(){
+    if ($(this).data('confirmed') != true){
+      $(this).popover('show')
+        .html('Yes')
+        .data('confirmed', true)
+        .attr('data-bs-dismiss', 'modal')
+    } else{
+      var $this = $(this);
+
+      $.ajax({
+        type: "GET",
+        url: $this.data('url'),
+        success: function(response) {
+          if (response['status'] == 'success'){
+            var message = $(
+              '<div id="entry_message" class="alert alert-success" role="alert" style="display: block;">\
+                Reminder deleted.\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            $('#reminders_list').load($('#reminders_list').data('url'));
+            $('.popover').remove();
+            $('#messages_box').append(message);
+          }
+        }
+      });
+    }
+  });
 });
