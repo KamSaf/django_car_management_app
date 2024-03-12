@@ -5,6 +5,8 @@ from cars.models import Car
 from cars.forms import CarForm
 from entries.forms import EntryForm
 from entries.models import Entry
+from reminders.models import Reminder
+from reminders.forms import ReminderForm
 from .utils import get_viewed_car
 
 
@@ -55,10 +57,13 @@ def home(request, car_id=None):
     last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
     viewed_car_mileage = last_entry.mileage if last_entry else 0
 
+    reminders = Reminder.objects.filter(car=viewed_car).order_by('date').all()
+
     # create forms
     new_workshop_form = WorkshopForm(logged_user=request.user)
     new_car_form = CarForm(logged_user=request.user)
     new_entry_form = EntryForm(logged_user=request.user, car=viewed_car)
+    new_reminder_form = ReminderForm(logged_user=request.user, car=viewed_car)
     edit_car_form = CarForm(instance=viewed_car, logged_user=request.user)
     edit_car_form.set_initial(car=viewed_car)
 
@@ -70,11 +75,13 @@ def home(request, car_id=None):
             'new_car_form': new_car_form,
             'new_entry_form': new_entry_form,
             'edit_car_form': edit_car_form,
+            'new_reminder_form': new_reminder_form,
             'cars': cars,
             'viewed_car': viewed_car,
             'viewed_car_mileage': viewed_car_mileage,
             'workshops': workshops,
             'favourite_workshops': favourite_workshops,
             'entries': entries,
+            'reminders': reminders,
         }
     )

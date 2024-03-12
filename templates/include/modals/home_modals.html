@@ -244,3 +244,26 @@
     </div>
     </div>
 </div>
+
+<!-- New reminder modal -->
+<div class="modal fade" id="new_reminder_modal" tabindex="-1" role="dialog" aria-labelledby="new_reminder_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="new_reminder_modal_label">New reminder</h5>
+        </div>
+        <form id="new_reminder_form" method="POST">
+            <div class="modal-body">
+                <div id="new_reminder_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                {% csrf_token %}
+                {{ new_reminder_form|crispy }}
+                <input name="car_id" value="{{ viewed_car.id }}" type="hidden">
+            </div>
+            <div class="modal-footer">
+                <button id="new_reminder_close_modal_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success save-new-reminder" data-url="{% url 'add_new_reminder_url' %}">Save</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>

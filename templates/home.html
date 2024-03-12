@@ -28,16 +28,18 @@
                     <div class="col container h-100">
                         <div class="row h-100">
                             <div class="col text-end">
-                                <b class="row float-end">Incoming reminders:</b><br>
-                                <button class="btn btn-sm btn-outline-success mt-1">Add new reminder</button>
+                                <div class="row"><b class="text-end">Incoming reminders:</b></div>
+                                <div class="row">
+                                    <div class="text-end w-100">
+                                        <button class="btn btn-sm btn-outline-success mt-1" data-bs-toggle="modal" data-bs-target="#new_reminder_modal" style="width: 35%;">
+                                            Add new reminder
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>    
+                                    </div>
+                                </div>
                             </div>
-                            <ul class="col overflow-auto" style="list-style-type: none; max-height: 85%">
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Regeneracja turbosprężarki on: 21.04.2024</button></li>
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
-                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                            <ul id="reminders_list" class="col overflow-auto" style="list-style-type: none; max-height: 85%" data-url="{% url 'load_reminders_list_url' %}">
+                                {% include 'include/reminders/reminders_list.html' %}
                             </ul>
                         </div>
                     </div>
