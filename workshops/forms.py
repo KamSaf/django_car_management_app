@@ -83,4 +83,7 @@ class WorkshopForm(forms.ModelForm):
         self.instance.user = self.logged_user  # set author user for new workshop
         self.instance.last_edit_date = timezone.now()
 
+        if len(Workshop.objects.filter(user=self.logged_user)) == 0:
+            self.instance.favourite = True
+
         return self.cleaned_data
