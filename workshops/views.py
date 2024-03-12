@@ -36,7 +36,7 @@ def async_load_workshop_details(request, workshop_id):
     except Exception(Workshop.DoesNotExist):
         return Response({
             'status': 'fail',
-            'errors': 'This item does not exist.',
+            'errors': 'This workshop does not exist.',
         })
     form = WorkshopForm(instance=workshop, logged_user=request.user)
     form.set_initial(workshop=workshop)
@@ -64,7 +64,7 @@ def async_edit_workshop(request, workshop_id):
             return Response({
                 'status': 'fail',
                 'errors': {
-                    'db_error': 'This item does not exist in the database.'
+                    'db_error': 'This workshop does not exist in the database.'
                 },
             })
         if request.user.id != workshop.user_id:
@@ -98,7 +98,7 @@ def async_toggle_favourite_workshop(request, workshop_id):
             return Response({
                 'status': 'fail',
                 'errors': {
-                    'db_error': 'This item does not exist in the database.'
+                    'db_error': 'This workshop does not exist in the database.'
                 },
             })
         if request.user.id != workshop.user_id:
@@ -174,7 +174,7 @@ def async_delete_workshop(request, workshop_id):
         return Response({
             'status': 'fail',
             'errors': {
-                'db_error': 'This item does not exist in the database.'
+                'db_error': 'This workshop does not exist in the database.'
             },
         })
     if request.user.id != workshop.user_id:
@@ -200,7 +200,7 @@ def async_refresh_workshop_data(request, workshop_id):
     except Exception(Workshop.DoesNotExist):
         return Response({
             'status': 'fail',
-            'errors': 'This item does not exist.',
+            'errors': 'This workhop does not exist.',
         })
 
     return render(

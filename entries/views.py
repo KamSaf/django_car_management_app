@@ -4,8 +4,6 @@ from rest_framework.decorators import api_view
 from .forms import EntryForm
 from .models import Entry
 from django.shortcuts import render
-from django.utils import timezone
-from car_management_app.utils import get_viewed_car
 from cars.models import Car
 
 
@@ -65,7 +63,7 @@ def async_edit_entry(request):
     })
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @login_required
 def async_load_entries_list(request, category=None, search_phrase=None):
     """
@@ -107,7 +105,7 @@ def async_load_entry_details(request, entry_id):
         context={
             'entry': entry,
             'edit_entry_form': edit_entry_form,
-            }
+        }
     )
 
 
@@ -123,7 +121,7 @@ def async_delete_entry(request, entry_id):
         return Response({
             'status': 'fail',
             'errors': {
-                'db_error': 'This item does not exist in the database.'
+                'db_error': 'This entry does not exist in the database.'
             },
         })
     if request.user.id != entry.user_id:
