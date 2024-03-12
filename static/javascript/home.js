@@ -170,12 +170,12 @@ $(function(){
   });
 });
 
-// // Reminders details load
-// $(function(){
-//   $('#entries_list').on('click', '.entry-details', function(){
-//     $('#entry_details_modal_content').load($(this).data('url'));
-//   });
-// });
+// Reminders details load
+$(function(){
+  $('#reminders_list').on('click', '.reminder-details', function(){
+    $('#reminder_details_modal_content').load($(this).data('url'));
+  });
+});
 
 // Handles new workshop creation request
 $(function() {  

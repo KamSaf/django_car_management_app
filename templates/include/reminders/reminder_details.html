@@ -1,0 +1,36 @@
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start">Date:</span>
+        <span class="float-end">
+            {{ reminder.date|date:"D d M Y"  }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start">Category:</span>
+        <span class="float-end">
+            {{ reminder.category }}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start">Place:</span>
+        <span class="float-end">
+            {% if reminder.place %}
+                {{ reminder.category }}
+            {% else %}
+                -
+            {% endif %}
+        </span>
+    </span>
+</div>
+<div style="margin-bottom: 15px;" class="row">
+    <span class="col text-start">
+        <span class="float-start">Place:</span>
+        <span class="float-end">
+            {{ reminder.details }}
+        </span>
+    </span>
+</div>

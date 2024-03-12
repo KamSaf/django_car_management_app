@@ -1,6 +1,6 @@
 {% for reminder in reminders %}
     <li style="margin-bottom: 1%;">
-        <button class="btn btn-sm {% if reminder.category == 'service' %} btn-danger {% elif reminder.category == 'fuel' %} btn-warning {% else %} btn-info {% endif %} w-100">
+        <button class="btn btn-sm {% if reminder.category == 'service' %} btn-danger {% elif reminder.category == 'fuel' %} btn-warning {% else %} btn-info {% endif %} reminder-details w-100" data-url="{% url 'load_reminder_details_url' reminder_id=reminder.id %}" data-bs-toggle="modal" data-bs-target="#reminder_details_modal">
             {% if reminder.category == 'service' %}
                 <i class="bi bi-tools"></i>
             {% elif reminder.category == 'fuel' %}
@@ -8,7 +8,7 @@
             {% else %}
                 <i class="bi bi-cart-plus"></i>
             {% endif %}
-            {{ reminder.details }} on: {{ reminder.date }}
+            {{ reminder.details }} on: {{ reminder.date|date:"D d M Y"  }}
         </button>
     </li>
 {% endfor %}

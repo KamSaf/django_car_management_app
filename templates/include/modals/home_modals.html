@@ -69,19 +69,19 @@
 <!-- Car details modal -->
 <div class="modal fade" id="car_details_modal" tabindex="-1" role="dialog" aria-labelledby="car_details_modal_label" aria-hidden="true">
     <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title float-start" id="car_details_modal_label">Car details</h5>
-            <button type="submit" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#confirm_car_delete_modal"><i class="bi bi-trash"></i></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title float-start" id="car_details_modal_label">Car details</h5>
+                <button type="submit" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#confirm_car_delete_modal"><i class="bi bi-trash"></i></button>
+            </div>
+            <div class="modal-body">
+                {% include 'include/cars/car_data.html' %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success edit-car-details" data-bs-toggle="modal" data-bs-target="#edit_car_modal">Edit</button>
+            </div>
         </div>
-        <div class="modal-body">
-            {% include 'include/cars/car_data.html' %}
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success edit-car-details" data-bs-toggle="modal" data-bs-target="#edit_car_modal">Edit</button>
-        </div>
-    </div>
     </div>
 </div>
 
@@ -265,5 +265,21 @@
             </div>
         </form>
     </div>
+    </div>
+</div>
+
+<!-- Reminder details modal -->
+<div class="modal fade" id="reminder_details_modal" tabindex="-1" role="dialog" aria-labelledby="reminder_details_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title float-start" id="reminder_details_modal_label">Reminder details</h5>
+                <button type="submit" class="btn btn-sm btn-danger float-end"><i class="bi bi-trash"></i></button>
+            </div>
+            <div id="reminder_details_modal_content" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
