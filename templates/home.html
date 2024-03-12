@@ -9,24 +9,41 @@
 {% endblock %}
 
 {% block body %}
-    <div style="margin-top: 25px;" class="container-fluid">
-        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-            <div class="card-body">
-                <h5 class="card-title">
+    <div style="margin-top: 25px; height: 20%" class="container-fluid">
+        <div style="margin-top: 25px;" class="shadow bg-body rounded card h-100">
+            <div class="card-body row h-100">
+                <h4 class="card-title h-25 mb-3">
                     <b>{{ viewed_car.make }} {{ viewed_car.model }}</b>
                     <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal"><i class="bi bi-chevron-down"></i></button>
                     <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#car_details_modal">Car details</button>
-                </h5>
-                <hr>
-                <h5 style="display: inline;">
-                    <div id="date"></div>
-                    <div style="margin-top: 5px;" id="clock"></div>
-                </h5>
+                </h4>
+                <hr class="mb-2">
+                <div class="row h-75">
+                    <div class="col mt-3">
+                        <h4 class="float-start" style="display: inline;">
+                            <div id="date"></div>
+                            <div style="margin-top: 5px;" id="clock"></div>
+                        </h4>        
+                    </div>
+                    <div class="col container h-100">
+                        <div class="row h-100">
+                            <div class="col text-end"><b>Incoming reminders:</b></div>
+                            <ul class="col overflow-auto" style="list-style-type: none; max-height: 85%">
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                                <li style="margin-bottom: 1%;"><button class="btn btn-sm btn-danger w-100"><i class="bi bi-tools"></i> Service at: Dariusz Ficek on: 21.04.2024</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div style="margin-top: 25px;" class="container-fluid h-75">
+    <div class="container-fluid h-75">
         <div class="row h-100">
             <div class="row h-100">
                 <div class="col h-100">
@@ -54,7 +71,9 @@
                                 </div>
                             </form>                        
                             <hr style="margin-top: 10px;">
-                            {% include 'include/entries/entries_list.html' %}
+                            <div id="entries_list" class="h-75" style="margin-top: 25px;" data-url="{% url 'load_entries_list_url' %}">
+                                {% include 'include/entries/entries_list.html' %}
+                            </div>
                         </div>
                         <div class="card-footer" style="height: 15%;">
                             <div class="row" style="margin-top: 1%;" style="height: 75%;">
