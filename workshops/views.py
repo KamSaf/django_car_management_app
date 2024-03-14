@@ -53,11 +53,12 @@ def async_load_workshop_details(request, workshop_id):
 
 @api_view(['POST'])
 @login_required
-def async_edit_workshop(request, workshop_id):
+def async_edit_workshop(request):
     """
         Endpoint for editing workshop (for AJAX)
     """
     if request.method == 'POST':
+        workshop_id = int(request.POST.get('workshop_id'))
         try:
             workshop = Workshop.objects.get(id=workshop_id)
         except Workshop.DoesNotExist:

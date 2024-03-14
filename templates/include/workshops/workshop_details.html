@@ -45,9 +45,10 @@
                             <div id="edit_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
                             {% csrf_token %}
                             {{ edit_workshop_form|crispy }}
+                            <input name="workshop_id" type="hidden" value="{{ workshop.id }}">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' workshop_id=workshop.id %}" data-refresh-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">Save</button>
+                            <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' %}" data-refresh-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">Save</button>
                             <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
                         </div>
                     </form>
