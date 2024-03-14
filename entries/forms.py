@@ -21,6 +21,7 @@ class EntryForm(forms.ModelForm):
     error_messages = {
         'field_value_too_long': 'field value is too long.',
         'mileage_smaller': 'Mileage cannot be smaller than in an entry before it.',
+        'mileage_bigger': 'Mileage cannot be bigger than in an entry after it.',
         'date_error': 'Entry date must not be in the future.',
     }
 
@@ -87,10 +88,20 @@ class EntryForm(forms.ModelForm):
             self._errors['mileage'] = self.error_class(mileage_error)
             return self.cleaned_data
 
+        entries = Entry.objects.filter(car=self.car).exclude(id=self.instance.id).order_by('-date').all()
+
         # check if mileage field value is smaller than in last saved entry
-        last_entry = Entry.objects.filter(user=self.logged_user, date__lte=date).exclude(id=self.instance.id).order_by('-date').first()
+        last_entry = entries.filter(date__lt=self.date).order_by('-date').first()
         if last_entry and last_entry.mileage > mileage:
             mileage_error = self.error_messages['mileage_smaller']
+            self.data_errors['id_mileage'] = mileage_error
+            self._errors['mileage'] = mileage_error
+            return self.cleaned_data
+
+        # check if mileage field value is bigger than in "next" saved entry (when editing one of old entries)
+        newer_entry = entries.filter(date__gt=self.date).order_by('-date').first()
+        if newer_entry and newer_entry.mileage < mileage:
+            mileage_error = self.error_messages['mileage_bigger']
             self.data_errors['id_mileage'] = mileage_error
             self._errors['mileage'] = mileage_error
             return self.cleaned_data
