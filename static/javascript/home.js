@@ -12,21 +12,21 @@ function checkIfValidPhoneNumber(phoneNumber){
 }
 
 // Function for clearing form errors and entered data
-function clearForm(form_id){
+function clearForm(formId){
   clearErrors();
-  $('#' + form_id + ' *').filter(':input').not($("input:hidden")).each(function(){
+  $('#' + formId + ' *').filter(':input').not($("input:hidden")).each(function(){
     $(this).val('');
   });
 };
 
 // Function for workshop form data validation
-function validateWorkshopData(submit_info_box_id, form_id){
+function validateWorkshopData(submitInfoBoxId, formId){
   clearErrors();
   var fieldsToValidate = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
   var fieldsValid = true;
 
   for (var i = 0; i < fieldsToValidate.length; i++) {
-    var field = $('#' + form_id + ' ' +fieldsToValidate[i]);
+    var field = $('#' + formId + ' ' +fieldsToValidate[i]);
     if (!field.val()) {
       field.addClass('is-invalid');
       fieldsValid = false;
@@ -34,13 +34,13 @@ function validateWorkshopData(submit_info_box_id, form_id){
   }
   
   if (!fieldsValid) {
-    $('#' + submit_info_box_id).html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+    $('#' + submitInfoBoxId).html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
     return false;
   }
 
-  if (!checkIfValidPhoneNumber($('#' + form_id + ' #id_phone_number').val())){
-    $('#' + form_id + ' #id_phone_number').addClass('is-invalid');
-    $('#' + submit_info_box_id).html("Invalid phone number.").prop('style', 'display: block;');
+  if (!checkIfValidPhoneNumber($('#' + formId + ' #id_phone_number').val())){
+    $('#' + formId + ' #id_phone_number').addClass('is-invalid');
+    $('#' + submitInfoBoxId).html("Invalid phone number.").prop('style', 'display: block;');
     return false;
   }
   return true;
@@ -53,7 +53,7 @@ function refreshWorkshopsLists(){
 }
 
 // Function for handling ajax response
-function handleAjaxResponse(response, modal, submit_info_box_id, form_id){
+function handleAjaxResponse(response, modal, submitInfoBoxId, formId){
   let errors = "";
   if (response['errors']){
     for (key in response['errors']){
@@ -64,9 +64,9 @@ function handleAjaxResponse(response, modal, submit_info_box_id, form_id){
       }
   }
   if (errors){
-    $('#' + submit_info_box_id).html(errors).prop('style', 'display: block;');
+    $('#' + submitInfoBoxId).html(errors).prop('style', 'display: block;');
   } else {
-    clearForm(form_id);
+    clearForm(formId);
     if (modal){
       modal.hide();
     }
@@ -324,15 +324,15 @@ $(function(){
       url: $this.data('url'),
       success: function(response) {
         if (response['status'] == 'failed'){
-          let error_dismiss_button = '<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>';
-          $('#favourite_car_error_box').html(response['error'] + error_dismiss_button).prop('style', 'display: block;');
+          let errorDismissButton = '<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>';
+          $('#favourite_car_error_box').html(response['error'] + errorDismissButton).prop('style', 'display: block;');
         } else {
-          let current_favourite_car = $('.favourite-car');
+          let currentFavouriteCar = $('.favourite-car');
 
           if ($this.hasClass('favourite-car')){
             $this.removeClass('favourite-car').html('<i class="bi bi-star"></i>');
           } else {
-            current_favourite_car.removeClass('favourite-car').html('<i class="bi bi-star"></i>');
+            currentFavouriteCar.removeClass('favourite-car').html('<i class="bi bi-star"></i>');
             $this.addClass('favourite-car').html('<i class="bi bi-star-fill"></i>');
           }  
         }
