@@ -76,7 +76,7 @@ def home(request, car_id=None):
             'favourite_workshops': favourite_workshops,
             'entries': entries,
             'reminders': reminders,
-            'this_month_data': this_month_report,
-            'last_month_data': last_month_report,
+            'this_month_report': this_month_report,
+            'last_month_report': last_month_report,
         }
     )

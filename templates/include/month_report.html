@@ -1,0 +1,19 @@
+<div class="row">
+    {{ dupa }}
+    <div class="col">
+        <h6>Expenses:</h6>
+        <h4 class="text-danger fw-bold">{{ report.all_costs }} zł</h4>
+        <p class="text-muted fw-lighter">{{ report.cost_per_day }} zł per day</p>
+    </div>
+    <div class="col">
+        <h6>Fuel economy:</h6>
+        <h4 class="text-warning fw-bold">{{ report.fuel_economy }} l/100 km</h4>
+        <p class="text-muted fw-lighter">{{ report.cost_per_km }} zł per kilometer</p>
+    </div>
+    <hr>
+</div>
+<div class="row">
+    <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>{{ report.fuel_costs }}%</b></div>
+    <div class="col"><i class="bi bi-tools"></i> Service: <b>{{ report.service_costs }} %</b></div>
+    <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>{{ report.others_costs }}%</b></div>
+</div>
