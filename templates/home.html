@@ -106,20 +106,20 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <h6>Expenses:</h6>
-                                                    <h4 class="text-danger fw-bold">37,21 zł</h4>
-                                                    <p class="text-muted fw-lighter">4,23 zł per day</p>
+                                                    <h4 class="text-danger fw-bold">{{ last_month_data.all_costs }} zł</h4>
+                                                    <p class="text-muted fw-lighter">{{ last_month_data.cost_per_day }} zł per day</p>
                                                 </div>
                                                 <div class="col">
                                                     <h6>Fuel economy:</h6>
-                                                    <h4 class="text-warning fw-bold">8,9l / 100 km</h4>
-                                                    <p class="text-muted fw-lighter">1,20 zł per kilometer</p>
+                                                    <h4 class="text-warning fw-bold">{{ last_month_data.fuel_economy }} l/100 km</h4>
+                                                    <p class="text-muted fw-lighter">{{ last_month_data.cost_per_km }} zł per kilometer</p>
                                                 </div>
                                                 <hr>
                                             </div>
                                             <div class="row">
-                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>86%</b></div>
-                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>10%</b></div>
-                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>4%</b></div>
+                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>{{ last_month_data.fuel_costs }}%</b></div>
+                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>{{ last_month_data.service_costs }} %</b></div>
+                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>{{ last_month_data.others_costs }}%</b></div>
                                             </div>
                                         </div>
                                     </div>
@@ -128,20 +128,20 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <h6>Expenses:</h6>
-                                                    <h4 class="text-danger fw-bold">21,37 zł</h4>
-                                                    <p class="text-muted fw-lighter">6,90 zł per day</p>
+                                                    <h4 class="text-danger fw-bold">{{ this_month_data.all_costs }} zł</h4>
+                                                    <p class="text-muted fw-lighter">{{ this_month_data.cost_per_day }} zł per day</p>
                                                 </div>
                                                 <div class="col">
                                                     <h6>Fuel economy:</h6>
-                                                    <h4 class="text-warning fw-bold">9,3l / 100 km</h4>
-                                                    <p class="text-muted fw-lighter">1,63 zł per kilometer</p>
+                                                    <h4 class="text-warning fw-bold">{{ this_month_data.fuel_economy }} l/100 km</h4>
+                                                    <p class="text-muted fw-lighter">{{ this_month_data.cost_per_km }} zł per kilometer</p>
                                                 </div>
                                                 <hr>
                                             </div>
                                             <div class="row">
-                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>70%</b></div>
-                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>15%</b></div>
-                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>15%</b></div>
+                                                <div class="col"><i class="bi bi-fuel-pump"></i> Fuel: <b>{{ this_month_data.fuel_costs }}%</b></div>
+                                                <div class="col"><i class="bi bi-tools"></i> Service: <b>{{ this_month_data.service_costs }}%</b></div>
+                                                <div class="col"><i class="bi bi-cart-plus"></i> Others: <b>{{ this_month_data.others_costs }}%</b></div>
                                             </div>
                                         </div>
                                     </div>
