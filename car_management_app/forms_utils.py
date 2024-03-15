@@ -18,3 +18,8 @@ class FormUtils:
         error = f"{field_name} {self.error_messages['field_too_long']}"
         self.data_errors[f'id_{field_name.lower()}'] = error
         self._errors[field_name.lower()] = self.error_class([error])
+
+    # returns error message for invalid value name
+    @staticmethod
+    def invalid_field_value(field_name: str) -> str:
+        return f'Invalid {field_name} field value.'

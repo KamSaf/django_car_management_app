@@ -48,10 +48,6 @@ class EntryForm(forms.ModelForm, FormUtils):
             self.initial['details'] = entry.fuel_type
         return self
 
-    # returns error message for invalid value name
-    def __invalid_field_value(field_name: str) -> str:
-        return f'Invalid {field_name} field value.'
-
     def clean(self):
         category = self.cleaned_data.get('category')
         place = self.cleaned_data.get('place')
@@ -69,7 +65,7 @@ class EntryForm(forms.ModelForm, FormUtils):
         try:
             cost = int(float(self.cleaned_data.get('cost')))
         except TypeError:
-            cost_error = EntryForm.__invalid_field_value(field_name='cost')
+            cost_error = EntryForm.invalid_field_value(field_name='cost')
             self.data_errors['id_cost'] = cost_error
             self._errors['cost'] = self.error_class(cost_error)
             return self.cleaned_data
@@ -78,7 +74,7 @@ class EntryForm(forms.ModelForm, FormUtils):
         try:
             mileage = int(self.cleaned_data.get('mileage'))
         except TypeError:
-            mileage_error = EntryForm.__invalid_field_value(field_name='mileage')
+            mileage_error = EntryForm.invalid_field_value(field_name='mileage')
             self.data_errors['id_mileage'] = mileage_error
             self._errors['mileage'] = self.error_class(mileage_error)
             return self.cleaned_data
@@ -103,7 +99,7 @@ class EntryForm(forms.ModelForm, FormUtils):
 
         # check if category field value is valid
         if category not in Entry.TYPES_OF_ENTRIES:
-            category_error = EntryForm.__invalid_field_value(field_name='category')
+            category_error = EntryForm.invalid_field_value(field_name='category')
             self.data_errors['id_category'] = category_error
             self._errors['category'] = category_error
             return self.cleaned_data
@@ -115,7 +111,7 @@ class EntryForm(forms.ModelForm, FormUtils):
 
         # check if details field value is not too long
         if not EntryForm.check_field_length(value=details, length=500):
-            self.set_length_errors(field_name='Place')
+            self.set_length_errors(field_name='Details')
             return self.cleaned_data
 
         self.instance.category = category

@@ -3,9 +3,10 @@ from .models import Reminder
 from entries.models import Entry
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from car_management_app.forms_utils import FormUtils
 
 
-class ReminderForm(forms.ModelForm):
+class ReminderForm(forms.ModelForm, FormUtils):
     """
         Form for creating and editing reminders
     """
@@ -14,7 +15,6 @@ class ReminderForm(forms.ModelForm):
     place = forms.Field(required=False, label=mark_safe('Place'))
     details = forms.Field(required=True, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
 
-    data_errors = {}
     field_order = ['date', 'category', 'place', 'details']
 
     error_messages = {
@@ -42,15 +42,6 @@ class ReminderForm(forms.ModelForm):
             self.initial['details'] = entry.fuel_type
         return self
 
-    # clears displayed error messages list
-    def clear_errors(self):
-        self.data_errors = {}
-        return self
-
-    # returns error message for invalid value name
-    def __invalid_field_value(field_name: str) -> str:
-        return f'Invalid {field_name} field value.'
-
     def clean(self):
         category = self.cleaned_data.get('category')
         place = self.cleaned_data.get('place')
@@ -66,23 +57,19 @@ class ReminderForm(forms.ModelForm):
 
         # check if category field value is valid
         if category not in Entry.TYPES_OF_ENTRIES:
-            category_error = ReminderForm.__invalid_field_value(field_name='category')
+            category_error = ReminderForm.invalid_field_value(field_name='category')
             self.data_errors['id_category'] = category_error
             self._errors['category'] = category_error
             return self.cleaned_data
 
         # check if place field value is not too long
-        if len(place) > 200:
-            place_error = 'Place ' + self.error_messages['field_value_too_long']
-            self.data_errors['id_place'] = place_error
-            self._errors['place'] = place_error
+        if not ReminderForm.check_field_length(value=place, length=200):
+            self.set_length_errors(field_name='Place')
             return self.cleaned_data
 
         # check if details field value is not too long
-        if len(details) > 100:
-            details_error = 'Details ' + self.error_messages['field_value_too_long']
-            self.data_errors['id_details'] = details_error
-            self._errors['details'] = details_error
+        if not ReminderForm.check_field_length(value=details, length=100):
+            self.set_length_errors(field_name='Details')
             return self.cleaned_data
 
         self.instance.category = category
