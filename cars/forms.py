@@ -53,7 +53,7 @@ class CarForm(forms.ModelForm, FormUtils):
 
     # set field_too_long error to a form field
     def __set_length_errors(self, field_name: str):
-        error = f"{field_name.capitalize()} {self.error_messages['field_too_long']}"
+        error = f"{field_name} {self.error_messages['field_too_long']}"
         self.data_errors[f'id_{field_name.lower()}'] = error
         self._errors[field_name.lower()] = self.error_class([error])
 
@@ -74,11 +74,13 @@ class CarForm(forms.ModelForm, FormUtils):
             {'vin': vin}
         ]
 
-        # for i in range(len(string_fields)):
-        #     if not CarForm.__check_field_length(value=list(string_fields[i].values())[0], length=STRING_FIELDS_LENGTHS[i]):
-        #         field_name = list(string_fields[i].keys())[0].capitalize() if string_fields[i].key() == 'vin' else string_fields[i].key().capitalize()
-        #         self.__set_length_errors(field_name=list(field_name)[0])
-        #         return self.cleaned_data
+        for i in range(len(string_fields)):
+            if not CarForm.__check_field_length(value=list(string_fields[i].values())[0], length=STRING_FIELDS_LENGTHS[i]):
+                dict_key = list(string_fields[i].keys())[0]
+                print(dict_key == 'vin')
+                field_name = dict_key.upper() if dict_key == 'vin' else dict_key.capitalize()
+                self.__set_length_errors(field_name=field_name)
+                return self.cleaned_data
 
         try:
             displacement = int(self.cleaned_data.get('displacement'))
@@ -86,26 +88,6 @@ class CarForm(forms.ModelForm, FormUtils):
             displacement_error = self.error_messages['displacement_invalid']
             self.data_errors['id_displacement'] = displacement_error
             self._errors['displacement'] = self.error_class([displacement_error])
-            return self.cleaned_data
-
-        if not CarForm.__check_field_length(value=make, length=100):
-            self.__set_length_errors(field_name='make')
-            return self.cleaned_data
-
-        if not CarForm.__check_field_length(value=model, length=100):
-            self.__set_length_errors(field_name='model')
-            return self.cleaned_data
-
-        if not CarForm.__check_field_length(value=num_plate, length=50):
-            self.__set_length_errors(field_name='num_plate')
-            return self.cleaned_data
-
-        if not CarForm.__check_field_length(value=fuel_type, length=50):
-            self.__set_length_errors(field_name='fuel_type')
-            return self.cleaned_data
-
-        if not CarForm.__check_field_length(value=vin, length=25):
-            self.__set_length_errors(field_name='vin')
             return self.cleaned_data
 
         # checks if production year field is valid
