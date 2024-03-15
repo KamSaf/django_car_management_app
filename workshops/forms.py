@@ -2,9 +2,10 @@ from django import forms
 from .models import Workshop
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from car_management_app.forms_utils import FormUtils
 
 
-class WorkshopForm(forms.ModelForm):
+class WorkshopForm(forms.ModelForm, FormUtils):
     """
         Form for creating and editing workshops
     """
@@ -18,7 +19,6 @@ class WorkshopForm(forms.ModelForm):
     address = forms.Field(required=True, label=mark_safe('<i class="bi bi-geo-alt"></i> Address'))
     phone_number = forms.Field(required=True, label=mark_safe('<i class="bi bi-telephone"></i> Phone number'))
     profession = forms.Field(required=True, label=mark_safe('<i class="bi bi-wrench-adjustable-circle"></i> Workshop profession'))
-    data_errors = {}
     field_order = ['name', 'city', 'address', 'phone_number', 'profession']
 
     error_messages = {
@@ -30,7 +30,8 @@ class WorkshopForm(forms.ModelForm):
         model = Workshop
         fields = ['name', 'city', 'address', 'phone_number', 'profession']
 
-    def set_initial(self, workshop: Workshop = None):  # sets initial value of fields
+    # sets initial value of fields
+    def set_initial(self, workshop: Workshop = None):
         if workshop:
             self.initial['name'] = workshop.name
             self.initial['city'] = workshop.city
@@ -39,48 +40,38 @@ class WorkshopForm(forms.ModelForm):
             self.initial['profession'] = workshop.profession
         return self
 
-    def clear_errors(self):  # clears displayed error messages list
-        self.data_errors = {}
-        return self
-
     def clean(self):
+        MAX_STRING_FIELDS_LENGTH = 100
         name = self.cleaned_data.get('name')
         city = self.cleaned_data.get('city')
         address = self.cleaned_data.get('address')
         phone_number = self.cleaned_data.get('phone_number')
         profession = self.cleaned_data.get('profession')
 
-        if len(name) > 100:  # checks if workshop name field is proper length
-            self.data_errors['id_name'] = self.error_messages['name_too_long']
-            self._errors['name'] = self.error_class([f'Name {self.error_messages["field_too_long"]}'])
-            return self.cleaned_data
+        string_fields = [
+            {'name': name},
+            {'city': city},
+            {'address': address},
+            {'profession': profession},
+        ]
 
-        if len(city) > 100:  # checks if city field is proper length
-            self.data_errors['id_city'] = self.error_messages['city_too_long']
-            self._errors['city'] = self.error_class([f'City {self.error_messages["field_too_long"]}'])
-            return self.cleaned_data
+        for i in range(len(string_fields)):
+            if not WorkshopForm.check_field_length(value=list(string_fields[i].values())[0], length=MAX_STRING_FIELDS_LENGTH):
+                self.set_length_errors(field_name=list(string_fields[i].keys())[0].capitalize())
+                return self.cleaned_data
 
-        if len(address) > 100:  # checks if address field is proper length
-            self.data_errors['id_address'] = self.error_messages['address_too_long']
-            self._errors['address'] = self.error_class([f'Address {self.error_messages["field_too_long"]}'])
-            return self.cleaned_data
-
-        if len(phone_number) != 9 or not phone_number.isdigit():  # checks if phone number field is valid
+        # checks if phone number field is valid
+        if len(phone_number) != 9 or not phone_number.isdigit():
             self.data_errors['id_phone_number'] = self.error_messages['invalid_phone_number']
             self._errors['phone_number'] = self.error_class([self.error_messages["invalid_phone_number"]])
             return self.cleaned_data
 
-        if len(profession) > 100:  # checks if profession field is proper length
-            self.data_errors['id_profession'] = self.error_messages['profession_too_long']
-            self._errors['profession'] = self.error_class([f'Profession {self.error_messages["field_too_long"]}'])
-            return self.cleaned_data
-
-        self.instance.name = name  # set name for new workshop
-        self.instance.city = city  # set city for new workshop
-        self.instance.address = address  # set address for new workshop
-        self.instance.phone_number = phone_number  # set phone number for new workshop
-        self.instance.profession = profession  # set profession for new workshop
-        self.instance.user = self.logged_user  # set author user for new workshop
+        self.instance.name = name
+        self.instance.city = city
+        self.instance.address = address
+        self.instance.phone_number = phone_number
+        self.instance.profession = profession
+        self.instance.user = self.logged_user
         self.instance.last_edit_date = timezone.now()
 
         if len(Workshop.objects.filter(user=self.logged_user)) == 0:
