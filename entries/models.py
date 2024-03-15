@@ -19,6 +19,6 @@ class Entry(models.Model):
     date = models.DateTimeField(blank=False)
     place = models.TextField(blank=True, max_length=200)
     mileage = models.IntegerField(blank=False, null=True)
-    details = models.TextField(blank=True, max_length=1024)
+    details = models.TextField(blank=True, max_length=500)
     create_date = models.DateTimeField(default=timezone.now)
     last_edit_date = models.DateTimeField(default=timezone.now)

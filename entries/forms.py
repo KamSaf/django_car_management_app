@@ -2,9 +2,10 @@ from django import forms
 from .models import Entry
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from car_management_app.forms_utils import FormUtils
 
 
-class EntryForm(forms.ModelForm):
+class EntryForm(forms.ModelForm, FormUtils):
     """
         Form for creating and editing exploitation history entries
     """
@@ -15,7 +16,6 @@ class EntryForm(forms.ModelForm):
     cost = forms.Field(required=True, label=mark_safe('Cost'))
     details = forms.Field(required=False, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
 
-    data_errors = {}
     field_order = ['date', 'category', 'place', 'mileage', 'cost', 'details']
 
     error_messages = {
@@ -46,11 +46,6 @@ class EntryForm(forms.ModelForm):
             self.initial['mileage'] = entry.prod_year
             self.initial['cost'] = entry.num_plate
             self.initial['details'] = entry.fuel_type
-        return self
-
-    # clears displayed error messages list
-    def clear_errors(self):
-        self.data_errors = {}
         return self
 
     # returns error message for invalid value name
@@ -114,17 +109,13 @@ class EntryForm(forms.ModelForm):
             return self.cleaned_data
 
         # check if place field value is not too long
-        if len(place) > 200:
-            place_error = 'Place ' + self.error_messages['field_value_too_long']
-            self.data_errors['id_place'] = place_error
-            self._errors['place'] = place_error
+        if not EntryForm.check_field_length(value=place, length=200):
+            self.set_length_errors(field_name='Place')
             return self.cleaned_data
 
         # check if details field value is not too long
-        if len(details) > 1024:
-            details_error = 'Details ' + self.error_messages['field_value_too_long']
-            self.data_errors['id_details'] = details_error
-            self._errors['details'] = details_error
+        if not EntryForm.check_field_length(value=details, length=500):
+            self.set_length_errors(field_name='Place')
             return self.cleaned_data
 
         self.instance.category = category
