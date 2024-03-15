@@ -47,16 +47,6 @@ class CarForm(forms.ModelForm, FormUtils):
             self.initial['vin'] = car.vin
         return self
 
-    # checks if string field value is proper length, return True if field is proper length
-    def __check_field_length(value: str, length: int) -> bool:
-        return False if len(value) > length else True
-
-    # set field_too_long error to a form field
-    def __set_length_errors(self, field_name: str):
-        error = f"{field_name} {self.error_messages['field_too_long']}"
-        self.data_errors[f'id_{field_name.lower()}'] = error
-        self._errors[field_name.lower()] = self.error_class([error])
-
     def clean(self):
         STRING_FIELDS_LENGTHS = [100, 100, 50, 50, 25]
         make = self.cleaned_data.get('make')
@@ -75,11 +65,10 @@ class CarForm(forms.ModelForm, FormUtils):
         ]
 
         for i in range(len(string_fields)):
-            if not CarForm.__check_field_length(value=list(string_fields[i].values())[0], length=STRING_FIELDS_LENGTHS[i]):
+            if not CarForm.check_field_length(value=list(string_fields[i].values())[0], length=STRING_FIELDS_LENGTHS[i]):
                 dict_key = list(string_fields[i].keys())[0]
-                print(dict_key == 'vin')
                 field_name = dict_key.upper() if dict_key == 'vin' else dict_key.capitalize()
-                self.__set_length_errors(field_name=field_name)
+                self.set_length_errors(field_name=field_name)
                 return self.cleaned_data
 
         try:

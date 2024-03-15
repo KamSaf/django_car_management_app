@@ -31,7 +31,7 @@ def user_profile(request):
     """
         View rendering User account information page
     """
-    form = UserUpdateForm()
+    form = UserUpdateForm(request=request)
     cars_number = len(Car.objects.filter(user=request.user).all())
     if request.user:
         form = form.set_initial(user=request.user)
@@ -57,7 +57,7 @@ def async_edit_user(request):
         Endpoint for editing User data (for AJAX)
     """
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
+        form = UserUpdateForm(request.POST, instance=request.user, request=request)
         form.clear_errors()
         if form.is_valid():
             form.save()
@@ -68,7 +68,6 @@ def async_edit_user(request):
     })
 
 
-@login_required
 def refresh_user_data(request):
     """
         Endpoint returning user data template (for AJAX user data refresh)
