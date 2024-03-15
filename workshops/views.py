@@ -5,6 +5,7 @@ from .forms import WorkshopForm
 from .models import Workshop
 from django.shortcuts import render
 from django.utils import timezone
+from car_management_app.utils import permission_denied, item_not_existing
 
 
 @api_view(['POST'])
@@ -34,10 +35,11 @@ def async_load_workshop_details(request, workshop_id):
     try:
         workshop = Workshop.objects.get(id=workshop_id)
     except Exception(Workshop.DoesNotExist):
-        return Response({
-            'status': 'fail',
-            'errors': 'This workshop does not exist.',
-        })
+        return Response(item_not_existing(item='workshop'))
+
+    if request.user.id != workshop.user_id:
+        return Response(permission_denied())
+
     form = WorkshopForm(instance=workshop, logged_user=request.user)
     form.set_initial(workshop=workshop)
 
@@ -62,19 +64,11 @@ def async_edit_workshop(request):
         try:
             workshop = Workshop.objects.get(id=workshop_id)
         except Workshop.DoesNotExist:
-            return Response({
-                'status': 'fail',
-                'errors': {
-                    'db_error': 'This workshop does not exist in the database.'
-                },
-            })
+            return Response(item_not_existing(item='workshop'))
+
         if request.user.id != workshop.user_id:
-            return Response({
-                'status': 'fail',
-                'errors': {
-                    'access_error': 'You are not permitted to perform this action.'
-                },
-            })
+            return Response(permission_denied())
+
         form = WorkshopForm(request.POST, instance=workshop, logged_user=request.user)
         form.clear_errors()
         if form.is_valid():
@@ -96,19 +90,11 @@ def async_toggle_favourite_workshop(request, workshop_id):
         try:
             workshop = Workshop.objects.get(id=workshop_id)
         except Workshop.DoesNotExist:
-            return Response({
-                'status': 'fail',
-                'errors': {
-                    'db_error': 'This workshop does not exist in the database.'
-                },
-            })
+            return Response(item_not_existing(item='workshop'))
+
         if request.user.id != workshop.user_id:
-            return Response({
-                'status': 'fail',
-                'errors': {
-                    'access_error': 'You are not permitted to perform this action.'
-                },
-            })
+            return Response(permission_denied())
+
         if workshop:
             workshop.last_edit_date = timezone.now()
             workshop.favourite = not workshop.favourite
@@ -140,8 +126,7 @@ def async_load_workshops_list(request, category=None, filter=None):
     """
         Endpoint for loading all workshops list (for AJAX)
     """
-
-    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()    
+    workshops = Workshop.objects.filter(user=request.user).order_by('create_date').all()
     match(category):
         case 'name':
             workshops = workshops.filter(name__icontains=filter)
@@ -172,19 +157,10 @@ def async_delete_workshop(request, workshop_id):
     try:
         workshop = Workshop.objects.get(id=workshop_id)
     except Workshop.DoesNotExist:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'db_error': 'This workshop does not exist in the database.'
-            },
-        })
+        return Response(item_not_existing(item='workshop'))
+
     if request.user.id != workshop.user_id:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'access_error': 'You are not permitted to perform this action.'
-            },
-        })
+        return Response(permission_denied())
 
     workshop.delete()
     return Response({'status': 'success'})
@@ -199,10 +175,10 @@ def async_refresh_workshop_data(request, workshop_id):
     try:
         workshop = Workshop.objects.get(id=workshop_id)
     except Exception(Workshop.DoesNotExist):
-        return Response({
-            'status': 'fail',
-            'errors': 'This workhop does not exist.',
-        })
+        return Response(item_not_existing(item='workshop'))
+
+    if request.user.id != workshop.user_id:
+        return Response(permission_denied())
 
     return render(
         request=request,

@@ -6,6 +6,7 @@ from .models import Reminder
 from cars.models import Car
 from django.shortcuts import render
 from django.utils import timezone
+from car_management_app.utils import permission_denied, item_not_existing
 
 
 @api_view(['POST'])
@@ -20,10 +21,7 @@ def async_add_reminder(request):
         try:
             car = Car.objects.get(id=car_id)
         except Car.DoesNotExist:
-            return Response({
-                'status': 'fail',
-                'errors': 'This car does not exist in the database.',
-            })
+            return Response(item_not_existing(item='car'))
 
         form = ReminderForm(request.POST, logged_user=request.user, car=car)
         form.clear_errors()
@@ -46,10 +44,7 @@ def async_load_reminders_list(request, car_id):
     try:
         car = Car.objects.get(id=car_id)
     except Car.DoesNotExist:
-        return Response({
-            'status': 'fail',
-            'errors': 'This car does not exist in the database.',
-        })
+        return Response(item_not_existing(item='car'))
 
     reminders = Reminder.objects.filter(user=request.user, car=car, date__gte=timezone.now()).order_by('date').all()
 
@@ -69,10 +64,7 @@ def async_load_reminder_details(request, reminder_id):
     try:
         reminder = Reminder.objects.get(id=reminder_id)
     except Reminder.DoesNotExist:
-        return Response({
-            'status': 'error',
-            'message': 'Reminder not found',
-        })
+        return Response(item_not_existing(item='reminder'))
 
     return render(
         request=request,
@@ -92,20 +84,10 @@ def async_delete_reminder(request, reminder_id):
     try:
         reminder = Reminder.objects.get(id=reminder_id)
     except Reminder.DoesNotExist:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'db_error': 'This reminder does not exist in the database.'
-            },
-        })
+        return Response(item_not_existing(item='reminder'))
 
     if request.user.id != reminder.user_id:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'access_error': 'You are not permitted to perform this action.'
-            },
-        })
+        return Response(permission_denied())
 
     reminder.delete()
     return Response({'status': 'success'})

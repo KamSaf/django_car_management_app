@@ -73,10 +73,33 @@ def expl_report(car: Car, year: int, month: int) -> dict:
     return this_month_report, last_month_report
 
 
-def get_fuel_prices():
+def get_fuel_prices() -> list:
     """
         Function scrapping data about current prices (in Poland) from Autocentrum
     """
     URL = 'https://www.autocentrum.pl/paliwa/ceny-paliw/'
     soup = BeautifulSoup(requests.get(URL), 'html.parser')
     return [item.text.strip()[0:4] for item in soup.find_all(class_='price')]
+
+
+def permission_denied() -> dict:
+    """
+        Returns JSON response for permission denied Response
+    """
+    return {
+        'status': 'fail',
+        'errors':
+        {
+            'access_error': 'You are not permitted to perform this action.'
+        },
+    }
+
+
+def item_not_existing(item: str) -> dict:
+    """
+        Returns JSON response for item does not exists Response
+    """
+    return {
+        'status': 'fail',
+        'errors': f'This {item} does not exist.',
+    }
