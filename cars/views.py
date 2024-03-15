@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib import messages
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from car_management_app.utils import permission_denied, item_not_existing
 
 
 @login_required
@@ -47,7 +48,14 @@ def async_toggle_favourite_car(request):
         Endpoint for toggling favourite car (for AJAX)
     """
     car_id = int(request.POST.get('car_id'))
-    current_favourite_car = Car.objects.filter(favourite=True).first()
+    current_favourite_car = Car.objects.filter(user=request.user, favourite=True).first()
+
+    try:
+        new_favourite_car = Car.objects.get(id=car_id)
+        if request.user.id != new_favourite_car.user.id:
+            return Response(permission_denied())
+    except Car.DoesNotExist:
+        return Response(item_not_existing(item='car'))
 
     if current_favourite_car:
         current_favourite_car.favourite = False
@@ -55,16 +63,12 @@ def async_toggle_favourite_car(request):
         current_favourite_car.save()
 
         if current_favourite_car.id == car_id:
-            return Response({'status': 'success', 'dupa': 'dupa'})
+            return Response({'status': 'success'})
 
-    try:
-        new_favourite_car = Car.objects.get(id=car_id)
-        new_favourite_car.favourite = True
-        new_favourite_car.last_edit_date = timezone.now()
-        new_favourite_car.save()
-        return Response({'status': 'success'})
-    except Car.DoesNotExist:
-        return Response({'status': 'failed', 'error': 'This car does not exist.'})
+    new_favourite_car.favourite = True
+    new_favourite_car.last_edit_date = timezone.now()
+    new_favourite_car.save()
+    return Response({'status': 'success'})
 
 
 @login_required
