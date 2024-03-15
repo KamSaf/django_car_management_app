@@ -5,6 +5,7 @@ from .forms import EntryForm
 from .models import Entry
 from django.shortcuts import render
 from cars.models import Car
+from car_management_app.utils import permission_denied, item_not_existing
 
 
 @api_view(['POST'])
@@ -19,10 +20,10 @@ def async_add_entry(request):
         try:
             car = Car.objects.get(id=car_id)
         except Car.DoesNotExist:
-            return Response({
-                'status': 'fail',
-                'errors': 'This car does not exist in the database.',
-            })
+            return Response(item_not_existing(item='car'))
+
+        if request.user.id != car.user_id:
+            return Response(permission_denied())
 
         form = EntryForm(request.POST, logged_user=request.user, car=car)
         form.clear_errors()
@@ -47,10 +48,10 @@ def async_edit_entry(request):
         try:
             entry = Entry.objects.get(id=entry_id)
         except Entry.DoesNotExist:
-            return Response({
-                'status': 'fail',
-                'errors': 'This entry does not exist in the database.',
-            })
+            return Response(item_not_existing(item='entry'))
+
+        if request.user.id != entry.user_id:
+            return Response(permission_denied())
 
         form = EntryForm(request.POST, logged_user=request.user, car=entry.car, instance=entry)
         form.clear_errors()
@@ -93,10 +94,10 @@ def async_load_entry_details(request, entry_id):
     try:
         entry = Entry.objects.get(id=entry_id)
     except Entry.DoesNotExist:
-        return Response({
-            'status': 'error',
-            'message': 'Entry not found',
-        })
+        return Response(item_not_existing(item='entry'))
+
+    if request.user.id != entry.user_id:
+        return Response(permission_denied())
 
     edit_entry_form = EntryForm(instance=entry, logged_user=request.user, car=entry.car)
     return render(
@@ -118,19 +119,10 @@ def async_delete_entry(request, entry_id):
     try:
         entry = Entry.objects.get(id=entry_id)
     except Entry.DoesNotExist:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'db_error': 'This entry does not exist in the database.'
-            },
-        })
+        return Response(item_not_existing(item='entry'))
+
     if request.user.id != entry.user_id:
-        return Response({
-            'status': 'fail',
-            'errors': {
-                'access_error': 'You are not permitted to perform this action.'
-            },
-        })
+        return Response(permission_denied())
 
     entry.delete()
     return Response({'status': 'success'})
