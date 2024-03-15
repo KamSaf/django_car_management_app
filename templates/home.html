@@ -27,20 +27,20 @@
                     </div>
                     <div class="col container h-100">
                         <div class="row h-100">
-                            <div class="col text-end">
+                            <div class="col-9 text-end">
                                 <div class="row"><b class="text-end">Incoming reminders:</b></div>
                                 <div class="row">
                                     <div class="text-end w-100">
-                                        <button class="btn btn-sm btn-outline-success mt-1" data-bs-toggle="modal" data-bs-target="#new_reminder_modal" style="width: 35%;">
+                                        <button class="btn btn-sm btn-outline-success mt-1" data-bs-toggle="modal" data-bs-target="#new_reminder_modal" style="width: 25%;">
                                             Add new reminder
                                             <i class="bi bi-plus-circle"></i>
                                         </button>    
                                     </div>
                                 </div>
                             </div>
-                            <ul id="reminders_list" class="col overflow-auto" style="list-style-type: none; max-height: 85%" data-url="{% url 'load_reminders_list_url' car_id=viewed_car.id %}">
+                            <div id="reminders_list" class="col-3 overflow-auto text-end" style="list-style-type: none; max-height: 85%; max-width: 75%;" data-url="{% url 'load_reminders_list_url' car_id=viewed_car.id %}">
                                 {% include 'include/reminders/reminders_list.html' %}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,6 +110,7 @@
                                         <div id="new_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
                                             {% include 'include/month_report.html' with report=this_month_report only %}
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
