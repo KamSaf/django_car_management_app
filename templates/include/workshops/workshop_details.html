@@ -22,7 +22,7 @@
                 <div style="margin-top: 25px;" class="container">
                     <div class="row">
                         <div class="col-1"></div>
-                        <div class="col-10">
+                        <div id="workshop_data" class="col-10" data-url="{% url 'refresh_workshop_data_url' workshop_id=workshop.id %}">
                             {% include 'include/workshops/workshop_data.html' %}
                         </div>
                         <div class="col-1"></div>

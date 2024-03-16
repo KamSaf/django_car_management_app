@@ -15,3 +15,15 @@ class Reminder(models.Model):
     details = models.TextField(blank=True, max_length=100)
     create_date = models.DateTimeField(default=timezone.now)
     last_edit_date = models.DateTimeField(default=timezone.now)
+
+    def get_display_fields(self) -> dict:
+        """
+            Returns dict containing Car object data
+        """
+
+        return [
+            (self.date.strftime("%a %d %b %Y"), 'Date', '', None),
+            (self.category, 'Category', '', None),
+            (self.place, 'Place', '', None),
+            (self.details, 'Details', '', None),
+        ]

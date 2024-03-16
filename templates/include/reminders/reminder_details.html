@@ -6,43 +6,23 @@
         </button>
     </div>
     <div id="reminder_details_modal_content" class="modal-body">
+        {% for field, label, icon, unit in reminder.get_display_fields %}
         <div style="margin-bottom: 15px;" class="row">
             <span class="col text-start">
-                <span class="float-start">Date:</span>
+                <span class="float-start"><i class="bi bi-{{ icon }}"></i> {{ label }}:</span>
                 <span class="float-end">
-                    {{ reminder.date|date:"D d M Y"  }}
-                </span>
-            </span>
-        </div>
-        <div style="margin-bottom: 15px;" class="row">
-            <span class="col text-start">
-                <span class="float-start">Category:</span>
-                <span class="float-end">
-                    {{ reminder.category }}
-                </span>
-            </span>
-        </div>
-        <div style="margin-bottom: 15px;" class="row">
-            <span class="col text-start">
-                <span class="float-start">Place:</span>
-                <span class="float-end">
-                    {% if reminder.place %}
-                        {{ reminder.category }}
+                    {% if field %}
+                        {{ field }}
                     {% else %}
                         -
+                    {% endif %}
+                    {% if unit %}
+                        {{ unit }}
                     {% endif %}
                 </span>
             </span>
         </div>
-        <div style="margin-bottom: 15px;" class="row">
-            <span class="col text-start">
-                <span class="float-start">Place:</span>
-                <span class="float-end">
-                    {{ reminder.details }}
-                </span>
-            </span>
-        </div>
-    </div>
+    {% endfor %}
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>

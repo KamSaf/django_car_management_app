@@ -18,10 +18,11 @@ class Workshop(models.Model):
         """
             Returns dict containing Workshop object data
         """
+        phone_number = ''.join(['tel. ', self.phone_number[0:3], ' ', self.phone_number[3:6], ' ', self.phone_number[6:9]])
         return [
             (self.name, 'Name', 'person-vcard', None),
             (self.city, 'City', 'map', None),
             (self.address, 'Address', 'geo-alt', None),
-            (self.phone_number, 'Phone number', 'telephone', None),
+            (phone_number, 'Phone number', 'telephone', None),
             (self.profession, 'Profession', 'wrench-adjustable-circle', None),
         ]
