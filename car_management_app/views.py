@@ -54,9 +54,6 @@ def home(request, car_id=None):
     viewed_car = get_viewed_car(user=request.user, car_id=car_id)
     entries = Entry.objects.filter(user=request.user, car=viewed_car).order_by('-date', '-create_date').all()
 
-    last_entry = Entry.objects.filter(car=viewed_car).order_by('-date').first()
-    viewed_car_mileage = last_entry.mileage if last_entry else 0
-
     reminders = Reminder.objects.filter(car=viewed_car, date__gte=timezone.now()).order_by('date').all()
     this_month_report, last_month_report = expl_report(car=viewed_car, year=timezone.now().year, month=timezone.now().month)
 
@@ -71,7 +68,6 @@ def home(request, car_id=None):
             'edit_car_form': CarForm(instance=viewed_car, logged_user=request.user).set_initial(car=viewed_car),
             'cars': cars,
             'viewed_car': viewed_car,
-            'viewed_car_mileage': viewed_car_mileage,
             'workshops': workshops,
             'favourite_workshops': favourite_workshops,
             'entries': entries,

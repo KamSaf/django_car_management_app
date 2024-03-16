@@ -15,3 +15,23 @@ class Car(models.Model):
     favourite = models.BooleanField(default=False, blank=False)
     create_date = models.DateTimeField(default=timezone.now)
     last_edit_date = models.DateTimeField(default=timezone.now)
+
+    def get_display_fields(self) -> dict:
+        """
+            Returns dict containing Car object data
+        """
+        from entries.models import Entry
+
+        last_entry = Entry.objects.filter(car=self).order_by('-date').first()
+        mileage = last_entry.mileage if last_entry else 0
+
+        return [
+            (self.make, 'Make', 'car-front', None),
+            (self.model, 'Model', 'box', None),
+            (self.prod_year, 'Production year', 'calendar', None),
+            (self.num_plate, 'Number plate', '123', None),
+            (self.fuel_type, 'Fuel type', 'fuel-pump', None),
+            (self.displacement, 'Displacement', 'arrows-angle-expand', 'cm3'),
+            (mileage, 'Mileage', 'arrows-angle-expand', 'km'),
+            (self.vin, 'VIN number', 'pencil-square', None)
+        ]
