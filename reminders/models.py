@@ -18,7 +18,7 @@ class Reminder(models.Model):
 
     def get_display_fields(self) -> dict:
         """
-            Returns dict containing object data
+            Returns dict containing object data ready to display
         """
 
         return [

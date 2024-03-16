@@ -16,7 +16,7 @@ class Workshop(models.Model):
 
     def get_display_fields(self) -> dict:
         """
-            Returns dict containing object data
+            Returns dict containing object data ready to display
         """
         phone_number = ''.join(['tel. ', self.phone_number[0:3], ' ', self.phone_number[3:6], ' ', self.phone_number[6:9]])
         return [

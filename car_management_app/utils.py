@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from entries.models import Entry
 import calendar
 from django.utils import timezone
-import requests
-from bs4 import BeautifulSoup
 
 
 def get_viewed_car(user: User, car_id: int = None) -> Car | None:
@@ -71,18 +69,6 @@ def expl_report(car: Car, year: int, month: int) -> dict:
         month, year = 12, year - 1
     last_month_report = calc_report(car=car, year=year, month=month)
     return this_month_report, last_month_report
-
-
-def get_fuel_prices() -> list:
-    """
-        Function scrapping data about current prices (in Poland) from Autocentrum
-
-        Returns prices in order:
-        [pb95, pb98, diesel, diesel_premium, lpg]
-    """
-    URL = 'https://www.autocentrum.pl/paliwa/ceny-paliw/'
-    soup = BeautifulSoup(requests.get(URL), 'html.parser')
-    return [item.text.strip()[0:4] for item in soup.find_all(class_='price')]
 
 
 def permission_denied() -> dict:

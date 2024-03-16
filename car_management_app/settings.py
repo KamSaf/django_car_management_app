@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'entries.apps.EntriesConfig',
     'workshops.apps.WorkshopsConfig',
     'reminders.apps.RemindersConfig',
+    'fuel_prices_cronjob.apps.FuelPricesCronjobConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
