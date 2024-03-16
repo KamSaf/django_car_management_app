@@ -6,23 +6,7 @@
         </button>
     </div>
     <div id="reminder_details_modal_content" class="modal-body">
-        {% for field, label, icon, unit in reminder.get_display_fields %}
-        <div style="margin-bottom: 15px;" class="row">
-            <span class="col text-start">
-                <span class="float-start"><i class="bi bi-{{ icon }}"></i> {{ label }}:</span>
-                <span class="float-end">
-                    {% if field %}
-                        {{ field }}
-                    {% else %}
-                        -
-                    {% endif %}
-                    {% if unit %}
-                        {{ unit }}
-                    {% endif %}
-                </span>
-            </span>
-        </div>
-    {% endfor %}
+        {% include 'include/object_data.html' with object=reminder only %}
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>

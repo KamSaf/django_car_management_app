@@ -182,7 +182,7 @@ def async_refresh_workshop_data(request, workshop_id):
 
     return render(
         request=request,
-        template_name='include/workshops/workshop_data.html',
+        template_name='include/object_data.html',
         context={
             'workshop': workshop,
         },

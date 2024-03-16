@@ -75,7 +75,7 @@
                 <button type="submit" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#confirm_car_delete_modal"><i class="bi bi-trash"></i></button>
             </div>
             <div class="modal-body">
-                {% include 'include/cars/car_data.html' %}
+                {% include 'include/object_data.html' with object=viewed_car only %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
