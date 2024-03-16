@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class FuelPricesCronjobConfig(AppConfig):
+class CronjobConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'fuel_prices_cronjob'
+    name = 'cronjob'

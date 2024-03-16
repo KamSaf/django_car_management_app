@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'entries.apps.EntriesConfig',
     'workshops.apps.WorkshopsConfig',
     'reminders.apps.RemindersConfig',
-    'fuel_prices_cronjob.apps.FuelPricesCronjobConfig',
+    'cronjob.apps.CronjobConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'rest_framework',
+    'django_crontab',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -145,3 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'welcome_page'
 
 LOGIN_URL = 'login_page'
+
+CRONJOBS = [
+    ('* * * * *', 'cron.update_fuel_prices'),
+]
