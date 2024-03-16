@@ -76,6 +76,9 @@ def expl_report(car: Car, year: int, month: int) -> dict:
 def get_fuel_prices() -> list:
     """
         Function scrapping data about current prices (in Poland) from Autocentrum
+
+        Returns prices in order:
+        [pb95, pb98, diesel, diesel_premium, lpg]
     """
     URL = 'https://www.autocentrum.pl/paliwa/ceny-paliw/'
     soup = BeautifulSoup(requests.get(URL), 'html.parser')
