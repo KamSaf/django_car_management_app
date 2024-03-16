@@ -13,3 +13,15 @@ class Workshop(models.Model):
     create_date = models.DateTimeField(default=timezone.now)
     favourite = models.BooleanField(default=False, blank=False)
     last_edit_date = models.DateTimeField(default=timezone.now)
+
+    def get_display_fields(self) -> dict:
+        """
+            Returns dict containing Workshop object data
+        """
+        return [
+            (self.name, 'Name', 'person-vcard', None),
+            (self.city, 'City', 'map', None),
+            (self.address, 'Address', 'geo-alt', None),
+            (self.phone_number, 'Phone number', 'telephone', None),
+            (self.profession, 'Profession', 'wrench-adjustable-circle', None),
+        ]
