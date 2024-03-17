@@ -148,5 +148,5 @@ LOGIN_REDIRECT_URL = 'welcome_page'
 LOGIN_URL = 'login_page'
 
 CRONJOBS = [
-    ('1 */6 * * *', 'cron.update_fuel_prices'),
+    ('1 */3 * * *', 'cron.update_fuel_prices'),
 ]
