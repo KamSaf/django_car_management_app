@@ -10,15 +10,14 @@ class FuelPrices(models.Model):
     lpg = models.FloatField(null=True)
     date = models.DateTimeField(default=timezone.now)
 
-    def get_data(self) -> dict:
+    def get_data(self) -> list:
         """
             Returns dict containing object data
         """
-        return {
-            'PB95': self.pb95,
-            'PB98': self.pb98,
-            'Diesel': self.diesel,
-            'Diesel+': self.diesel_premium,
-            'LPG': self.lpg,
-            'Date': self.date.strftime("%a %d %b %Y")
-        }
+        return [
+            ('PB95', self.pb95, "#55a309"),
+            ('PB98', self.pb98, "#4f900f"),
+            ('Diesel', self.diesel, "#4a4a4a"),
+            ('Diesel+', self.diesel_premium, "#353535"),
+            ('LPG', self.lpg, "#00aeef"),
+        ]

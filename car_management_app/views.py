@@ -9,6 +9,7 @@ from reminders.models import Reminder
 from reminders.forms import ReminderForm
 from .utils import get_viewed_car, expl_report
 from django.utils import timezone
+from cronjob.models import FuelPrices
 
 
 def welcome(request):
@@ -56,7 +57,6 @@ def home(request, car_id=None):
 
     reminders = Reminder.objects.filter(car=viewed_car, date__gte=timezone.now()).order_by('date').all()
     this_month_report, last_month_report = expl_report(car=viewed_car, year=timezone.now().year, month=timezone.now().month)
-
     return render(
         request=request,
         template_name='home.html',
@@ -74,5 +74,6 @@ def home(request, car_id=None):
             'reminders': reminders,
             'this_month_report': this_month_report,
             'last_month_report': last_month_report,
+            'fuel_prices': FuelPrices.objects.order_by('-date').first()
         }
     )
