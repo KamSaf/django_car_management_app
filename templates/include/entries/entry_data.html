@@ -30,6 +30,16 @@
             </span>
         </span>
     </div>
+    {% if entry.category == 'fuel' %}
+        <div style="margin-bottom: 15px;" class="row">
+            <span class="col text-start">
+                <span class="float-start"><i class="bi bi-map"></i> Fuel liters:</span>
+                <span class="float-end">
+                    {{ entry.fuel_liters|stringformat:".2f" }} l
+                </span>
+            </span>
+        </div>
+    {% endif %}
     <div style="margin-bottom: 15px;" class="row">
         <span class="col text-start">
             <span class="float-start"><i class="bi bi-geo-alt"></i> Place:</span>

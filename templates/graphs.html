@@ -14,6 +14,9 @@
                         <a class="nav-link {% if graph_name == 'expenses' %} active {% endif %}" type="button" role="tab" href="{% url 'render_graphs' car_id=car.id graph='expenses' %}">Monthly expenses</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link {% if graph_name == 'costs_to_mileage' %} active {% endif %}" type="button" role="tab" href="{% url 'render_graphs' car_id=car.id graph='costs_to_mileage' %}">Cost to mileage</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link {% if graph_name == 'fuel_economy' %} active {% endif %}" type="button" role="tab" href="{% url 'render_graphs' car_id=car.id graph='fuel_economy' %}">Fuel economy</a>
                     </li>
                 </ul>

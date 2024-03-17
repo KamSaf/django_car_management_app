@@ -15,6 +15,7 @@ class Entry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     cost = models.FloatField(default=0)
+    fuel_liters = models.FloatField(blank=True, null=True)
     category = models.TextField(blank=False, choices=TYPES_OF_ENTRIES)
     date = models.DateTimeField(blank=False)
     place = models.TextField(blank=True, max_length=200)

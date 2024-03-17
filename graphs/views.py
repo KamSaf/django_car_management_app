@@ -31,6 +31,8 @@ def render_graphs(request, car_id, graph):
             graph_html = mileage_graph(this_car_entries=this_car_entries, car=car)
         case 'expenses':
             graph_html = costs_graph(entries=this_car_entries, car=car)
+        case 'costs_to_mileage':
+            graph_html = service_costs_graph(entries=this_car_entries, car=car)
         case 'fuel_economy':
             graph_html = None
     return render(
@@ -93,16 +95,22 @@ def mileage_graph(this_car_entries: list[Entry], car: Car) -> str:
     return fig.to_html()
 
 
-def service_costs_graph(this_car_entries: list[Entry], other_cars_entries: list[Entry], car: Car) -> str:
+def service_costs_graph(entries: list[Entry], car: Car) -> str:
     """
         Function creating service costs to mileage graph
     """
-    queryset = this_car_entries.filter(category='service').values('mileage', 'cost').order_by('date')
+    queryset = entries.filter(category='service').values('mileage', 'cost').order_by('date')
 
     data = [{list(dict.values())[0]: list(dict.values())[1]} for dict in queryset]
 
+    costs = [list(dict.values())[0] for dict in data]
+
+    for i in range(len(costs)):
+        if i > 0:
+            costs[i] += costs[i - 1]
+
     this_car_df = pd.DataFrame({
-        'costs': [list(dict.values())[0] for dict in data],
+        'costs': costs,
         'mileage': [list(dict.keys())[0] for dict in data],
     })
 
@@ -111,22 +119,15 @@ def service_costs_graph(this_car_entries: list[Entry], other_cars_entries: list[
     return fig.to_html()
 
 
+def fuel_economy_graph(this_car_entries: list[Entry], other_cars_entries: list[Entry], car: Car) -> str:
+    """
+        Function creating fuel economy across exploitation period graph
+    """
+    mileage_df = pd.DataFrame({
+        'date': this_car_entries.values_list('date', flat=True),
+        'mileage': this_car_entries.values_list('mileage', flat=True),
+    })
 
-# def foo(this_car_entries: list[Entry], other_cars_entries: list[Entry], car: Car) -> str:
-#     """
-#         Function creating mileage across exploitation period graph
-#     """
-#     mileage_df = pd.DataFrame({
-#         'date': this_car_entries.values_list('date', flat=True),
-#         'mileage': this_car_entries.values_list('mileage', flat=True),
-#     })
-
-#     other_cars_mileage_df = pd.DataFrame({
-#         'date': this_car_entries.values_list('date', flat=True),
-#         'mileage': other_cars_entries.values_list('mileage', flat=True),
-#     })
-
-#     fig = go.Figure().add_trace(go.Scatter(x=mileage_df['date'], y=mileage_df['mileage'], mode='lines', name=f'Your {car.make} {car.model}'))
-#     fig.add_trace(go.Scatter(x=other_cars_mileage_df['date'], y=other_cars_mileage_df['mileage'], mode='lines', name=f'Average for {car.make} {car.model}'))
-#     fig.update_layout(title='Car mileage:', xaxis_title='Date', yaxis_title='Mileage [km]')
-#     return fig.to_html()
+    fig = go.Figure().add_trace(go.Scatter(x=mileage_df['date'], y=mileage_df['mileage'], mode='lines', name=f'Your {car.make} {car.model}'))
+    fig.update_layout(autosize=True, title='Car mileage:', xaxis_title='Date', yaxis_title='Mileage [km]', )
+    return fig.to_html()

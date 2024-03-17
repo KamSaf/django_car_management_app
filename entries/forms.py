@@ -15,8 +15,9 @@ class EntryForm(forms.ModelForm, FormUtils):
     mileage = forms.Field(required=True, label=mark_safe('Mileage'))
     cost = forms.Field(required=True, label=mark_safe('Cost'))
     details = forms.Field(required=False, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
+    fuel_liters = forms.FloatField(required=False, label=mark_safe('Fuel liters (for Fuel entries)'))
 
-    field_order = ['date', 'category', 'place', 'mileage', 'cost', 'details']
+    field_order = ['date', 'category', 'place', 'mileage', 'cost', 'fuel_liters', 'details']
 
     error_messages = {
         'field_value_too_long': 'field value is too long.',
@@ -27,7 +28,7 @@ class EntryForm(forms.ModelForm, FormUtils):
 
     class Meta:
         model = Entry
-        fields = ['date', 'category', 'place', 'mileage', 'details', 'cost']
+        fields = ['date', 'category', 'place', 'mileage', 'details', 'cost', 'fuel_liters']
         widgets = {
             'date': forms.widgets.DateInput(attrs={'type': 'date'}),
         }
@@ -53,6 +54,18 @@ class EntryForm(forms.ModelForm, FormUtils):
         place = self.cleaned_data.get('place')
         details = self.cleaned_data.get('details')
         date = self.cleaned_data.get('date')
+
+        if self.cleaned_data.get('fuel_liters'):
+            # check if type of fuel_liters is valid
+            try:
+                cost = int(float(self.cleaned_data.get('fuel_liters')))
+            except TypeError:
+                fuel_error = EntryForm.invalid_field_value(field_name='fuel_liters')
+                self.data_errors['id_fuel_liters'] = fuel_error
+                self._errors['fuel_liters'] = self.error_class(fuel_error)
+                return self.cleaned_data
+        else:
+            self.instance.fuel_liters = None
 
         # check if given date is not in the future
         if date > timezone.now():
