@@ -6,3 +6,4 @@ djangorestframework
 beautifulsoup4
 requests
 django-crontab
+plotly
