@@ -92,7 +92,7 @@
             </div>
             <div class="col" style="height: 100%;">
                 <div class="row container-fluid" style="height: 4%;">
-                    <div id="fuel_prices" class="shadow bg-body rounded card">{% include 'include/fuel_prices.html' %}</div>
+                    <div id="fuel_prices" class="shadow bg-body rounded card" data-refresh-url="{% url 'refresh_fuel_prices' %}">{% include 'include/fuel_prices.html' %}</div>
                 </div>
                 <div class="row container-fluid" style="height: 30%; margin-top: 4%;">
                     <div class="shadow bg-body rounded card">

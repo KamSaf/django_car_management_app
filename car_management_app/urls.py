@@ -34,5 +34,6 @@ urlpatterns = [
     path('entries/', include('entries.urls')),
     path('workshops/', include('workshops.urls')),
     path('reminders/', include('reminders.urls')),
+    path('cron/', include('cronjob.urls')),
     path('navbar_refresh/', main_views.refresh_navbar, name="navbar_refresh_url"),
 ]

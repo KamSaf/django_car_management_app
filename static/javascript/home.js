@@ -177,6 +177,19 @@ $(function(){
   });
 });
 
+// Refresh fuel prices
+
+$(function() {
+  function updateFuelPrices() {
+    let $fuelPrices = $('#fuel_prices');
+    $fuelPrices.load($fuelPrices.data('refresh-url'));
+  }
+
+  // interval is 1 hour in miliseconds
+  setInterval(updateFuelPrices, 3600000);
+  updateFuelPrices();
+})
+
 // Handles new workshop creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_workshop_modal"));

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     function updateClock() {
         var now = new Date();
         var hours = now.getHours();
@@ -26,4 +26,4 @@ $(document).ready(function() {
 
     setInterval(updateClock, 1000);
     updateClock();
-});
+})
