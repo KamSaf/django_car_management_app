@@ -12,11 +12,15 @@
     <div style="margin-top: 25px; height: 20%" class="container-fluid">
         <div style="margin-top: 25px;" class="shadow bg-body rounded card h-100">
             <div class="card-body row h-100">
-                <h4 class="card-title h-25 mb-3">
-                    <b>{{ viewed_car.make }} {{ viewed_car.model }}</b>
-                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal"><i class="bi bi-chevron-down"></i></button>
-                    <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#car_details_modal">Car details</button>
-                </h4>
+                <div class="row mb-2">
+                    <div class="col float-start text-start">
+                        <h4 class="card-title">
+                            <b>{{ viewed_car.make }} {{ viewed_car.model }}</b>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cars_list_modal"><i class="bi bi-chevron-down"></i></button>    
+                        </h4>
+                    </div>
+                    <div class="col float-end text-end"><button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#car_details_modal">Car details</button></div>
+                </div>
                 <hr class="mb-2">
                 <div class="row h-75">
                     <div class="col mt-3">
@@ -48,85 +52,94 @@
         </div>
     </div>
 
-    <div class="container-fluid h-75">
-        <div class="row h-100">
-            <div class="row h-100">
-                <div class="col h-100">
-                    <div style="margin-top: 25px;" class="shadow bg-body rounded card h-75">
-                        <div class="card-body row" style="height: 80%;">
-                            <h5 class="col card-title">
-                                Exploatation History
-                            </h5>
-                            <form id="entries_search_form" class="col" role="search">
-                                <div class="row">
-                                    <span class="col-3">
-                                        <select class="form-control" id="entries_category_filter">
-                                            <option value="all">All</option>
-                                            <option value="fuel">Fuel</option>
-                                            <option value="service">Service</option>
-                                            <option value="others">Others</option>
-                                        </select>
-                                    </span>
-                                    <span class="col-7">
-                                        <input id="entries_search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
-                                    </span>
-                                    <span class="col-2">
-                                        <button type="button" class="btn btn-outline-dark apply-entries-filter" type="submit" data-url="{% url 'load_entries_list_url' %}"><i class="bi bi-search"></i></button>    
-                                    </span>    
-                                </div>
-                            </form>                        
-                            <hr style="margin-top: 10px;">
-                            <div id="entries_list" class="h-75" style="margin-top: 25px;" data-url="{% url 'load_entries_list_url' %}">
-                                {% include 'include/entries/entries_list.html' %}
+    <div class="container-fluid" style="height: 80%; margin-top: 1.5%;">
+        <div class="row" style="height: 100%;">
+            <div class="col" style="height: 100%;">
+                <div style="height: 75%;" class="shadow bg-body rounded card">
+                    <div class="card-body row" style="height: 80%;">
+                        <h5 class="col card-title">
+                            Exploatation History
+                        </h5>
+                        <form id="entries_search_form" class="col" role="search">
+                            <div class="row">
+                                <span class="col-3">
+                                    <select class="form-control" id="entries_category_filter">
+                                        <option value="all">All</option>
+                                        <option value="fuel">Fuel</option>
+                                        <option value="service">Service</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                </span>
+                                <span class="col-7">
+                                    <input id="entries_search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                </span>
+                                <span class="col-2">
+                                    <button type="button" class="btn btn-outline-dark apply-entries-filter" type="submit" data-url="{% url 'load_entries_list_url' %}"><i class="bi bi-search"></i></button>    
+                                </span>    
                             </div>
+                        </form>                        
+                        <hr style="margin-top: 10px;">
+                        <div id="entries_list" style="margin-top: 25px; height: 75%;" data-url="{% url 'load_entries_list_url' %}">
+                            {% include 'include/entries/entries_list.html' %}
                         </div>
-                        <div class="card-footer" style="height: 15%;">
-                            <div class="row" style="margin-top: 1%;" style="height: 75%;">
-                                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
+                    </div>
+                    <div class="card-footer" style="height: 15%;">
+                        <div class="row" style="margin-top: 1%;" style="height: 75%;">
+                            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#new_entry_modal">Add new entry <i class="bi bi-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="height: 100%;">
+                <div class="row container-fluid" style="height: 4%;">
+                    <div class="shadow bg-body rounded card">
+                        <div class="row shadow" style="height: 100%;">
+                            <div class="col" style="background-color: #55a309;"><b class="text-light">PB95<br>1.39 zł</b></div>
+                            <div class="col" style="background-color: #4f900f;"><b class="text-light">PB98<br>1.39 zł</b></div>
+                            <div class="col" style="background-color: #4a4a4a;"><b class="text-light">Diesel<br>1.39 zł</b></div>
+                            <div class="col" style="background-color: #353535;"><b class="text-light">Diesel+<br>1.39 zł</b></div>
+                            <div class="col" style="background-color: #00aeef;"><b class="text-light">LPG<br>1.39 zł</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row container-fluid" style="height: 30%; margin-top: 4%;">
+                    <div class="shadow bg-body rounded card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="monthTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="monthTabContent">
+                                <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
+                                    <div id="last_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
+                                            {% include 'include/month_report.html' with report=last_month_report only %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
+                                    <div id="new_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
+                                        {% include 'include/month_report.html' with report=this_month_report only %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <div class="col h-100">
-                <div class="container h-100">
-                    <div class="row h-25">
-                        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                            <div class="card-body">
-                                <ul class="nav nav-tabs" id="monthTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="last-month-tab" data-bs-toggle="tab" data-bs-target="#last-month" type="button" role="tab" aria-controls="last-month" aria-selected="false">Last Month</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="monthTabContent">
-                                    <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
-                                        <div id="last_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
-                                                {% include 'include/month_report.html' with report=last_month_report only %}
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
-                                        <div id="new_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
-                                            {% include 'include/month_report.html' with report=this_month_report only %}
-                                        </div>
-                                        
-                                    </div>
-                                </div>
+                <div class="row container-fluid" style="height: 120%; margin-top: 2%;">
+                    <div class="shadow bg-body rounded card" style="height: 25%; max-height: 25%; margin-top: 3%;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Favourite workshops:
+                                <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#workshops_list_modal">See all saved workshops</button>
+                            </h5>
+                            <hr>
+                            <div id="favourite_workshops_list" class="overflow-auto workshop-list" style="max-height: 25%;" data-url="{% url 'load_favourite_workshops_list_url' %}">
+                                {% include 'include/workshops/favourite_workshops_list.html' %}
                             </div>
-                        </div>
-                    </div>
-                    <div class="row h-25" style="margin-top: 110px;">
-                        <div style="margin-top: 25px;" class="shadow bg-body rounded card">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    Favourite workshops:
-                                    <button class="btn btn-sm btn-outline-info float-end" data-bs-toggle="modal" data-bs-target="#workshops_list_modal">See all saved workshops</button>
-                                </h5>
-                                <hr>
-                                    {% include 'include/workshops/favourite_workshops_list.html' %}
-                                <button style="margin-top: 15px;" class="btn btn-sm btn-outline-success new-workshop-main float-end" data-bs-toggle="modal" data-bs-target="#new_workshop_modal">Add new workshop <i class="bi bi-plus-circle"></i></button>
-                            </div>
+                            <button style="margin-top: 2%;" class="btn btn-sm btn-outline-success new-workshop-main float-end" data-bs-toggle="modal" data-bs-target="#new_workshop_modal">Add new workshop <i class="bi bi-plus-circle"></i></button>
                         </div>
                     </div>
                 </div>

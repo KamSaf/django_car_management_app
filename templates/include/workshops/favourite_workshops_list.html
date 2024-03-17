@@ -1,20 +1,14 @@
-<div id="favourite_workshops_list" class="overflow-auto workshop-list" style="max-height: 175px;" data-url="{% url 'load_favourite_workshops_list_url' %}">
-    <div class="list-group w-auto" style="list-style: none;">
-        {% for workshop in favourite_workshops %}
-            <button class="btn btn-light show-workshop-details" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
-                <div style="max-height: 50px;">
-                    <div class="row">
-                        <span class="col text-start">{{ workshop.name }}</span>
-                        <span class="col text-center">
-                            tel.
-                            {{ workshop.phone_number|slice:"0:3" }}
-                            {{ workshop.phone_number|slice:"3:6" }}
-                            {{ workshop.phone_number|slice:"6:9" }}
-                        </span>
-                        <span class="col text-end">{{ workshop.address }}, {{ workshop.city }}</span>
-                    </div>
-                </div>
-            </button>
-        {% endfor %}                            
+{% for workshop in favourite_workshops %}
+    <button class="btn btn-light show-workshop-details w-100" style="height: 5%; max-height: 5%" data-bs-toggle="modal" data-bs-target="#workshop_details_modal" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
+        <div class="row">
+            <span class="col text-start">{{ workshop.name }}</span>
+            <span class="col text-center">
+                tel.
+                {{ workshop.phone_number|slice:"0:3" }}
+                {{ workshop.phone_number|slice:"3:6" }}
+                {{ workshop.phone_number|slice:"6:9" }}
+            </span>
+            <span class="col text-end">{{ workshop.address }}, {{ workshop.city }}</span>
         </div>
-</div>
+    </button>
+{% endfor %}
