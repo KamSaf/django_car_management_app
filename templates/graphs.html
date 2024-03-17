@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+    {% if no_data %}
+        {% include 'include/no_data.html' %}
+    {% else %}
+        {{ mileage_graph|safe }}
+        {{ costs_graph|safe }}
+    {% endif %}
+{% endblock %}
