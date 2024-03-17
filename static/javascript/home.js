@@ -11,6 +11,11 @@ function checkIfValidPhoneNumber(phoneNumber){
   };
 }
 
+// Refresh home page reports
+function refreshMonthReports(){
+  $('#month_reports').load($('#month_reports').data('refresh-url'));
+}
+
 // Function for clearing form errors and entered data
 function clearForm(formId){
   clearErrors();
@@ -381,6 +386,7 @@ $(function() {
           modal.hide();
           $('#entries_list').load($('#entries_list').data('url'));
           $('#messages_box').append(message);
+          refreshMonthReports();
         }
       });
     });
@@ -413,6 +419,7 @@ $(function() {
         $('#entries_list').load($('#entries_list').data('url'));
         $('#entry_details_modal_content').load($this.data('refresh-url'));
         $('#messages_box').append(message);
+        refreshMonthReports();
       }
     });
   });
@@ -443,6 +450,7 @@ $(function(){
             $('#entries_list').load($('#entries_list').data('url'));
             $('.popover').remove();
             $('#messages_box').append(message);
+            refreshMonthReports();
           }
         }
       });
@@ -498,7 +506,7 @@ $(function(){
         success: function(response) {
           if (response['status'] == 'success'){
             var message = $(
-              '<div id="entry_message" class="alert alert-success" role="alert" style="display: block;">\
+              '<div id="reminder_message" class="alert alert-success" role="alert" style="display: block;">\
                 Reminder deleted.\
                 <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
               </div>'

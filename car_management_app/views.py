@@ -10,6 +10,7 @@ from reminders.forms import ReminderForm
 from .utils import get_viewed_car, expl_report
 from django.utils import timezone
 from cronjob.models import FuelPrices
+from django.contrib.auth.decorators import login_required
 
 
 def welcome(request):
@@ -28,12 +29,29 @@ def about(request):
 
 def refresh_navbar(request):
     """
-        Endpoint returnig navbar template (for AJAX navbar refresh)
+        Endpoint rendering navbar template (for AJAX navbar refresh)
     """
     return render(
         request=request,
         template_name='include/navbar.html',
         context={'user': request.user}
+    )
+
+
+@login_required
+def refresh_month_reports(request, car_id):
+    """
+        Endpoint rendering month reports template (for AJAX)
+    """
+    car = Car.objects.filter(id=car_id).first()
+    this_month_report, last_month_report = expl_report(car=car, year=timezone.now().year, month=timezone.now().month)
+    return render(
+        request=request,
+        template_name='include/month_reports.html',
+        context={
+            'this_month_report': this_month_report,
+            'last_month_report': last_month_report,
+        }
     )
 
 

@@ -105,17 +105,7 @@
                                     <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
                                 </li>
                             </ul>
-                            <div class="tab-content" id="monthTabContent">
-                                <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
-                                    <div id="last_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
-                                            {% include 'include/month_report.html' with report=last_month_report only %}
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
-                                    <div id="new_month_report" style="margin-left: 25px; margin-top: 25px;" class="container">
-                                        {% include 'include/month_report.html' with report=this_month_report only %}
-                                    </div>
-                                </div>
+                            <div id="month_reports" class="tab-content" id="monthTabContent" data-refresh-url="{% url 'navbar_refresh_url' car_id=viewed_car.id %}">{% include 'include/month_reports.html' %}
                             </div>
                         </div>
                     </div>

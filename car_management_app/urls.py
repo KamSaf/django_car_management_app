@@ -36,4 +36,5 @@ urlpatterns = [
     path('reminders/', include('reminders.urls')),
     path('cron/', include('cronjob.urls')),
     path('navbar_refresh/', main_views.refresh_navbar, name="navbar_refresh_url"),
+    path('reports_refresh/<int:car_id>/', main_views.refresh_month_reports, name="navbar_refresh_url"),
 ]
