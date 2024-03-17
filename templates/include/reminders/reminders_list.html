@@ -8,7 +8,7 @@
             {% else %}
                 <i class="bi bi-cart-plus"></i>
             {% endif %}
-            {{ reminder.details }} on: {{ reminder.date|date:"D d M Y"  }}
+            {{ reminder.details }} <br> on: {{ reminder.date|date:"D d M Y"  }}
         </button>
     </li>
 {% endfor %}
