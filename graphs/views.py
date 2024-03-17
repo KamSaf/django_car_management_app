@@ -1,40 +1,49 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import plotly.express as px
 import plotly.graph_objects as go
 from entries.models import Entry
 from cars.models import Car
 from django.contrib.auth.decorators import login_required
 import pandas as pd
-from django.db.models.functions import TruncMonth
-from django.db.models import Count
 from datetime import datetime, timedelta
+from django.contrib import messages
 
 
 @login_required
-def render_graphs(request, car_id):
+def render_graphs(request, car_id, graph):
     """
         Views rendering page with graphs representing car exploitation data
     """
     try:
         car = Car.objects.get(user=request.user, id=car_id)
     except Car.DoesNotExist:
-        print('message')
+        messages.error(request, 'This car does not exist.')
+        return redirect(to="home_page")
 
     this_car_entries = Entry.objects.filter(car=car).order_by('-date')
     other_cars_entries = Entry.objects.filter(car__make=car.make, car__model=car.model).order_by('-date')
 
     if len(this_car_entries) < 1:
-        context = {'no_data': True}
-    else:
-        context = {
-            'mileage_graph': create_mileage_graph(this_car_entries=this_car_entries, car=car),
-            'costs_graph': create_costs_graph(entries=this_car_entries, car=car),
-        }
+        return render(request=request, template_name='graphs.html', context={'no_data': True})
+
+    match(graph):
+        case 'mileage':
+            graph_html = create_mileage_graph(this_car_entries=this_car_entries, car=car)
+        case 'expenses':
+            graph_html = create_costs_graph(entries=this_car_entries, car=car)
+        case 'fuel_economy':
+            graph_html = None
+        case 'costs_to_mileage':
+            graph_html = None
 
     return render(
         request=request,
         template_name='graphs.html',
-        context=context,
+        context={
+            'graph': graph_html,
+            'car': car,
+            'graph_name': graph,
+        },
     )
 
 
@@ -69,6 +78,7 @@ def create_costs_graph(entries: list[Entry], car: Car) -> str:
     })
 
     fig = px.bar(df, x='month', y='expenses').update_xaxes(type='category', title='Months').update_yaxes(title='Expenses [zł]')
+    fig.update_layout(autosize=True)
     return fig.to_html()
 
 
@@ -82,7 +92,7 @@ def create_mileage_graph(this_car_entries: list[Entry], car: Car) -> str:
     })
 
     fig = go.Figure().add_trace(go.Scatter(x=mileage_df['date'], y=mileage_df['mileage'], mode='lines', name=f'Your {car.make} {car.model}'))
-    fig.update_layout(title='Car mileage:', xaxis_title='Date', yaxis_title='Mileage [km]')
+    fig.update_layout(autosize=True, title='Car mileage:', xaxis_title='Date', yaxis_title='Mileage [km]', )
     return fig.to_html()
 
 

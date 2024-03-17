@@ -105,7 +105,7 @@
                                     <button class="nav-link active" id="this-month-tab" data-bs-toggle="tab" data-bs-target="#this-month" type="button" role="tab" aria-controls="this-month" aria-selected="true">This Month</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link"type="button" role="tab" href="{% url 'render_graphs' car_id=viewed_car.id %}">Data graphs</a>
+                                    <a class="nav-link"type="button" role="tab" href="{% url 'render_graphs' car_id=viewed_car.id graph='mileage' %}">Data graphs</a>
                                 </li>
                             </ul>
                             <div id="month_reports" class="tab-content" id="monthTabContent" data-refresh-url="{% url 'navbar_refresh_url' car_id=viewed_car.id %}">{% include 'include/month_reports.html' %}
