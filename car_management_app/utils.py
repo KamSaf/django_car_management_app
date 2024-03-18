@@ -39,7 +39,9 @@ def calc_report(car: Car, year: int, month: int) -> dict:
     month_days = timezone.now().day if timezone.now().month == month and timezone.now().year == year else calendar.monthrange(year, month)[1]
 
     entries = Entry.objects.filter(car=car, date__year=year, date__month=month).order_by('date')
-    # spalanie zrobie po zrobieniu web scrappera z autocentrum
+    print(sum(entries.filter(category='fuel').values_list('fuel_liters', flat=True)))
+    print(entries.last().mileage - entries.first().mileage)
+    fuel_economy = (sum(entries.filter(category='fuel').values_list('fuel_liters', flat=True)) * 100) / (entries.last().mileage - entries.first().mileage)
     all_costs = costs_sum(query=entries)
     fuel_costs = costs_sum(query=entries, category='fuel')
     service_costs = costs_sum(query=entries, category='service')
@@ -53,7 +55,7 @@ def calc_report(car: Car, year: int, month: int) -> dict:
         'others_costs': round((others_costs / all_costs) * 100, 1) if all_costs > 0 else 0,
         'cost_per_day': round((all_costs / month_days), 2),
         'cost_per_km': round(fuel_costs / mileage_covered, 2) if mileage_covered > 0 else 0,
-        'fuel_economy': 9.3,
+        'fuel_economy': round(fuel_economy, 2),
     }
     return report
 

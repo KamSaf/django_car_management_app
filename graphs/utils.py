@@ -81,13 +81,39 @@ def service_costs_graph(entries: list[Entry], car: Car) -> str:
 
 def fuel_economy_graph(this_car_entries: list[Entry], other_cars_entries: list[Entry], car: Car) -> str:
     """
-        Function creating fuel economy across exploitation period graph
+        Function creating costs by month graph
     """
-    mileage_df = pd.DataFrame({
-        'date': this_car_entries.values_list('date', flat=True),
-        'mileage': this_car_entries.values_list('mileage', flat=True),
-    })
+    fuel_queryset = this_car_entries.filter(category='fuel').values('date', 'fuel_liters').order_by('date')
+    mileage_queryset = this_car_entries.values('date', 'mileage').order_by('date')
 
-    fig = go.Figure().add_trace(go.Scatter(x=mileage_df['date'], y=mileage_df['mileage'], mode='lines', name=f'Your {car.make} {car.model}'))
-    fig.update_layout(autosize=True, title='Car mileage:', xaxis_title='Date', yaxis_title='Mileage [km]', )
-    return fig.to_html()
+    if len(fuel_queryset) > 1 and len(mileage_queryset) > 1:
+        data_fuel = [{list(dict.values())[0].strftime('%m/%Y'): list(dict.values())[1]} for dict in fuel_queryset]
+        data_mileage = [{list(mileage_queryset[i].values())[0].strftime('%m/%Y'): (list(mileage_queryset[i].values())[1] - list(mileage_queryset[i - 1].values())[1])} for i in range(1, len(mileage_queryset))]
+
+        grouped_data_fuel = {}
+        for dict in data_fuel:
+            for key, value in dict.items():
+                grouped_data_fuel.setdefault(key, 0)
+                grouped_data_fuel[key] += value
+
+        grouped_data_mileage = {}
+        for dict in data_mileage:
+            for key, value in dict.items():
+                grouped_data_mileage.setdefault(key, 0)
+                grouped_data_mileage[key] += value
+
+        data = {}
+        print(grouped_data_fuel)
+        print(grouped_data_mileage)
+
+        for date, mileage in grouped_data_mileage.items():
+            data[date] = (grouped_data_fuel[date] * 100) / mileage if date in grouped_data_fuel.keys() else 0
+
+        df = pd.DataFrame({
+            'month': data.keys(),
+            'expenses': data.values(),
+        })
+
+        fig = go.Figure().add_trace(go.Scatter(x=df['month'], y=df['expenses'], mode='lines', name=f'Your {car.make} {car.model}'))
+        fig.update_layout(autosize=True, title='Fuel economy:', xaxis_title='Month', yaxis_title='Fuel [l/km]', )
+        return fig.to_html()

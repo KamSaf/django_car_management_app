@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .utils import service_costs_graph, costs_graph, fuel_economy_graph, mileage_graph
 
+
 @login_required
 def render_graphs(request, car_id, graph):
     """
@@ -16,8 +17,8 @@ def render_graphs(request, car_id, graph):
         messages.error(request, 'This car does not exist.')
         return redirect(to="home_page")
 
-    this_car_entries = Entry.objects.filter(car=car).order_by('-date')
-    other_cars_entries = Entry.objects.filter(car__make=car.make, car__model=car.model).order_by('-date')
+    this_car_entries = Entry.objects.filter(car=car).order_by('date')
+    other_cars_entries = Entry.objects.filter(car__make=car.make, car__model=car.model)
 
     if len(this_car_entries) < 1:
         return render(request=request, template_name='graphs.html', context={'no_data': True})
@@ -30,8 +31,7 @@ def render_graphs(request, car_id, graph):
         case 'costs_to_mileage':
             graph_html = service_costs_graph(entries=this_car_entries, car=car)
         case 'fuel_economy':
-            # graph_html = fuel_economy_graph(this_car_entries=this_car_entries, other_cars_entries=other_cars_entries, car=car)
-            graph_html = None
+            graph_html = fuel_economy_graph(this_car_entries=this_car_entries, other_cars_entries=other_cars_entries, car=car)
     return render(
         request=request,
         template_name='graphs.html',
