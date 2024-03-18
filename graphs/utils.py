@@ -103,9 +103,6 @@ def fuel_economy_graph(this_car_entries: list[Entry], other_cars_entries: list[E
                 grouped_data_mileage[key] += value
 
         data = {}
-        print(grouped_data_fuel)
-        print(grouped_data_mileage)
-
         for date, mileage in grouped_data_mileage.items():
             data[date] = (grouped_data_fuel[date] * 100) / mileage if date in grouped_data_fuel.keys() else 0
 
