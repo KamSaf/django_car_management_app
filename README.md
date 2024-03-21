@@ -1,8 +1,8 @@
 # WORK IN PROGRESS
 
-Django web application created to make it easier to keep records of car operating expenses. 
+Django web application created to make it easier to keep records of car operating expenses. Created as a bachelor's thesis project.
 
-How to run:
+# How to run:
 
 1. Create virtual environment and activate it:
 
@@ -33,4 +33,4 @@ How to run:
 
 3. Run application with command when in main project directory:
 
-        python manage.py migrate
+        python manage.py runserver
