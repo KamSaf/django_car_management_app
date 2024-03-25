@@ -8,3 +8,5 @@ requests
 django-crontab
 plotly
 pandas
+django-stubs
+django-types

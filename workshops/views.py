@@ -34,7 +34,7 @@ def async_load_workshop_details(request, workshop_id):
     """
     try:
         workshop = Workshop.objects.get(id=workshop_id)
-    except Exception(Workshop.DoesNotExist):
+    except Workshop.DoesNotExist:
         return Response(item_not_existing(item='workshop'))
 
     if request.user.id != workshop.user_id:
@@ -174,7 +174,7 @@ def async_refresh_workshop_data(request, workshop_id):
     """
     try:
         workshop = Workshop.objects.get(id=workshop_id)
-    except Exception(Workshop.DoesNotExist):
+    except Workshop.DoesNotExist:
         return Response(item_not_existing(item='workshop'))
 
     if request.user.id != workshop.user_id:

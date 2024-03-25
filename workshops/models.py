@@ -14,7 +14,7 @@ class Workshop(models.Model):
     favourite = models.BooleanField(default=False, blank=False)
     last_edit_date = models.DateTimeField(default=timezone.now)
 
-    def get_display_fields(self) -> dict:
+    def get_display_fields(self) -> list:
         """
             Returns dict containing object data ready to display
         """
