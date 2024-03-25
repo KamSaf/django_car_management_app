@@ -1,4 +1,3 @@
-from django.db.models import BaseManager
 from cars.models import Car
 from entries.models import Entry
 from datetime import datetime, timedelta
@@ -7,7 +6,7 @@ import plotly.graph_objects as go
 import pandas as pd
 
 
-def costs_graph(entries: BaseManager[Entry], car: Car) -> str:
+def costs_graph(entries: list[Entry], car: Car) -> str:
     """
         Function creating costs by month graph
     """
@@ -42,7 +41,7 @@ def costs_graph(entries: BaseManager[Entry], car: Car) -> str:
     return fig.to_html()
 
 
-def mileage_graph(this_car_entries: BaseManager[Entry], car: Car) -> str:
+def mileage_graph(this_car_entries: list[Entry], car: Car) -> str:
     """
         Function creating mileage across exploitation period graph
     """
@@ -80,7 +79,7 @@ def service_costs_graph(entries: list[Entry], car: Car) -> str:
     return fig.to_html()
 
 
-def fuel_economy_graph(this_car_entries: BaseManager[Entry], other_cars_entries: BaseManager[Entry], car: Car) -> str:
+def fuel_economy_graph(this_car_entries: list[Entry], other_cars_entries: list[Entry], car: Car) -> str:
     """
         Function creating costs by month graph
     """
