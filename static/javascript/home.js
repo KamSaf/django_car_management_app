@@ -170,7 +170,6 @@ $(function(){
     args.forEach(function(element) {
       element !== "" ? url.push(element) : url.push('__null');
     });
-    console.log(url.join('/'));
     $('#entries_list').load(url.join('/'));
   });
 });
@@ -236,7 +235,6 @@ $(function() {
 
 // Handles workshop edit request
 $(function() {
-  var modal = new bootstrap.Modal($("#workshop_details_modal"));
 
   $('#workshop_details_modal').on('click', '.save-edit-workshop-data', function(event) {
     event.preventDefault();
@@ -250,7 +248,7 @@ $(function() {
       url: $(this).data('url'),
       data: $('#edit_workshop_form').serializeArray(),
       success: function(response) {
-        handleAjaxResponse(response, modal, 'edit_workshop_submit_info', 'edit_workshop_form');
+        handleAjaxResponse(response, null, 'edit_workshop_submit_info', 'edit_workshop_form');
         refreshWorkshopsLists();
         var message = $(
           '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
@@ -258,8 +256,9 @@ $(function() {
             <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
           </div>'
         );
-        $('#workshop_data').load($('#workshop_data').data('url'));
-        $('#messages_box').append(message);
+        $('#workshop_details_modal_content').load($('#workshop_data').data('url'), function() {
+          $('#workshop_edit_messages_box').append(message);
+        });
       }
     });
   });

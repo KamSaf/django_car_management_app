@@ -170,7 +170,7 @@ def async_delete_workshop(request, workshop_id):
 @login_required
 def async_refresh_workshop_data(request, workshop_id):
     """
-        Endpoint for refreshing workshop (for AJAX)
+        Endpoint for refreshing workshop (for AJAX) - not used but let it be for now
     """
     try:
         workshop = Workshop.objects.get(id=workshop_id)
@@ -184,6 +184,6 @@ def async_refresh_workshop_data(request, workshop_id):
         request=request,
         template_name='include/object_data.html',
         context={
-            'workshop': workshop,
+            'object': workshop,
         },
     )

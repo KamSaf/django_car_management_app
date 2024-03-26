@@ -1,58 +1,56 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-<div id="workshop_details_modal_content" class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="workshop_details_modal_label">{{ workshop.name }}</h5>
-        <button type="button" class="btn btn-sm btn-danger delete-workshop  float-end" data-url="{% url 'delete_workshop_url' workshop_id=workshop.id %}" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
-            <i class="bi bi-trash"></i>
-        </button>
-    </div>
-    <div class="modal-body">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="workshop-details-tab" data-bs-toggle="tab" data-bs-target="#data-tab" type="button" role="tab" aria-controls="data-tab" aria-selected="true">Details</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="workshop-edit-tab" data-bs-toggle="tab" data-bs-target="#form-tab" type="button" role="tab" aria-controls="form-tab" aria-selected="false">Edit</button>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="data-tab" role="tabpanel" aria-labelledby="workshop-details-tab">
-                <div style="margin-top: 25px;" class="container">
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div id="workshop_data" class="col-10" data-url="{% url 'refresh_workshop_data_url' workshop_id=workshop.id %}">
-                            {% include 'include/object_data.html' with object=workshop only %}
-                        </div>
-                        <div class="col-1"></div>
+<div class="modal-header">
+    <h5 class="modal-title" id="workshop_details_modal_label">{{ workshop.name }}</h5>
+    <button type="button" class="btn btn-sm btn-danger delete-workshop  float-end" data-url="{% url 'delete_workshop_url' workshop_id=workshop.id %}" data-confirmed="false" data-bs-toggle="popover" data-bs-html="true" data-bs-title="Are you sure?">
+        <i class="bi bi-trash"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <div id="workshop_edit_messages_box"></div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="workshop-details-tab" data-bs-toggle="tab" data-bs-target="#data-tab" type="button" role="tab" aria-controls="data-tab" aria-selected="true">Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="workshop-edit-tab" data-bs-toggle="tab" data-bs-target="#form-tab" type="button" role="tab" aria-controls="form-tab" aria-selected="false">Edit</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="data-tab" role="tabpanel" aria-labelledby="workshop-details-tab">
+            <div style="margin-top: 25px;" class="container">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div id="workshop_data" class="col-10" data-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">
+                        {% include 'include/object_data.html' with object=workshop only %}
                     </div>
-                </div>
-                <div class="modal-footer">
-                    {% if workshop.favourite %}
-                        <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star-fill"></i> Delete from favourites</button>
-                    {% else %}
-                        <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star"></i> Add to favourites</button>
-                    {% endif %}
-                    <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
+                    <div class="col-1"></div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="form-tab" role="tabpanel" aria-labelledby="workshop-edit-tab">
-                <div style="margin-top: 25px;" class="container">
-                    <form id="edit_workshop_form" method="POST">
-                        <div id="workshop_edit_messages_box" style="margin-top: 15px;"></div>
-                        <div class="modal-body">
-                            <div id="edit_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
-                            {% csrf_token %}
-                            {{ edit_workshop_form|crispy }}
-                            <input name="workshop_id" type="hidden" value="{{ workshop.id }}">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' %}" data-refresh-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">Save</button>
-                            <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="modal-footer">
+                {% if workshop.favourite %}
+                    <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star-fill"></i> Delete from favourites</button>
+                {% else %}
+                    <button id="favourite_workshop_toggle_button" type="button" class="btn btn-sm btn-primary toggle-favourite-workshop float-start" data-url="{% url 'toggle_favourite_workshop_url' workshop_id=workshop.id %}"><i class="bi bi-star"></i> Add to favourites</button>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="form-tab" role="tabpanel" aria-labelledby="workshop-edit-tab">
+            <div style="margin-top: 25px;" class="container">
+                <form id="edit_workshop_form" method="POST">
+                    <div class="modal-body">
+                        <div id="edit_workshop_submit_info" class="alert alert-danger" role="alert" style="display: none;"></div>
+                        {% csrf_token %}
+                        {{ edit_workshop_form|crispy }}
+                        <input name="workshop_id" type="hidden" value="{{ workshop.id }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-success save-edit-workshop-data" data-url="{% url 'edit_workshop_details_url' %}" data-refresh-url="{% url 'workshop_details_url' workshop_id=workshop.id %}">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary float-end redirect-to-workshop-list">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
