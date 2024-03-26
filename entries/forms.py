@@ -24,6 +24,7 @@ class EntryForm(forms.ModelForm, FormUtils):
         'mileage_smaller': 'Mileage cannot be smaller than in an entry before it.',
         'mileage_bigger': 'Mileage cannot be bigger than in an entry after it.',
         'date_error': 'Entry date must not be in the future.',
+        'negative_value': 'Field value can not be negative value.'
     }
 
     class Meta:
@@ -83,6 +84,13 @@ class EntryForm(forms.ModelForm, FormUtils):
             self._errors['cost'] = self.error_class(cost_error)
             return self.cleaned_data
 
+        # check if cost is not negative
+        if cost < 0:
+            cost_error = self.error_messages['negative_value']
+            self.data_errors['id_cost'] = cost_error
+            self._errors['cost'] = self.error_class(cost_error)
+            return self.cleaned_data
+
         # check if type of mileage is valid
         try:
             mileage = int(self.cleaned_data.get('mileage'))
@@ -93,6 +101,13 @@ class EntryForm(forms.ModelForm, FormUtils):
             return self.cleaned_data
 
         entries = Entry.objects.filter(car=self.car).exclude(id=self.instance.id).order_by('-date').all()
+
+        # check if mileage is not negative
+        if mileage < 0:
+            mileage_error = self.error_messages['negative_value']
+            self.data_errors['id_mileage'] = mileage_error
+            self._errors['mileage'] = self.error_class(mileage_error)
+            return self.cleaned_data
 
         # check if mileage field value is smaller than in last saved entry
         last_entry = entries.filter(date__lt=date).order_by('-date').first()
