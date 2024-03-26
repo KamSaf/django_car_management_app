@@ -11,9 +11,9 @@ class ReminderForm(forms.ModelForm, FormUtils):
         Form for creating and editing reminders
     """
 
-    category = forms.ChoiceField(required=True, label=mark_safe('Category'), choices=Entry.TYPES_OF_ENTRIES)
-    place = forms.Field(required=False, label=mark_safe('Place'))
-    details = forms.Field(required=True, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
+    category = forms.ChoiceField(required=True, label=mark_safe('<i class="bi bi-boxes"></i> Category'), choices=Entry.TYPES_OF_ENTRIES)
+    place = forms.Field(required=False, label=mark_safe('<i class="bi bi-geo-alt"></i> Place'))
+    details = forms.Field(required=True, label=mark_safe('<i class="bi bi-card-text"></i> Details'), widget=forms.Textarea(attrs={"rows": "5"}))
 
     field_order = ['date', 'category', 'place', 'details']
 

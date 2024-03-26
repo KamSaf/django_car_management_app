@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 from cars.models import Car
 from django.utils import timezone
@@ -20,10 +21,18 @@ class Reminder(models.Model):
         """
             Returns dict containing object data ready to display
         """
+        category = ''
+        match(self.category):
+            case 'service':
+                category = '<i class="bi bi-tools"></i> ' + self.category.capitalize()
+            case 'fuel':
+                category = '<i class="bi bi-tools"></i> ' + self.category.capitalize()
+            case 'others':
+                category = '<i class="bi bi-cart-plus"></i> ' + self.category.capitalize()
 
         return [
-            (self.date.strftime("%a %d %b %Y"), 'Date', '', None),
-            (self.category, 'Category', '', None),
-            (self.place, 'Place', '', None),
-            (self.details, 'Details', '', None),
+            (self.date.strftime("%a %d %b %Y"), 'Date', 'calendar', None),
+            (mark_safe(category), 'Category', 'boxes', None),
+            (self.place, 'Place', 'geo-alt', None),
+            (self.details, 'Details', 'card-text', None),
         ]

@@ -10,12 +10,12 @@ class EntryForm(forms.ModelForm, FormUtils):
         Form for creating and editing exploitation history entries
     """
 
-    category = forms.ChoiceField(required=True, label=mark_safe('Category'), choices=Entry.TYPES_OF_ENTRIES)
-    place = forms.Field(required=False, label=mark_safe('Place'))
-    mileage = forms.Field(required=True, label=mark_safe('Mileage'))
-    cost = forms.Field(required=True, label=mark_safe('Cost'))
-    details = forms.Field(required=False, label=mark_safe('Details'), widget=forms.Textarea(attrs={"rows": "5"}))
-    fuel_liters = forms.FloatField(required=False, label=mark_safe('Fuel liters (for Fuel entries)'))
+    category = forms.ChoiceField(required=True, label=mark_safe('<i class="bi bi-boxes"></i> Category'), choices=Entry.TYPES_OF_ENTRIES)
+    place = forms.Field(required=False, label=mark_safe('<i class="bi bi-geo-alt"></i> Place'))
+    mileage = forms.Field(required=True, label=mark_safe('<i class="bi bi-activity"></i> Mileage'))
+    cost = forms.Field(required=True, label=mark_safe('<i class="bi bi-currency-dollar"></i> Cost'))
+    details = forms.Field(required=False, label=mark_safe('<i class="bi bi-card-text"></i> Details'), widget=forms.Textarea(attrs={"rows": "5"}))
+    fuel_liters = forms.FloatField(required=False, label=mark_safe('<i class="bi bi-fuel-pump"></i> Fuel liters (for Fuel entries)'))
 
     field_order = ['date', 'category', 'place', 'mileage', 'cost', 'fuel_liters', 'details']
 
