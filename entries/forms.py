@@ -59,12 +59,21 @@ class EntryForm(forms.ModelForm, FormUtils):
         if self.cleaned_data.get('fuel_liters'):
             # check if type of fuel_liters is valid
             try:
-                cost = int(float(self.cleaned_data.get('fuel_liters')))
+                fuel_liters = int(float(self.cleaned_data.get('fuel_liters')))
             except TypeError:
                 fuel_error = EntryForm.invalid_field_value(field_name='fuel_liters')
                 self.data_errors['id_fuel_liters'] = fuel_error
                 self._errors['fuel_liters'] = self.error_class(fuel_error)
                 return self.cleaned_data
+
+            # check if fuel_liters is not negative
+            if fuel_liters < 0:
+                fuel_error = self.error_messages['negative_value']
+                self.data_errors['id_fuel_liters'] = fuel_error
+                self._errors['fuel_liters'] = self.error_class(fuel_error)
+                return self.cleaned_data
+
+            self.instance.fuel_liters = fuel_liters
         else:
             self.instance.fuel_liters = None
 
