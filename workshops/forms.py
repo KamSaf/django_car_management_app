@@ -57,7 +57,7 @@ class WorkshopForm(forms.ModelForm, FormUtils):
 
         for i in range(len(string_fields)):
             if not WorkshopForm.check_field_length(value=list(string_fields[i].values())[0], length=MAX_STRING_FIELDS_LENGTH):
-                self.set_length_errors(field_name=list(string_fields[i].keys())[0].capitalize())
+                self.length_error(field_name=list(string_fields[i].keys())[0].capitalize())
                 return self.cleaned_data
 
         # checks if phone number field is valid

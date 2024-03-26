@@ -143,12 +143,12 @@ class EntryForm(forms.ModelForm, FormUtils):
 
         # check if place field value is not too long
         if not EntryForm.check_field_length(value=place, length=200):
-            self.set_length_errors(field_name='Place')
+            self.length_error(field_name='Place')
             return self.cleaned_data
 
         # check if details field value is not too long
         if not EntryForm.check_field_length(value=details, length=500):
-            self.set_length_errors(field_name='Details')
+            self.length_error(field_name='Details')
             return self.cleaned_data
 
         self.instance.category = category

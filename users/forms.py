@@ -75,7 +75,7 @@ class UserUpdateForm(forms.ModelForm, FormUtils):
         for i in range(len(string_fields)):
             if not UserUpdateForm.check_field_length(value=list(string_fields[i].values())[0], length=STRING_FIELDS_LENGTHS[i]):
                 field_name = list(string_fields[i].keys())[0].capitalize()
-                self.set_length_errors(field_name=field_name)
+                self.length_error(field_name=field_name)
                 return self.cleaned_data
 
         # checks if user provided valid password (current)

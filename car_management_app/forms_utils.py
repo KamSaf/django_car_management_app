@@ -14,7 +14,7 @@ class FormUtils:
         return self
 
     # set field_too_long error to a form field
-    def set_length_errors(self, field_name: str):
+    def length_error(self, field_name: str):
         error = f"{field_name} {self.error_messages['field_too_long']}"
         self.data_errors[f'id_{field_name.lower()}'] = error
         self._errors[field_name.lower()] = self.error_class([error])
