@@ -465,14 +465,12 @@ $(function(){
 // Handles new entry creation request
 $(function() {  
   var modal = new bootstrap.Modal($("#new_entry_modal"));
-
     $(".save-new-entry").on("click", function(event) {
       event.preventDefault();
 
-      // if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
-        // return false;
-      // }
-
+      if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
+        return false;
+      }
 
       $.ajax({
         type: "POST",
@@ -499,14 +497,12 @@ $(function() {
 
 // Handles edit entry request
 $(function() {  
-  // var modal = new bootstrap.Modal($("#new_entry_modal"));
   $('#entry_details_modal_content').on('click', ".save-edit-entry", function(){
     var $this = $(this);
 
-      // if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
-        // return false;
-      // }
-
+      if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
+        return false;
+      }
 
     $.ajax({
       type: "POST",
@@ -521,7 +517,6 @@ $(function() {
               <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
             </div>'
           );
-          // modal.hide();
           $('#entries_list').load($('#entries_list').data('url'));
           $('#entry_details_modal_content').load($this.data('refresh-url'));
           $('#messages_box').append(message);
