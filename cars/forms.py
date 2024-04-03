@@ -29,6 +29,7 @@ class CarForm(forms.ModelForm, FormUtils):
         'field_too_long': "field value is too long.",
         'displacement_invalid': 'Invalid displacement.',
         'production_year_invalid': 'Invalid production year.',
+        'blank_fields': 'Required fields must not be blank',
     }
 
     class Meta:
@@ -55,6 +56,11 @@ class CarForm(forms.ModelForm, FormUtils):
         prod_year = self.cleaned_data.get('prod_year')
         fuel_type = self.cleaned_data.get('fuel_type')
         vin = self.cleaned_data.get('vin')
+
+        if None in [make, model, vin]:
+            error = self.error_messages['blank_fields']
+            self._errors['required_fields'] = self.error_class([error])
+            return self.cleaned_data
 
         string_fields = [
             {'make': make},

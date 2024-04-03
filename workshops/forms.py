@@ -23,7 +23,8 @@ class WorkshopForm(forms.ModelForm, FormUtils):
 
     error_messages = {
         'field_too_long': "field value is too long.",
-        'invalid_phone_number': "Provided phone number is invalid."
+        'invalid_phone_number': "Provided phone number is invalid.",
+        'blank_fields': 'Required fields must not be blank',
     }
 
     class Meta:
@@ -47,6 +48,11 @@ class WorkshopForm(forms.ModelForm, FormUtils):
         address = self.cleaned_data.get('address')
         phone_number = self.cleaned_data.get('phone_number')
         profession = self.cleaned_data.get('profession')
+
+        if None in [name, city, address, city, phone_number, profession]:
+            error = self.error_messages['blank_fields']
+            self._errors['required_fields'] = self.error_class([error])
+            return self.cleaned_data
 
         string_fields = [
             {'name': name},

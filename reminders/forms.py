@@ -20,6 +20,7 @@ class ReminderForm(forms.ModelForm, FormUtils):
     error_messages = {
         'field_value_too_long': 'field value is too long.',
         'date_error': 'Entry date must not be in the past.',
+        'blank_fields': 'Required fields must not be blank',
     }
 
     class Meta:
@@ -47,6 +48,11 @@ class ReminderForm(forms.ModelForm, FormUtils):
         place = self.cleaned_data.get('place')
         details = self.cleaned_data.get('details')
         date = self.cleaned_data.get('date')
+
+        if None in [date, category, details]:
+            error = self.error_messages['blank_fields']
+            self._errors['required_fields'] = self.error_class([error])
+            return self.cleaned_data
 
         # check if given date is not in the past
         if date < timezone.now():

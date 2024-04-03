@@ -24,7 +24,8 @@ class EntryForm(forms.ModelForm, FormUtils):
         'mileage_smaller': 'Mileage cannot be smaller than in an entry before it.',
         'mileage_bigger': 'Mileage cannot be bigger than in an entry after it.',
         'date_error': 'Entry date must not be in the future.',
-        'negative_value': 'Field value can not be negative value.'
+        'negative_value': 'Field value can not be negative value.',
+        'blank_fields': 'Required fields must not be blank',
     }
 
     class Meta:
@@ -93,13 +94,6 @@ class EntryForm(forms.ModelForm, FormUtils):
             self._errors['cost'] = self.error_class(cost_error)
             return self.cleaned_data
 
-        # check if cost is not negative
-        if cost < 0:
-            cost_error = self.error_messages['negative_value']
-            self.data_errors['id_cost'] = cost_error
-            self._errors['cost'] = self.error_class(cost_error)
-            return self.cleaned_data
-
         # check if type of mileage is valid
         try:
             mileage = int(self.cleaned_data.get('mileage'))
@@ -107,6 +101,18 @@ class EntryForm(forms.ModelForm, FormUtils):
             mileage_error = EntryForm.invalid_field_value(field_name='mileage')
             self.data_errors['id_mileage'] = mileage_error
             self._errors['mileage'] = self.error_class(mileage_error)
+            return self.cleaned_data
+
+        if None in [date, category, mileage, cost]:
+            error = self.error_messages['blank_fields']
+            self._errors['required_fields'] = self.error_class([error])
+            return self.cleaned_data
+
+        # check if cost is not negative
+        if cost < 0:
+            cost_error = self.error_messages['negative_value']
+            self.data_errors['id_cost'] = cost_error
+            self._errors['cost'] = self.error_class(cost_error)
             return self.cleaned_data
 
         entries = Entry.objects.filter(car=self.car).exclude(id=self.instance.id).order_by('-date').all()

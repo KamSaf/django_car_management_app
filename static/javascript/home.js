@@ -108,6 +108,13 @@ $(function(){
   });
 });
 
+// Clears workshop form when leaving modal
+$(function(){
+  $('#workshop_details').on('hidden.bs.modal', function () {
+    clearForm('new_workshop_form');
+  });
+});
+
 // Loads content of the workshop details modal
 $(function() {  
     $('.workshop-list').on('click', '.show-workshop-details', function(){
@@ -182,7 +189,6 @@ $(function(){
 });
 
 // Refresh fuel prices
-
 $(function() {
   function updateFuelPrices() {
     let $fuelPrices = $('#fuel_prices');
