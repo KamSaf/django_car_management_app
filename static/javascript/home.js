@@ -121,7 +121,6 @@ function validateEntryData(submitInfoBoxId, formId){
 
   for (let i = 0; i < stringFields.length; i++) {
     let field = $('#' + formId + ' ' + stringFields[i]);
-    console.log(field);
     if (field.val().length > maxFieldsLength[i]) {
       field.addClass('is-invalid');
       fieldLengthOK = false;
@@ -500,7 +499,7 @@ $(function() {
   $('#entry_details_modal_content').on('click', ".save-edit-entry", function(){
     var $this = $(this);
 
-      if (!validateEntryData('new_entry_submit_info', 'new_entry_form')){
+      if (!validateEntryData('edit_entry_submit_info', 'edit_entry_form')){
         return false;
       }
 
