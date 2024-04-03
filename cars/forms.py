@@ -59,6 +59,7 @@ class CarForm(forms.ModelForm, FormUtils):
 
         if None in [make, model, vin]:
             error = self.error_messages['blank_fields']
+            self.data_errors['required_fields'] = error
             self._errors['required_fields'] = self.error_class([error])
             return self.cleaned_data
 

@@ -51,6 +51,7 @@ class WorkshopForm(forms.ModelForm, FormUtils):
 
         if None in [name, city, address, city, phone_number, profession]:
             error = self.error_messages['blank_fields']
+            self.data_errors['required_fields'] = error
             self._errors['required_fields'] = self.error_class([error])
             return self.cleaned_data
 

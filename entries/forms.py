@@ -78,13 +78,6 @@ class EntryForm(forms.ModelForm, FormUtils):
         else:
             self.instance.fuel_liters = None
 
-        # check if given date is not in the future
-        if date > timezone.now():
-            date_error = self.error_messages['date_error']
-            self.data_errors['id_date'] = date_error
-            self._errors['date'] = self.error_class(date_error)
-            return self.cleaned_data
-
         # check if type of cost is valid
         try:
             cost = int(float(self.cleaned_data.get('cost')))
@@ -105,7 +98,15 @@ class EntryForm(forms.ModelForm, FormUtils):
 
         if None in [date, category, mileage, cost]:
             error = self.error_messages['blank_fields']
+            self.data_errors['required_fields'] = error
             self._errors['required_fields'] = self.error_class([error])
+            return self.cleaned_data
+
+        # check if given date is not in the future
+        if date > timezone.now():
+            date_error = self.error_messages['date_error']
+            self.data_errors['id_date'] = date_error
+            self._errors['date'] = self.error_class(date_error)
             return self.cleaned_data
 
         # check if cost is not negative

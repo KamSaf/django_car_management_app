@@ -70,11 +70,13 @@ function handleAjaxResponse(response, modal, submitInfoBoxId, formId){
   }
   if (errors){
     $('#' + submitInfoBoxId).html(errors).prop('style', 'display: block;');
+    return false;
   } else {
     clearForm(formId);
     if (modal){
       modal.hide();
     }
+    return true;
   }
 };
 
@@ -216,23 +218,25 @@ $(function() {
         url: $(this).data('url'),
         data: $('#new_workshop_form').serializeArray(),
         success: function(response) {
-          handleAjaxResponse(response, modal, 'new_workshop_submit_info', 'new_workshop_form', 'new_workshop_form');
-          refreshWorkshopsLists();
-          var message = $(
-            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-              Workshop created!\
-              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-            </div>'
-          );
-          modal.hide();
-          if ($('#workshop_details_modal').data('modal-redirect') == true){
-            var newModal = new bootstrap.Modal($("#workshops_list_modal"));
-            newModal.show();
-            $('#workshop_details_modal').removeData('modal-redirect');
-            clearForm('new_workshop_form');
-            $('#workshops_list_messages_box').append(message);
-          } else {
-            $('#messages_box').append(message);
+          let ajaxResult = handleAjaxResponse(response, modal, 'new_workshop_submit_info', 'new_workshop_form', 'new_workshop_form');
+          if (ajaxResult){
+            refreshWorkshopsLists();
+            var message = $(
+              '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+                Workshop created!\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            modal.hide();
+            if ($('#workshop_details_modal').data('modal-redirect') == true){
+              var newModal = new bootstrap.Modal($("#workshops_list_modal"));
+              newModal.show();
+              $('#workshop_details_modal').removeData('modal-redirect');
+              clearForm('new_workshop_form');
+              $('#workshops_list_messages_box').append(message);
+            } else {
+              $('#messages_box').append(message);
+            }  
           }
         }
       });
@@ -254,17 +258,19 @@ $(function() {
       url: $(this).data('url'),
       data: $('#edit_workshop_form').serializeArray(),
       success: function(response) {
-        handleAjaxResponse(response, null, 'edit_workshop_submit_info', 'edit_workshop_form');
-        refreshWorkshopsLists();
-        var message = $(
-          '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-            Workshop data edited!\
-            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-          </div>'
-        );
-        $('#workshop_details_modal_content').load($('#workshop_data').data('url'), function() {
-          $('#workshop_edit_messages_box').append(message);
-        });
+        let ajaxResult = handleAjaxResponse(response, null, 'edit_workshop_submit_info', 'edit_workshop_form');
+        if (ajaxResult) {
+          refreshWorkshopsLists();
+          var message = $(
+            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+              Workshop data edited!\
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+            </div>'
+          );
+          $('#workshop_details_modal_content').load($('#workshop_data').data('url'), function() {
+            $('#workshop_edit_messages_box').append(message);
+          });  
+        }
       }
     });
   });
@@ -381,17 +387,19 @@ $(function() {
         url: $(this).data('url'),
         data: $('#new_entry_form').serializeArray(),
         success: function(response) {
-          handleAjaxResponse(response, modal, 'new_entry_submit_info', 'new_entry_form');
-          var message = $(
-            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-              Entry created!\
-              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-            </div>'
-          );
-          modal.hide();
-          $('#entries_list').load($('#entries_list').data('url'));
-          $('#messages_box').append(message);
-          refreshMonthReports();
+          let ajaxResult = handleAjaxResponse(response, modal, 'new_entry_submit_info', 'new_entry_form');
+          if (ajaxResult) {
+            var message = $(
+              '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+                Entry created!\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            modal.hide();
+            $('#entries_list').load($('#entries_list').data('url'));
+            $('#messages_box').append(message);
+            refreshMonthReports();  
+          }
         }
       });
     });
@@ -413,18 +421,20 @@ $(function() {
       url: $(this).data('url'),
       data: $('#edit_entry_form').serializeArray(),
       success: function(response) {
-        handleAjaxResponse(response, null, 'edit_entry_submit_info', 'edit_entry_form');
-        var message = $(
-          '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-            Entry edited!\
-            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-          </div>'
-        );
-        // modal.hide();
-        $('#entries_list').load($('#entries_list').data('url'));
-        $('#entry_details_modal_content').load($this.data('refresh-url'));
-        $('#messages_box').append(message);
-        refreshMonthReports();
+        let ajaxResult = handleAjaxResponse(response, null, 'edit_entry_submit_info', 'edit_entry_form');
+        if (ajaxResult) {
+          var message = $(
+            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+              Entry edited!\
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+            </div>'
+          );
+          // modal.hide();
+          $('#entries_list').load($('#entries_list').data('url'));
+          $('#entry_details_modal_content').load($this.data('refresh-url'));
+          $('#messages_box').append(message);
+          refreshMonthReports();  
+        }
       }
     });
   });
@@ -479,16 +489,18 @@ $(function() {
         url: $(this).data('url'),
         data: $('#new_reminder_form').serializeArray(),
         success: function(response) {
-          handleAjaxResponse(response, modal, 'new_reminder_submit_info', 'new_reminder_form');
-          var message = $(
-            '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
-              Reminder created!\
-              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
-            </div>'
-          );
-          modal.hide();
-          $('#reminders_list').load($('#reminders_list').data('url'));
-          $('#messages_box').append(message);
+          let ajaxResult = handleAjaxResponse(response, modal, 'new_reminder_submit_info', 'new_reminder_form');
+          if (ajaxResult){
+            let message = $(
+              '<div id="workshop_message" class="alert alert-success" role="alert" style="display: block;">\
+                Reminder created!\
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>\
+              </div>'
+            );
+            modal.hide();
+            $('#reminders_list').load($('#reminders_list').data('url'));
+            $('#messages_box').append(message);  
+          }
         }
       });
     });
