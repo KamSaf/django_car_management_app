@@ -27,19 +27,30 @@ function clearForm(formId){
 // Function for workshop form data validation
 function validateWorkshopData(submitInfoBoxId, formId){
   clearErrors();
-  var fieldsToValidate = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
-  var fieldsValid = true;
+  let fieldsToValidate = ['#id_name', '#id_city', '#id_address', '#id_phone_number', '#id_profession'];
+  let maxFieldsLength = 100
+  let fieldsValid = true;
+  let fieldLengthOK = true;
 
-  for (var i = 0; i < fieldsToValidate.length; i++) {
-    var field = $('#' + formId + ' ' +fieldsToValidate[i]);
+  for (let i = 0; i < fieldsToValidate.length; i++) {
+    let field = $('#' + formId + ' ' + fieldsToValidate[i]);
     if (!field.val()) {
       field.addClass('is-invalid');
       fieldsValid = false;
+    }
+    if (field.val().length > maxFieldsLength) {
+      field.addClass('is-invalid');
+      fieldLengthOK = false;
     }
   }
   
   if (!fieldsValid) {
     $('#' + submitInfoBoxId).html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+    return false;
+  }
+
+  if (!fieldLengthOK) {
+    $('#' + submitInfoBoxId).html("Fields value too long.").prop('style', 'display: block;');
     return false;
   }
 
@@ -50,6 +61,87 @@ function validateWorkshopData(submitInfoBoxId, formId){
   }
   return true;
 };
+
+// Function for reminder form data validation
+function validateReminderData(submitInfoBoxId, formId){
+  clearErrors();
+  let fieldsToValidate = ['#id_date', '#id_category', '#id_place', '#id_details'];
+  let stringFields = ['#id_place', '#id_details'];
+  let maxFieldsLength = [200, 100]
+  let fieldsValid = true;
+  let fieldLengthOK = true;
+
+
+  for (let i = 0; i < fieldsToValidate.length; i++) {
+    let field = $('#' + formId + ' ' + fieldsToValidate[i]);
+    if (!field.val()) {
+      field.addClass('is-invalid');
+      fieldsValid = false;
+    }
+  }
+
+  for (let i = 0; i < stringFields.length; i++) {
+    let field = $('#' + formId + ' ' + stringFields[i]);
+    console.log(field);
+    if (field.val().length > maxFieldsLength[i]) {
+      field.addClass('is-invalid');
+      fieldLengthOK = false;
+    }
+  }
+  
+  if (!fieldsValid) {
+    $('#' + submitInfoBoxId).html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+    return false;
+  }
+
+  if (!fieldLengthOK) {
+    $('#' + submitInfoBoxId).html("Fields value too long.").prop('style', 'display: block;');
+    return false;
+  }
+
+  return true;
+};
+
+// Function for entry form data validation
+function validateEntryData(submitInfoBoxId, formId){
+  clearErrors();
+  let fieldsToValidate = ['#id_date', '#id_category', '#id_mileage', '#id_cost'];
+  let stringFields = ['#id_place', '#id_details'];
+  let maxFieldsLength = [200, 500]
+  let fieldsValid = true;
+  let fieldLengthOK = true;
+
+  for (let i = 0; i < fieldsToValidate.length; i++) {
+    let field = $('#' + formId + ' ' + fieldsToValidate[i]);
+    if (!field.val()) {
+      field.addClass('is-invalid');
+      fieldsValid = false;
+    }
+  }
+
+  for (let i = 0; i < stringFields.length; i++) {
+    let field = $('#' + formId + ' ' + stringFields[i]);
+    console.log(field);
+    if (field.val().length > maxFieldsLength[i]) {
+      field.addClass('is-invalid');
+      fieldLengthOK = false;
+    }
+  }
+  
+  if (!fieldsValid) {
+    $('#' + submitInfoBoxId).html("<b>Required</b> fields must not be left blank.").prop('style', 'display: block;');
+    return false;
+  }
+
+  if (!fieldLengthOK) {
+    $('#' + submitInfoBoxId).html("Fields value too long.").prop('style', 'display: block;');
+    return false;
+  }
+
+  return true;
+};
+
+
 
 // Function for refreshing workshops lists
 function refreshWorkshopsLists(){
@@ -480,9 +572,9 @@ $(function() {
     $(".save-new-reminder").on("click", function(event) {
       event.preventDefault();
 
-      // if (!validateReminderData('new_reminder_submit_info', 'new_reminder_form')){
-        // return false;
-      // }
+      if (!validateReminderData('new_reminder_submit_info', 'new_reminder_form')){
+        return false;
+      }
 
       $.ajax({
         type: "POST",

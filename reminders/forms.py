@@ -50,7 +50,6 @@ class ReminderForm(forms.ModelForm, FormUtils):
         date = self.cleaned_data.get('date')
 
         if None in [date, category, details]:
-            print('dupa')
             error = self.error_messages['blank_fields']
             self.data_errors['required_fields'] = error
             self._errors['required_fields'] = self.error_class([error])
