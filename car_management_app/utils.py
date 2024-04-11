@@ -36,6 +36,7 @@ def calc_report(car: Car, year: int, month: int) -> dict:
     """
         Calculate exploitation data for given month
     """
+    fuel_tank = 58
     month_days = timezone.now().day if timezone.now().month == month and timezone.now().year == year else calendar.monthrange(year, month)[1]
     entries = Entry.objects.filter(car=car).order_by('date')
 
@@ -49,7 +50,7 @@ def calc_report(car: Car, year: int, month: int) -> dict:
     previous_month_entries = entries.filter(date__year=last_year, date__month=last_month)
     this_month_entries = entries.filter(date__year=year, date__month=month)
 
-    start_entry = previous_month_entries.last() if previous_month_entries.last() else this_month_entries.first()
+    start_entry = this_month_entries.first()  if len(this_month_entries) > 0 else previous_month_entries.last()
     end_entry = this_month_entries.last()
 
     start_mileage = start_entry.mileage if start_entry else 0
@@ -57,7 +58,7 @@ def calc_report(car: Car, year: int, month: int) -> dict:
 
     mileage_covered = end_mileage - start_mileage if end_mileage and start_mileage else 0
 
-    fuel_economy = (sum(this_month_entries.filter(category='fuel').values_list('fuel_liters', flat=True)) * 100) / mileage_covered if mileage_covered else 0
+    fuel_economy = (sum(this_month_entries.filter(category='fuel').values_list('fuel_liters', flat=True)[1:]) * 100) / mileage_covered if mileage_covered else 0
     all_costs = costs_sum(query=this_month_entries)
     fuel_costs = costs_sum(query=this_month_entries, category='fuel')
     service_costs = costs_sum(query=this_month_entries, category='service')
@@ -85,6 +86,7 @@ def expl_report(car: Car, year: int, month: int) -> tuple:
     else:
         month, year = 12, year - 1
     last_month_report = calc_report(car=car, year=year, month=month)
+    print(this_month_report)
     return this_month_report, last_month_report
 
 
