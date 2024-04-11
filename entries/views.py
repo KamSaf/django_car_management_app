@@ -66,11 +66,11 @@ def async_edit_entry(request):
 
 @api_view(['GET'])
 @login_required
-def async_load_entries_list(request, category=None, search_phrase=None):
+def async_load_entries_list(request, car_id, category=None, search_phrase=None):
     """
         Endpoint for loading exploitation history entries (for AJAX)
     """
-    entries = Entry.objects.filter(user=request.user).order_by('-date', '-create_date').all()
+    entries = Entry.objects.filter(user=request.user, car_id=car_id).order_by('-date', '-create_date').all()
 
     if category and category in Entry.TYPES_OF_ENTRIES:
         entries = entries.filter(category=category)

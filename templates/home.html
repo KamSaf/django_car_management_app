@@ -74,12 +74,12 @@
                                     <input id="entries_search_phrase" class="form-control" type="search" placeholder="Search" aria-label="Search">
                                 </span>
                                 <span class="col-2">
-                                    <button type="button" class="btn btn-outline-dark apply-entries-filter" type="submit" data-url="{% url 'load_entries_list_url' %}"><i class="bi bi-search"></i></button>    
+                                    <button type="button" class="btn btn-outline-dark apply-entries-filter" type="submit" data-url="{% url 'load_entries_list_url' car_id=viewed_car.id %}"><i class="bi bi-search"></i></button>    
                                 </span>    
                             </div>
                         </form>                        
                         <hr style="margin-top: 10px;">
-                        <div id="entries_list" style="margin-top: 25px; height: 75%;" data-url="{% url 'load_entries_list_url' %}">
+                        <div id="entries_list" style="margin-top: 25px; height: 75%;" data-url="{% url 'load_entries_list_url' car_id=viewed_car.id %}">
                             {% include 'include/entries/entries_list.html' %}
                         </div>
                     </div>
