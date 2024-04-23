@@ -63,18 +63,27 @@ This application was created as a practical part of a bachelor's thesis.
 
 
 # GIFs
-
+<br>
+<h3>New entry creation</h3>
 <p align="center"><img src="gifs/carhub_1.gif" width="100%" height="60%"></p>
 
+<br>
+<h3>Graph reports</h3>
 <p align="center"><img src="gifs/carhub_2.gif" width="100%" height="60%"></p>
 
+<br>
+<h3>New car creation</h3>
 <p align="center"><img src="gifs/carhub_3.gif" width="100%" height="60%"></p>
 
+<br>
+<h3>New workshop creation</h3>
 <p align="center"><img src="gifs/carhub_4.gif" width="100%" height="60%"></p>
 
+<br>
+<h3>Filtering and searching entries</h3>
 <p align="center"><img src="gifs/carhub_5.gif" width="100%" height="60%"></p>
 
-<hr>
+##
 
 Kamil Safaryjski 2024
 
