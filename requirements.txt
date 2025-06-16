@@ -11,5 +11,6 @@ pandas
 django-stubs
 django-types
 dotenv
+psycopg2
 psycopg2-binary
 dj-database-url
