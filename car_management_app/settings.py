@@ -105,11 +105,7 @@ WSGI_APPLICATION = "car_management_app.wsgi.application"
 #         "PORT": DB_PORT,
 #     }
 # }
-DATABASES = {
-    "default": dj_database_url.config(
-        default="postgresql://postgres:postgres@localhost:5432/mysite", conn_max_age=600
-    )
-}
+DATABASES = {"default": dj_database_url.config(default=CON_STR, conn_max_age=600)}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
