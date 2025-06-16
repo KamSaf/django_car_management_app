@@ -16,11 +16,6 @@ from pathlib import Path
 import dj_database_url
 
 load_dotenv()
-# DB_NAME = os.getenv("DB_NAME")
-# DB_USER = os.getenv("DB_USER")
-# DB_PASSWORD = os.getenv("DB_PASSWORD")
-# DB_HOST = os.getenv("DB_HOST")
-# DB_PORT = os.getenv("DB_PORT")
 CON_STR = os.getenv("CON_STR")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-+_z5)&7u7ju7$@r5=!ook&wi45+&8zpt#iw16dk82xch^2&w#9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["django-car-management-app.onrender.com"]
 
 
 # Application definition
