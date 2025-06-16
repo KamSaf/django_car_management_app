@@ -154,3 +154,8 @@ LOGIN_URL = "login_page"
 CRONJOBS = [
     ("1 */3 * * *", "cron.update_fuel_prices"),
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "https://django-car-management-app.onrender.com",
+]
