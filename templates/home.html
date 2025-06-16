@@ -61,6 +61,7 @@
                             Exploatation History
                         </h5>
                         <form id="entries_search_form" class="col" role="search">
+                            {% csrf_token %}
                             <div class="row">
                                 <span class="col-3">
                                     <select class="form-control" id="entries_category_filter">

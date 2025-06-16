@@ -159,6 +159,7 @@
         <div class="collapse" id="filter_options">
             <div class="card card-body container">
                 <form>
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-3 text-start">
                             <select id="workshop_filter_category" class="form-select filter-input">
